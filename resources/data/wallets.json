@@ -1,0 +1,290 @@
+[
+    {
+        "name": "Aktionariat",
+        "icon": "BJibEjpWxulQPlV5vAxMyhWoHbSH80J98dshg5U8.png"
+    },
+    {
+        "name": "Alice",
+        "icon": "iiNq5Xf9exvoWH8HbEjX9x0MXiAmiYfJHNwkK7fW.png"
+    },
+    {
+        "name": "Alpha Wallet",
+        "icon": "H7xNKcOc9yIVcG76HrFsIdpJRUaRgw3Y6zngGbiZ.jpg"
+    },
+    {
+        "name": "Anchor",
+        "icon": "BpXL7LFRflp2klS0bMM4gbFNrS0a45BCn6MBpxry.png"
+    },
+    {
+        "name": "Argent",
+        "icon": "9665rLoCcfOa4CEUGaAxrU0u4TqRQe3fM3bcoJaO.jpg"
+    },
+    {
+        "name": "Atomic",
+        "icon": "esoZLsFqQEFY21vFttOhHXSXYRjWdqjWFAmjZiZv.png"
+    },
+    {
+        "name": "Atwallet",
+        "icon": "SO4qGizmSvRn20yuq5Ais9RjZ8xoEnonPHFVR9k4.png"
+    },
+    {
+        "name": "Authereum",
+        "icon": "BEZDNrjPogTEEfxH43HqPqlJ0oPXySqZ50pq0PGG.png"
+    },
+    {
+        "name": "Bakkt",
+        "icon": "yRqNYjy782hPVqJXhrvKuYqMe9FcnJegeSzDO5Ok.png"
+    },
+    {
+        "name": "Bitcoin cash",
+        "icon": "5UznHVslQ63G4dZZHKOL5Y2nA8cJWY2xiMuuckze.png"
+    },
+    {
+        "name": "Bitkeep",
+        "icon": "jcYws9i8W85NgolEt6k2Eo9htcibcHkSy3bmfqHp.png"
+    },
+    {
+        "name": "Bitpay",
+        "icon": "yDLNylATs1osaR3PYW9FMlwNRMtREtlQClT5ackp.jpg"
+    },
+    {
+        "name": "Blockchain",
+        "icon": "7f6f6WmPAtNUp83xtUcxgqGYqbPuhQFTHfDm4QLB.png"
+    },
+    {
+        "name": "Bridge Wallet",
+        "icon": "SGgUnIVhROLwgQeZ7gWtY9MB89WF7hMBkmVhKzpY.png"
+    },
+    {
+        "name": "Coin98",
+        "icon": "liH61NeflmMVgUmIhbYq2jQQlH8gJlN82gsFWDKO.png"
+    },
+    {
+        "name": "Coinbase",
+        "icon": "fW86jwztjOyUCIiaf8XX7bAmxPx2BCwtRMy9RK5Z.jpg"
+    },
+    {
+        "name": "Coinomi",
+        "icon": "a62dLNZvcHRHuEthV9gvt8dw56HunBX2XF1uGrlT.jpg"
+    },
+    {
+        "name": "Cool wallet",
+        "icon": "DTVCzHkFiXCdohdjExmfNYOluKv4JkiR7V8jpzXl.png"
+    },
+    {
+        "name": "Cosmos station",
+        "icon": "tEXQ7uLWgIRPzI2dIl6eGr6B1QAuHtBTlUNmddda.png"
+    },
+    {
+        "name": "Cybavo wallet",
+        "icon": "VEYS25PPYR1RiNqkV4D36p0Kb4cPgYmgdgry24nQ.png"
+    },
+    {
+        "name": "Dcentwallet",
+        "icon": "v3aMmGk7ObXytgIz7oo59z9kPRvdAoLFJQGjUliS.png"
+    },
+    {
+        "name": "Dok",
+        "icon": "1qKXEbW4ct48wpUJdgA5OUUYm3avbLItTSR4y3fm.png"
+    },
+    {
+        "name": "Easypocket",
+        "icon": "5qCsLFqwRYpyaE8iiQTxFAndAmhYAk3Cg07zv4oX.jpg"
+    },
+    {
+        "name": "Eidoo",
+        "icon": "ANvI0zzqIJccILuoXFmukMOg6R1dOYlvxoHhqRoc.png"
+    },
+    {
+        "name": "Ellipal",
+        "icon": "FGmOV5blYbhkI8DTib6RCXT30eMtI30VhUJjb7Pk.png"
+    },
+    {
+        "name": "Equal",
+        "icon": "erzyj5AYN7MZTH4E29UjiV6KqQBaMvCLSbQoFbtb.jpg"
+    },
+    {
+        "name": "Exodus",
+        "icon": "7aujlWuc9uVfvw0hWB9rY5pqRhaEqb5zzbauawnq.png"
+    },
+    {
+        "name": "Fetch",
+        "icon": "G38iVVxRZKF3K79occCdX9ULsC0L1I0qTI3imhuK.jpg"
+    },
+    {
+        "name": "Gnosis",
+        "icon": "9Lm9zGAhWGWqM03dMZ7uJlGC2UrrEJ1esgwpnJUm.jpg"
+    },
+    {
+        "name": "Gridplus",
+        "icon": "3x6xoGoTCOXKUxSsgk7WiIWKP9AcbIAhXoWTiY3L.png"
+    },
+    {
+        "name": "Harmony",
+        "icon": "G3xLceEUXVMTglATvPgzizilhI7ptjS4S4WwgD0B.png"
+    },
+    {
+        "name": "Huobi",
+        "icon": "YWbl1TSM2gSR8Gc789NiuEjDhSnuaIZRb2b1AwP3.jpg"
+    },
+    {
+        "name": "Iconex",
+        "icon": "U0rxVsezftcXf6fQHVcWi8FbO96DbMhJ7kzhM4LB.png"
+    },
+    {
+        "name": "Infinito Wallet",
+        "icon": "eLdTKRGUvyp4J3UjJQ4FjBI2wj3781gpO4wGzERO.png"
+    },
+    {
+        "name": "Infinity Wallet",
+        "icon": "lUblb1MYx79Hs4cojketU0XkfiMqVWPeKz0tFEsh.png"
+    },
+    {
+        "name": "Kardachain",
+        "icon": "qPo0iA9piw5Ck5Kl5uCzXGJ8siIu09N2mIokkwIe.png"
+    },
+    {
+        "name": "Keplr",
+        "icon": "MLGmin4mvMbohqFcFmimMb1da1fXJ2595zwIbTwm.png"
+    },
+    {
+        "name": "Keyringpro",
+        "icon": "7znVzoWy76259YVKks31otVC0Wp1dfnvDnjFY8Mc.png"
+    },
+    {
+        "name": "Ledger Live",
+        "icon": "T3p5hzkWwpOrWUdonlf92Kryvhv5ewio2tt8ioBo.png"
+    },
+    {
+        "name": "Lobstr",
+        "icon": "DUghm5yRWBOj7nQZE54EIBrEcViNt948xAgAdwgG.png"
+    },
+    {
+        "name": "Loop Spring",
+        "icon": "krVcOu6BO06M0Y8Sd4QTcVRiWYllJTZbs28IpC5l.jpg"
+    },
+    {
+        "name": "Maiar",
+        "icon": "aS72EWETPzJFkRjiwa12abKeKMsXG5hom6ESMMdG.png"
+    },
+    {
+        "name": "Math Wallet",
+        "icon": "bRXh5a0eDTukszRfYY4P6XhuxZjHVeHnsBXCHvY9.png"
+    },
+    {
+        "name": "Meetone",
+        "icon": "S3cxC7P7xQQLfzcp1xUWW765aPBoqorMuXTmyRIz.jpg"
+    },
+    {
+        "name": "Metamask",
+        "icon": "1NS1POo31VhHeJuQOv2IOgLwI6jAe8KK6QG2WLPI.png"
+    },
+    {
+        "name": "Midas Wallet",
+        "icon": "qaHIR7D4lCCsLip6gxCQH3XgKUdWXp79vihksslx.png"
+    },
+    {
+        "name": "Morixwallet",
+        "icon": "wU2z1o2UUy3TM6go8NaRz5fz0CVUdTpsAvaDl7Sl.png"
+    },
+    {
+        "name": "Mykey",
+        "icon": "nX1aL44t1Y4wJ0elwhXlpqec1G9Ljm5q0GbVvPal.png"
+    },
+    {
+        "name": "Nash",
+        "icon": "8VnAR4gxcijurY7gKshgNMQ3PN9cqHpPmlRECBFV.jpg"
+    },
+    {
+        "name": "Onto",
+        "icon": "M5PkNRAjXWvrXnmLLnF3f9wIhOqghTmQLXY1Yaik.png"
+    },
+    {
+        "name": "Ownbit",
+        "icon": "3mYAMzjiTN7Qffpj5yT9bR9jjkL3tRs1rMD9isdt.png"
+    },
+    {
+        "name": "Peakdefi",
+        "icon": "zTTqm9A3M5xY1jXlF83V6IOEFeJ3X4gUaBTCkxeg.png"
+    },
+    {
+        "name": "Pillar",
+        "icon": "19HMrj7nSpuuxHnjlAAS0LwzV1iLPIDTThwubjtX.png"
+    },
+    {
+        "name": "Rainbow",
+        "icon": "JJPyoyYeG6NFjsXmtzkStGD9xRQMsyKHbXu7BuXd.png"
+    },
+    {
+        "name": "Safepal",
+        "icon": "iLQL1zOooMq4yEYzYktS3EKmuJbX9TvbRUxp8RVR.png"
+    },
+    {
+        "name": "Sparkpoint",
+        "icon": "obxrqBdPXS19wHGEQMF3kBQOpJasUET0k1GKNQGR.png"
+    },
+    {
+        "name": "Spatium",
+        "icon": "nLGkClbKHXmEjmHXyaG3U3mMFV8GqkCTh7KBiAMq.jpg"
+    },
+    {
+        "name": "Swft Wallet",
+        "icon": "uv4dfPpmX5EMEJdxEvnyt9ECjteAErf5plHdAsEI.png"
+    },
+    {
+        "name": "Tokenary",
+        "icon": "SLplmc05yxZ01hfkVtY6KcAUKyLm9gOlmY3irY3j.png"
+    },
+    {
+        "name": "Tokenpocket",
+        "icon": "QsAqHHCqqrvq4wClxm2gPWCAkBMCb2UzbwbXBa0Y.png"
+    },
+    {
+        "name": "Torus",
+        "icon": "NiRXhBsPDLnRGjpc13ataf4LuSVbhzI9BAUKxyeK.jpg"
+    },
+    {
+        "name": "Trust",
+        "icon": "kxF43fXtB3B0m0C8Tz5ZZ3ckEYwKZFHCVJOh1BVr.png"
+    },
+    {
+        "name": "Trustvault",
+        "icon": "zdbZvvEDzMbvYYVRj5pCtW2R4WcX35v59N5fEK8B.png"
+    },
+    {
+        "name": "Unstoppable",
+        "icon": "OhSlAmebJ3Zyua7ZklCO8Iw4pr6n70y3NoKS5drW.png"
+    },
+    {
+        "name": "Viawallet",
+        "icon": "IIdKLC2LIPATrukIMIrTlCdlTrkVxurQXCtS33bx.png"
+    },
+    {
+        "name": "Vision",
+        "icon": "wMueM97YXPAKuAZO6n7LeGv595c8zAAMzmmeeH9Z.png"
+    },
+    {
+        "name": "Wallet Connect",
+        "icon": "4ndizRIaRk004RO9ZDqWozTAWNbyBWYLRleEry0f.jpg"
+    },
+    {
+        "name": "Wallet.io",
+        "icon": "LxY1QvKJCMviFVVUgvK2vRGfepXIex8Kv8NpCyAW.png"
+    },
+    {
+        "name": "Walleth",
+        "icon": "jWgYM2P7FEGknYNJjvTKIBvU51hXeG3kewMMbTHc.png"
+    },
+    {
+        "name": "Wazirx Logo",
+        "icon": "nb4XeFWV5rX7FMYdpIfWGXYEkimDe55TCDN5Ajls.png"
+    },
+    {
+        "name": "Xdc",
+        "icon": "2hcpxZpfpRdsUzhbOfPP2b9ml0jucMWdRP89dsLq.png"
+    },
+    {
+        "name": "Zelcore",
+        "icon": "HgqVI1N0K8Mp39lpUjD9xE57bRbps90Fawn91QKt.png"
+    }
+]

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deposit Funds - Fintech Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/fontawesome-min.css">
+    <link rel="stylesheet" href="../assets/css/fintech-custom.css">
+    <style>
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--secondary-color);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 14px;
+            background: #f8fafc;
+            color: var(--text-main);
+            transition: border-color 0.2s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            background: #fff;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: #fff;
+            border: none;
+            padding: 14px 20px;
+            border-radius: 6px;
+            font-weight: 600;
+            width: 100%;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-primary:hover {
+            background-color: #2c3a96;
+        }
+
+        .info-box {
+            background: #f1f5f9;
+            border-left: 4px solid var(--secondary-color);
+            padding: 20px;
+            margin-top: 30px;
+            border-radius: 4px;
+        }
+
+        .info-box h5 {
+            margin-bottom: 10px;
+            font-size: 15px;
+            color: var(--secondary-color);
+        }
+
+        .info-text {
+            font-size: 13px;
+            color: #64748b;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="dashboard-wrapper">
+
+        <!-- [Sidebar Component] -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="user-profile-snippet">
+                    <div class="user-avatar">
+                        <img src="../assets/images/dashboard/1.png" alt="User"
+                            onerror="this.src='https://via.placeholder.com/40'">
+                    </div>
+                    <div class="user-info">
+                        <h4>JohnDoe</h4>
+                        <p>john.doe@example.com</p>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="index.html" class="nav-item">
+                    <i class="fa fa-th-large"></i> <span>Dashboard</span>
+                </a>
+                <a href="deposit.html" class="nav-item active">
+                    <i class="fa fa-wallet"></i> <span>Deposit Funds</span>
+                </a>
+                <a href="withdraw.html" class="nav-item">
+                    <i class="fa fa-money-bill-wave"></i> <span>Withdraw Funds</span>
+                </a>
+                <a href="buy-giftcards.html" class="nav-item">
+                    <i class="fa fa-shopping-bag"></i> <span>Buy Gift Cards</span>
+                </a>
+                <a href="sell-giftcards.html" class="nav-item">
+                    <i class="fa fa-tags"></i> <span>Sell Gift Cards</span>
+                </a>
+                <a href="crypto.html" class="nav-item">
+                    <i class="fa fa-bitcoin"></i> <span>Crypto Withdraw</span>
+                </a>
+                <div style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 10px;">
+                    <a href="support.html" class="nav-item">
+                        <i class="fa fa-headset"></i> <span>Support</span>
+                    </a>
+                    <a href="#" class="nav-item">
+                        <i class="fa fa-sign-out-alt"></i> <span>Logout</span>
+                    </a>
+                </div>
+            </nav>
+        </aside>
+
+        <div class="main-content">
+            <!-- [Header Component - Reused] -->
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button class="menu-toggle" onclick="toggleSidebar()"><i class="fa fa-bars"></i></button>
+                    <div class="balance-card">
+                        <span class="balance-label">Total Balance</span>
+                        <span class="balance-amount">$12,450.75</span>
+                    </div>
+                </div>
+                <div class="topbar-right">
+                    <button class="icon-btn"><i class="fa fa-bell"></i></button>
+                    <div class="btn-header-action">Settings</div>
+                </div>
+            </header>
+
+            <!-- [Content Yield] -->
+            <main class="page-body">
+                <div class="page-title-row">
+                    <h2 class="page-title">Deposit Funds</h2>
+                </div>
+
+                <div class="card" style="max-width: 800px;">
+                    <form action="#" method="POST">
+                        <div class="form-group">
+                            <label class="form-label">Amount to Deposit</label>
+                            <div class="input-group">
+                                <input type="number" class="form-control" placeholder="Enter amount">
+                                <select class="form-control" style="width: 120px; flex-shrink: 0;">
+                                    <option>USD</option>
+                                    <option>EUR</option>
+                                    <option>GBP</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Bank Reference Number</label>
+                            <input type="text" class="form-control" placeholder="Enter reference number">
+                        </div>
+
+                        <button type="submit" class="btn-primary">Submit Deposit Request</button>
+
+                        <div class="info-box">
+                            <h5>Recent Deposit Instructions</h5>
+                            <p class="info-text">
+                                Make a bank transfer to our account using the bank reference number below for quicker
+                                processing.
+                                The bank reference number is required and should be included in the transfer details.
+                                Your will receive a confirmation once the deposit has been reviewed and approved.
+                            </p>
+                        </div>
+                    </form>
+                </div>
+            </main>
+        </div>
+    </div>
+    <script>function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }</script>
+</body>
+
+</html>

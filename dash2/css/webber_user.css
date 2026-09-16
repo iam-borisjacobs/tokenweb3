@@ -1,0 +1,1367 @@
+/* ==========================================================================
+   WEBBERFX-PRO CLIENT PORTAL DESIGN SYSTEM
+   Supports both High-Tech Dark Mode (Default) and Modern Clean Light Mode
+   ========================================================================== */
+
+:root, [data-theme="dark"] {
+    --wb-bg-main: #07090e;
+    --wb-bg-surface: #0e1320;
+    --wb-bg-card: #121827;
+    --wb-bg-card-alt: #161e31;
+    --wb-bg-input: #0b0f19;
+    --wb-border: rgba(255, 255, 255, 0.08);
+    --wb-border-light: rgba(255, 255, 255, 0.14);
+    --wb-text-primary: #f8fafc;
+    --wb-text-secondary: #94a3b8;
+    --wb-text-muted: #64748b;
+    --wb-accent-blue: #2563eb;
+    --wb-accent-blue-hover: #1d4ed8;
+    --wb-accent-blue-glow: rgba(37, 99, 235, 0.28);
+    --wb-accent-green: #10b981;
+    --wb-accent-green-bg: rgba(16, 185, 129, 0.15);
+    --wb-accent-red: #ef4444;
+    --wb-accent-red-bg: rgba(239, 68, 68, 0.15);
+    --wb-accent-purple: #8b5cf6;
+    --wb-accent-purple-bg: rgba(139, 92, 246, 0.18);
+    --wb-accent-amber: #f59e0b;
+    --wb-accent-amber-bg: rgba(245, 158, 11, 0.15);
+    --wb-topbar-bg: #0b0f19;
+    --wb-sidebar-bg: #0b0f19;
+    --wb-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5);
+    --wb-shadow-card: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+[data-theme="light"] {
+    --wb-bg-main: #f1f5f9;
+    --wb-bg-surface: #ffffff;
+    --wb-bg-card: #ffffff;
+    --wb-bg-card-alt: #f8fafc;
+    --wb-bg-input: #f8fafc;
+    --wb-border: #e2e8f0;
+    --wb-border-light: #cbd5e1;
+    --wb-text-primary: #0f172a;
+    --wb-text-secondary: #475569;
+    --wb-text-muted: #64748b;
+    --wb-accent-blue: #2563eb;
+    --wb-accent-blue-hover: #1d4ed8;
+    --wb-accent-blue-glow: rgba(37, 99, 235, 0.18);
+    --wb-accent-green: #10b981;
+    --wb-accent-green-bg: #ecfdf5;
+    --wb-accent-red: #ef4444;
+    --wb-accent-red-bg: #fef2f2;
+    --wb-accent-purple: #8b5cf6;
+    --wb-accent-purple-bg: #f5f3ff;
+    --wb-accent-amber: #f59e0b;
+    --wb-accent-amber-bg: #fffbeb;
+    --wb-topbar-bg: #ffffff;
+    --wb-sidebar-bg: #ffffff;
+    --wb-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+    --wb-shadow-card: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+/* Overall Body & Layout */
+body.application, body.wb-body {
+    background-color: var(--wb-bg-main) !important;
+    color: var(--wb-text-primary) !important;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+.container-application {
+    display: flex;
+    min-height: 100vh;
+    background-color: var(--wb-bg-main) !important;
+}
+
+.wb-layout-wrapper {
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+}
+
+/* SIDEBAR */
+.wb-sidebar {
+    width: 270px;
+    background: var(--wb-sidebar-bg) !important;
+    border-right: 1px solid var(--wb-border) !important;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1040;
+    overflow-y: auto;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.25s ease;
+}
+
+/* Mobile Sidebar behavior */
+@media (max-width: 991.98px) {
+    .wb-sidebar {
+        transform: translateX(-100%);
+        box-shadow: var(--wb-shadow);
+    }
+    .wb-sidebar.show {
+        transform: translateX(0);
+    }
+}
+
+.wb-sidebar::-webkit-scrollbar {
+    width: 4px;
+}
+.wb-sidebar::-webkit-scrollbar-thumb {
+    background: var(--wb-border);
+    border-radius: 4px;
+}
+
+.wb-sidebar-brand {
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--wb-border);
+}
+
+.wb-brand-title {
+    font-size: 1.25rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--wb-text-primary);
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.wb-brand-title span.badge-pro {
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+    color: #ffffff;
+    text-transform: uppercase;
+}
+
+.wb-brand-sub {
+    font-size: 0.72rem;
+    color: var(--wb-text-muted);
+    font-weight: 500;
+    margin-top: 2px;
+}
+
+.wb-sidebar-menu {
+    padding: 1rem 0.85rem;
+    flex: 1;
+}
+
+.wb-menu-category {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--wb-text-muted);
+    padding: 1rem 0.85rem 0.4rem;
+}
+
+.wb-nav-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.65rem 0.85rem;
+    margin-bottom: 3px;
+    border-radius: 8px;
+    color: var(--wb-text-secondary);
+    font-size: 0.88rem;
+    font-weight: 500;
+    text-decoration: none !important;
+    transition: all 0.2s ease;
+}
+
+.wb-nav-item:hover {
+    color: var(--wb-text-primary);
+    background: rgba(255, 255, 255, 0.04);
+}
+[data-theme="light"] .wb-nav-item:hover {
+    background: rgba(0, 0, 0, 0.04);
+}
+
+.wb-nav-item.active {
+    background: var(--wb-accent-blue) !important;
+    color: #ffffff !important;
+    font-weight: 600;
+    box-shadow: 0 4px 14px var(--wb-accent-blue-glow);
+}
+
+.wb-nav-item-left {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.wb-nav-icon {
+    width: 18px;
+    text-align: center;
+    font-size: 1rem;
+    opacity: 0.85;
+}
+
+.wb-pill-badge {
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    line-height: 1.2;
+}
+
+.wb-pill-badge.green {
+    background: var(--wb-accent-green-bg);
+    color: var(--wb-accent-green);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.wb-pill-badge.red {
+    background: var(--wb-accent-red-bg);
+    color: var(--wb-accent-red);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.wb-pill-badge.purple {
+    background: var(--wb-accent-purple-bg);
+    color: var(--wb-accent-purple);
+    border: 1px solid rgba(139, 92, 246, 0.3);
+}
+
+.wb-pill-badge.blue {
+    background: var(--wb-accent-blue-glow);
+    color: #60a5fa;
+    border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.wb-pill-badge.amber {
+    background: var(--wb-accent-amber-bg);
+    color: var(--wb-accent-amber);
+    border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+/* Sidebar Footer (Language selector) */
+.wb-sidebar-footer {
+    padding: 1rem 1.25rem;
+    border-top: 1px solid var(--wb-border);
+}
+
+.wb-lang-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--wb-bg-card);
+    border: 1px solid var(--wb-border);
+    border-radius: 8px;
+    padding: 0.5rem 0.85rem;
+    color: var(--wb-text-primary);
+    font-size: 0.85rem;
+    cursor: pointer;
+    text-align: left;
+}
+
+/* MAIN CONTENT AREA */
+.wb-main-content {
+    margin-left: 270px;
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: var(--wb-bg-main) !important;
+}
+
+@media (max-width: 991.98px) {
+    .wb-main-content {
+        margin-left: 0;
+    }
+}
+
+/* TOP NAVBAR */
+.wb-topbar {
+    height: 72px;
+    background: var(--wb-topbar-bg) !important;
+    border-bottom: 1px solid var(--wb-border) !important;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1.75rem;
+    position: sticky;
+    top: 0;
+    z-index: 1030;
+    transition: background-color 0.25s ease;
+}
+
+.wb-topbar-left {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+}
+
+.wb-topbar-brand-link {
+    text-decoration: none !important;
+    display: flex;
+    flex-direction: column;
+}
+
+.wb-live-ticker-pill {
+    background: var(--wb-bg-card);
+    border: 1px solid var(--wb-border);
+    border-radius: 999px;
+    padding: 0.4rem 0.9rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+}
+
+.wb-live-dot {
+    width: 8px;
+    height: 8px;
+    background-color: var(--wb-accent-green);
+    border-radius: 50%;
+    box-shadow: 0 0 8px var(--wb-accent-green);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+    70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+
+.wb-topbar-center {
+    display: flex;
+    align-items: center;
+}
+
+.wb-balance-header-pill {
+    background: linear-gradient(180deg, rgba(37, 99, 235, 0.12) 0%, rgba(37, 99, 235, 0.04) 100%);
+    border: 1px solid rgba(37, 99, 235, 0.35);
+    border-radius: 10px;
+    padding: 0.4rem 1.4rem;
+    text-align: center;
+}
+
+.wb-balance-header-title {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--wb-text-secondary);
+    font-weight: 700;
+    margin-bottom: 2px;
+}
+
+.wb-balance-header-val {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--wb-text-primary);
+    letter-spacing: -0.01em;
+}
+
+.wb-topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.wb-quicktrade-btn {
+    background: transparent;
+    border: 1px solid var(--wb-border);
+    color: var(--wb-text-primary);
+    padding: 0.45rem 0.95rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.wb-quicktrade-btn:hover {
+    border-color: var(--wb-border-light);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.wb-icon-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: var(--wb-bg-card);
+    border: 1px solid var(--wb-border);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--wb-text-secondary);
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s ease;
+    text-decoration: none !important;
+}
+
+.wb-icon-btn:hover {
+    color: var(--wb-text-primary);
+    border-color: var(--wb-border-light);
+    background: var(--wb-bg-card-alt);
+}
+
+.wb-icon-badge {
+    position: absolute;
+    top: -3px;
+    right: -3px;
+    background: #ef4444;
+    color: #ffffff;
+    font-size: 0.62rem;
+    font-weight: 800;
+    padding: 1px 5px;
+    border-radius: 999px;
+    line-height: 1.2;
+}
+
+/* User Profile Capsule in Navbar */
+.wb-user-capsule {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    background: var(--wb-bg-card);
+    border: 1px solid var(--wb-border);
+    padding: 0.3rem 0.75rem 0.3rem 0.35rem;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none !important;
+}
+
+.wb-user-capsule:hover {
+    border-color: var(--wb-border-light);
+}
+
+.wb-user-avatar-circle {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #2563eb, #8b5cf6);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.88rem;
+}
+
+.wb-user-capsule-text {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    line-height: 1.2;
+}
+
+.wb-user-capsule-name {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--wb-text-primary);
+}
+
+.wb-user-capsule-role {
+    font-size: 0.68rem;
+    color: var(--wb-text-muted);
+}
+
+/* DASHBOARD MAIN PAGE STYLES */
+.wb-dashboard-container {
+    padding: 1.75rem;
+    max-width: 1440px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* Hero Header */
+.wb-hero-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.wb-hero-title {
+    font-size: 1.85rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--wb-text-primary);
+    margin: 0;
+}
+
+.wb-hero-sub {
+    font-size: 0.95rem;
+    color: var(--wb-text-secondary);
+    margin-top: 4px;
+    margin-bottom: 0;
+}
+
+.wb-hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.wb-btn-connect-wallet {
+    background: linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%);
+    color: #ffffff !important;
+    border: none;
+    border-radius: 8px;
+    padding: 0.65rem 1.25rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35);
+    transition: all 0.2s ease;
+    text-decoration: none !important;
+}
+.wb-btn-connect-wallet:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(79, 70, 229, 0.45);
+}
+
+.wb-btn-invest-now {
+    background: #10b981;
+    color: #ffffff !important;
+    border: none;
+    border-radius: 8px;
+    padding: 0.65rem 1.25rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
+    transition: all 0.2s ease;
+    text-decoration: none !important;
+}
+.wb-btn-invest-now:hover {
+    background: #059669;
+    transform: translateY(-1px);
+}
+
+/* Live Trading Account Banner */
+.wb-live-account-banner {
+    background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%);
+    border-radius: 12px;
+    padding: 1.25rem 1.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #ffffff;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 8px 24px rgba(37, 99, 235, 0.25);
+}
+
+.wb-banner-left {
+    display: flex;
+    align-items: center;
+    gap: 1.15rem;
+}
+
+.wb-banner-icon-box {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.18);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.35rem;
+}
+
+.wb-banner-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.wb-banner-sub {
+    font-size: 0.88rem;
+    opacity: 0.9;
+    margin-top: 2px;
+}
+
+.wb-btn-switch-demo {
+    background: #ffffff;
+    color: #0f172a !important;
+    border: none;
+    border-radius: 8px;
+    padding: 0.55rem 1.2rem;
+    font-size: 0.88rem;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    transition: all 0.2s ease;
+    text-decoration: none !important;
+}
+.wb-btn-switch-demo:hover {
+    background: #f1f5f9;
+    transform: translateY(-1px);
+}
+
+/* CARDS COMMON */
+.wb-card {
+    background: var(--wb-bg-card) !important;
+    border: 1px solid var(--wb-border) !important;
+    border-radius: 12px;
+    padding: 1.35rem;
+    transition: all 0.25s ease;
+    box-shadow: var(--wb-shadow-card);
+    position: relative;
+}
+.wb-card:hover {
+    border-color: var(--wb-border-light) !important;
+}
+
+/* Primary Account Balance Card */
+.wb-balance-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.wb-card-header-flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+}
+
+.wb-card-title-group {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+}
+
+.wb-card-icon-sq {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: rgba(37, 99, 235, 0.12);
+    color: var(--wb-accent-blue);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.95rem;
+}
+
+.wb-card-label {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--wb-text-primary);
+    margin: 0;
+}
+
+.wb-card-sublabel {
+    font-size: 0.75rem;
+    color: var(--wb-text-muted);
+}
+
+.wb-balance-large-val {
+    font-size: 2.25rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: var(--wb-text-primary);
+    margin: 0.5rem 0;
+}
+
+.wb-badge-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0.75rem 0;
+}
+
+.wb-btc-pill {
+    background: rgba(245, 158, 11, 0.12);
+    color: #f59e0b;
+    border: 1px solid rgba(245, 158, 11, 0.25);
+    border-radius: 999px;
+    padding: 0.25rem 0.65rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.wb-status-tag {
+    font-size: 0.75rem;
+    padding: 0.2rem 0.55rem;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+.wb-status-tag.available {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--wb-border);
+    color: var(--wb-text-secondary);
+}
+.wb-status-tag.unverified {
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.25);
+    background: rgba(239, 68, 68, 0.08);
+}
+.wb-status-tag.verified {
+    color: #10b981;
+    border: 1px solid rgba(16, 185, 129, 0.25);
+    background: rgba(16, 185, 129, 0.08);
+}
+
+.wb-last-updated {
+    font-size: 0.72rem;
+    color: var(--wb-text-muted);
+    margin-bottom: 1rem;
+}
+
+.wb-balance-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: auto;
+}
+
+.wb-balance-btn {
+    flex: 1;
+    background: var(--wb-bg-surface);
+    border: 1px solid var(--wb-border);
+    border-radius: 8px;
+    color: var(--wb-text-primary);
+    padding: 0.6rem 0.85rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    transition: all 0.2s ease;
+    text-decoration: none !important;
+}
+.wb-balance-btn:hover {
+    background: var(--wb-bg-card-alt);
+    border-color: var(--wb-border-light);
+    color: var(--wb-text-primary);
+}
+
+/* Stat Metric Cards (Profit, Deposit, Withdrawal, Bonus) */
+.wb-stat-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.wb-stat-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.wb-stat-title {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--wb-text-secondary);
+    margin-bottom: 0.35rem;
+}
+
+.wb-stat-icon-circle {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--wb-border);
+    color: var(--wb-text-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+}
+
+.wb-stat-value {
+    font-size: 1.55rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--wb-text-primary);
+    margin: 0.45rem 0 0.65rem;
+}
+
+.wb-stat-bottom {
+    font-size: 0.72rem;
+    color: var(--wb-text-muted);
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+/* Identity Verification Banner */
+.wb-kyc-banner {
+    background: var(--wb-bg-card);
+    border: 1px solid var(--wb-border);
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 1.5rem 0;
+}
+
+.wb-kyc-left {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.wb-kyc-icon-badge {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: rgba(37, 99, 235, 0.15);
+    color: var(--wb-accent-blue);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.15rem;
+}
+
+.wb-btn-view-details {
+    background: var(--wb-accent-blue);
+    color: #ffffff !important;
+    border: none;
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    text-decoration: none !important;
+    transition: background 0.2s ease;
+}
+.wb-btn-view-details:hover {
+    background: var(--wb-accent-blue-hover);
+}
+
+/* Connect Wallet Promo Banner */
+.wb-connect-promo-card {
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.12) 0%, rgba(79, 70, 229, 0.08) 100%);
+    border: 1px solid rgba(59, 130, 246, 0.35);
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    margin-bottom: 1.5rem;
+}
+
+.wb-connect-promo-left {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.wb-connect-icon-sq {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: rgba(37, 99, 235, 0.2);
+    color: #60a5fa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+}
+
+.wb-connect-promo-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--wb-text-primary);
+    margin: 0;
+}
+
+.wb-connect-promo-desc {
+    font-size: 0.85rem;
+    color: var(--wb-text-secondary);
+    margin-top: 3px;
+    margin-bottom: 0.75rem;
+}
+
+.wb-btn-connect-now {
+    background: var(--wb-accent-blue);
+    color: #ffffff !important;
+    border: none;
+    border-radius: 8px;
+    padding: 0.55rem 1.15rem;
+    font-size: 0.88rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    text-decoration: none !important;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    transition: all 0.2s ease;
+}
+.wb-btn-connect-now:hover {
+    background: var(--wb-accent-blue-hover);
+    transform: translateY(-1px);
+}
+
+.wb-promo-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: transparent;
+    border: none;
+    color: var(--wb-text-muted);
+    font-size: 1.1rem;
+    cursor: pointer;
+}
+.wb-promo-close:hover {
+    color: var(--wb-text-primary);
+}
+
+/* Quick Action Cards Row */
+.wb-quick-actions-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+@media (max-width: 768px) {
+    .wb-quick-actions-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.wb-action-card {
+    background: var(--wb-bg-card);
+    border: 1px solid var(--wb-border);
+    border-radius: 12px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none !important;
+    color: var(--wb-text-primary);
+    transition: all 0.2s ease;
+    position: relative;
+}
+.wb-action-card:hover {
+    border-color: var(--wb-border-light);
+    transform: translateY(-2px);
+    color: var(--wb-text-primary);
+}
+
+.wb-action-icon {
+    font-size: 1.35rem;
+    color: var(--wb-accent-blue);
+    margin-bottom: 0.45rem;
+}
+
+.wb-action-label {
+    font-size: 0.88rem;
+    font-weight: 600;
+}
+
+.wb-action-badge {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 1px 6px;
+    border-radius: 4px;
+    background: var(--wb-accent-green);
+    color: #ffffff;
+}
+
+/* Trading & Market Overview Section */
+.wb-market-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+}
+
+.wb-market-quotes-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.wb-market-quotes-bar::-webkit-scrollbar {
+    height: 4px;
+}
+.wb-market-quotes-bar::-webkit-scrollbar-thumb {
+    background: var(--wb-border);
+    border-radius: 4px;
+}
+
+.wb-quote-pill {
+    background: var(--wb-bg-card);
+    border: 1px solid var(--wb-border);
+    border-radius: 8px;
+    padding: 0.45rem 0.85rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    color: var(--wb-text-primary);
+}
+
+.wb-quote-pill span.val {
+    color: var(--wb-accent-green);
+}
+
+/* TradingView Chart Container */
+.wb-chart-container {
+    background: var(--wb-bg-card);
+    border: 1px solid var(--wb-border);
+    border-radius: 12px;
+    overflow: hidden;
+    height: 520px;
+    box-shadow: var(--wb-shadow-card);
+}
+
+/* Quick Trade Widget Box */
+.wb-quicktrade-box {
+    background: var(--wb-bg-card);
+    border: 1px solid var(--wb-border);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--wb-shadow-card);
+}
+
+.wb-quicktrade-banner {
+    background: linear-gradient(135deg, #2563eb 0%, #4f46e5 100%);
+    color: #ffffff;
+    padding: 1.25rem;
+    border-radius: 12px 12px 0 0;
+}
+
+.wb-quicktrade-body {
+    padding: 1.25rem;
+}
+
+.wb-trade-tabs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background: var(--wb-bg-surface);
+    border-radius: 8px;
+    padding: 4px;
+    margin-bottom: 1rem;
+}
+
+.wb-trade-tab {
+    border: none;
+    background: transparent;
+    padding: 0.5rem;
+    border-radius: 6px;
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--wb-text-secondary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.wb-trade-tab.buy.active {
+    background: var(--wb-accent-green);
+    color: #ffffff;
+}
+
+.wb-trade-tab.sell.active {
+    background: var(--wb-accent-red);
+    color: #ffffff;
+}
+
+.wb-form-group {
+    margin-bottom: 1rem;
+}
+
+.wb-form-label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--wb-text-secondary);
+    margin-bottom: 0.35rem;
+    display: block;
+}
+
+.wb-input {
+    width: 100%;
+    background: var(--wb-bg-input);
+    border: 1px solid var(--wb-border);
+    border-radius: 8px;
+    padding: 0.6rem 0.85rem;
+    color: var(--wb-text-primary);
+    font-size: 0.88rem;
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+.wb-input:focus {
+    border-color: var(--wb-accent-blue);
+}
+
+.wb-btn-trade-submit {
+    width: 100%;
+    background: var(--wb-accent-blue);
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    padding: 0.75rem;
+    font-size: 0.92rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+.wb-btn-trade-submit:hover {
+    background: var(--wb-accent-blue-hover);
+}
+
+/* ==========================================================================
+   CONNECT WALLET DEDICATED PAGE
+   ========================================================================== */
+.wb-connect-page {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+}
+
+.wb-connect-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+}
+
+.wb-btn-back {
+    background: var(--wb-bg-card);
+    border: 1px solid var(--wb-border);
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    color: var(--wb-text-primary);
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none !important;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    transition: all 0.2s ease;
+}
+.wb-btn-back:hover {
+    background: var(--wb-bg-card-alt);
+    border-color: var(--wb-border-light);
+    color: var(--wb-text-primary);
+}
+
+/* Top Promo Earning Banner */
+.wb-earn-banner {
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.15) 0%, rgba(30, 64, 175, 0.1) 100%);
+    border: 1px solid rgba(59, 130, 246, 0.35);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.75rem;
+}
+
+.wb-earn-top {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.wb-earn-icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+    background: rgba(37, 99, 235, 0.25);
+    color: #60a5fa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.35rem;
+}
+
+.wb-earn-badges {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.wb-earn-badge-item {
+    font-size: 0.82rem;
+    color: #60a5fa;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+/* Provider Select Cards */
+.wb-provider-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin: 1.25rem 0;
+}
+
+@media (max-width: 768px) {
+    .wb-provider-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.wb-provider-card {
+    background: var(--wb-bg-card);
+    border: 1px solid var(--wb-border);
+    border-radius: 12px;
+    padding: 1.25rem 1rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+}
+
+.wb-provider-card:hover {
+    border-color: var(--wb-accent-blue);
+    transform: translateY(-2px);
+}
+
+.wb-provider-card.active {
+    background: rgba(37, 99, 235, 0.12);
+    border-color: var(--wb-accent-blue) !important;
+    box-shadow: 0 0 15px var(--wb-accent-blue-glow);
+}
+
+.wb-provider-card.dashed {
+    border: 1.5px dashed var(--wb-border-light);
+}
+
+.wb-provider-img {
+    width: 44px;
+    height: 44px;
+    object-fit: contain;
+}
+
+.wb-provider-title {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--wb-text-primary);
+    margin: 0;
+}
+
+/* Seed Phrase Box */
+.wb-phrase-box {
+    background: var(--wb-bg-surface);
+    border: 1px solid var(--wb-border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.wb-security-alert {
+    background: rgba(245, 158, 11, 0.1);
+    border-left: 4px solid #f59e0b;
+    border-radius: 6px;
+    padding: 0.85rem 1.15rem;
+    margin-bottom: 1.25rem;
+    font-size: 0.82rem;
+    color: var(--wb-text-primary);
+    line-height: 1.5;
+}
+
+.wb-textarea-wrapper {
+    position: relative;
+    margin-bottom: 1.25rem;
+}
+
+.wb-phrase-textarea {
+    width: 100%;
+    min-height: 110px;
+    background: var(--wb-bg-input);
+    border: 1px solid var(--wb-border);
+    border-radius: 10px;
+    padding: 1rem;
+    color: var(--wb-text-primary);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    outline: none;
+    resize: vertical;
+    transition: border-color 0.2s ease;
+    font-family: inherit;
+}
+
+.wb-phrase-textarea:focus {
+    border-color: var(--wb-accent-blue);
+    box-shadow: 0 0 10px var(--wb-accent-blue-glow);
+}
+
+.wb-word-counter {
+    position: absolute;
+    bottom: 10px;
+    right: 14px;
+    font-size: 0.75rem;
+    color: var(--wb-text-muted);
+    font-weight: 600;
+    background: var(--wb-bg-card);
+    padding: 2px 8px;
+    border-radius: 6px;
+    border: 1px solid var(--wb-border);
+}
+
+.wb-btn-connect-submit {
+    width: 100%;
+    background: linear-gradient(135deg, #2563eb 0%, #4f46e5 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    padding: 0.9rem;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(37, 99, 235, 0.35);
+    transition: all 0.2s ease;
+}
+.wb-btn-connect-submit:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(37, 99, 235, 0.45);
+}

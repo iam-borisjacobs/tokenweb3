@@ -1,0 +1,35 @@
+name: Deploy to cPanel on Push
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  web-deploy:
+    name: Deploy Changes to cPanel
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Sync Files to cPanel via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          # Destination path on your cPanel server for token.flutranglobal.com
+          server-dir: token.flutranglobal.com/
+          # CRITICAL: Preserve production configuration, logs, and user uploaded files!
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/.github*/**
+            **/node_modules/**
+            .env
+            .env.*
+            storage/app/public/uploads/**
+            storage/logs/**
