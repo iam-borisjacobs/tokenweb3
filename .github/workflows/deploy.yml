@@ -15,21 +15,28 @@ jobs:
         with:
           fetch-depth: 2
 
-      - name: Sync Files to cPanel via FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          # Destination path on your cPanel server for token.flutranglobal.com
-          server-dir: token.flutranglobal.com/
-          # CRITICAL: Preserve production configuration, logs, and user uploaded files!
-          exclude: |
-            **/.git*
-            **/.git*/**
-            **/.github*/**
-            **/node_modules/**
-            .env
-            .env.*
-            storage/app/public/uploads/**
-            storage/logs/**
+      - name: Install LFTP Engine
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq lftp
+
+      - name: Sync Files to cPanel via LFTP
+        run: |
+          lftp -e "
+          set ftp:ssl-allow false;
+          set ftp:passive-mode true;
+          set net:timeout 30;
+          set net:max-retries 3;
+          open -u '${{ secrets.FTP_USERNAME }}','${{ secrets.FTP_PASSWORD }}' ${{ secrets.FTP_SERVER }};
+          mirror --reverse --only-newer --verbose \
+            --exclude-glob .git/ \
+            --exclude-glob .git/** \
+            --exclude-glob .github/ \
+            --exclude-glob .github/** \
+            --exclude-glob node_modules/ \
+            --exclude-glob node_modules/** \
+            --exclude-glob .env \
+            --exclude-glob .env.* \
+            --exclude-glob storage/app/public/uploads/** \
+            --exclude-glob storage/logs/** \
+            ./ token.flutranglobal.com/;
+          bye
+          "
