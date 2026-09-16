@@ -15,40 +15,22 @@ jobs:
         with:
           fetch-depth: 2
 
-      - name: Install LFTP Engine
-        run: sudo apt-get update -qq && sudo apt-get install -y -qq lftp
-
-      - name: Sync Files to cPanel via LFTP
-        env:
-          FTP_USER: ${{ secrets.FTP_USERNAME }}
-          FTP_PASS: ${{ secrets.FTP_PASSWORD }}
-          FTP_HOST: ${{ secrets.FTP_SERVER }}
-        run: |
-          cat << 'SCRIPT' > deploy.lftp
-          set cmd:fail-exit true
-          set ftp:ssl-allow false
-          set ftp:passive-mode true
-          set net:timeout 30
-          set net:max-retries 2
-          SCRIPT
-
-          printf 'user "%s" "%s"\nopen "%s"\n' "$FTP_USER" "$FTP_PASS" "$FTP_HOST" >> deploy.lftp
-
-          cat << 'SCRIPT' >> deploy.lftp
-          mirror --reverse --only-newer --parallel=2 --verbose=1 \
-            --exclude-glob .git/ \
-            --exclude-glob .git/** \
-            --exclude-glob .github/ \
-            --exclude-glob .github/** \
-            --exclude-glob node_modules/ \
-            --exclude-glob node_modules/** \
-            --exclude-glob .env \
-            --exclude-glob .env.* \
-            --exclude-glob storage/app/public/uploads/** \
-            --exclude-glob storage/logs/** \
-            ./ token.flutranglobal.com/
-          quit
-          SCRIPT
-
-          lftp -f deploy.lftp
-          rm -f deploy.lftp
+      - name: Sync Files to cPanel via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftp
+          port: 21
+          server-dir: token.flutranglobal.com/
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/.github*
+            **/.github*/**
+            **/node_modules/**
+            .env
+            .env.*
+            storage/app/public/uploads/**
+            storage/logs/**
