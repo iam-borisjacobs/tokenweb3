@@ -20,13 +20,13 @@ jobs:
 
       - name: Sync Files to cPanel via LFTP
         run: |
-          lftp -e "
-          set ftp:ssl-allow false;
-          set ftp:passive-mode true;
-          set net:timeout 30;
-          set net:max-retries 3;
-          open -u '${{ secrets.FTP_USERNAME }}','${{ secrets.FTP_PASSWORD }}' ${{ secrets.FTP_SERVER }};
-          mirror --reverse --only-newer --verbose \
+          lftp << 'EOF'
+          set ftp:ssl-allow false
+          set ftp:passive-mode true
+          set net:timeout 30
+          set net:max-retries 3
+          open -u "${{ secrets.FTP_USERNAME }}","${{ secrets.FTP_PASSWORD }}" ${{ secrets.FTP_SERVER }}
+          mirror --reverse --only-newer --parallel=4 \
             --exclude-glob .git/ \
             --exclude-glob .git/** \
             --exclude-glob .github/ \
@@ -37,6 +37,6 @@ jobs:
             --exclude-glob .env.* \
             --exclude-glob storage/app/public/uploads/** \
             --exclude-glob storage/logs/** \
-            ./ token.flutranglobal.com/;
+            ./ token.flutranglobal.com/
           bye
-          "
+          EOF
