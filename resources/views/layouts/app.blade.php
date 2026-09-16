@@ -611,18 +611,22 @@
         }
 
         /* Default / Light Mode: Show Colored Logo ($settings->dark_logo), Hide White Logo */
-        body:not(.dark-only) .page-header .logo-wrapper img.admin-brand-colored {
+        body:not(.dark-only) .page-header .logo-wrapper img.admin-brand-colored,
+        body:not(.dark-only) .sidebar-mobile-header img.admin-brand-colored {
             display: inline-block !important;
         }
-        body:not(.dark-only) .page-header .logo-wrapper img.admin-brand-white {
+        body:not(.dark-only) .page-header .logo-wrapper img.admin-brand-white,
+        body:not(.dark-only) .sidebar-mobile-header img.admin-brand-white {
             display: none !important;
         }
 
         /* Dark Mode: Show White Logo ($settings->logo), Hide Colored Logo */
-        body.dark-only .page-header .logo-wrapper img.admin-brand-colored {
+        body.dark-only .page-header .logo-wrapper img.admin-brand-colored,
+        body.dark-only .sidebar-mobile-header img.admin-brand-colored {
             display: none !important;
         }
-        body.dark-only .page-header .logo-wrapper img.admin-brand-white {
+        body.dark-only .page-header .logo-wrapper img.admin-brand-white,
+        body.dark-only .sidebar-mobile-header img.admin-brand-white {
             display: inline-block !important;
         }
 

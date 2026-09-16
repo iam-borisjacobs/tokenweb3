@@ -79,6 +79,7 @@ class CreateNewUser implements CreatesNewUsers
         $cryptoaccnt->user_id = $user->id;
         $cryptoaccnt->save();
         $request->session()->forget('ref_by');
+        $request->session()->forget('url.intended');
         $request->session()->flash('newly_registered', true);
 
         try {

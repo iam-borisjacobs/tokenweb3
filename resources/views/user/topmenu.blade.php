@@ -7,16 +7,18 @@
             </svg>
         </a>
         <a href="{{ route('dashboard') }}" class="d-flex align-items-center gap-2 text-decoration-none header-logo-link">
+            {{-- 1. Dark/Colored Logo (for Light Mode against white navbar) --}}
             @if(!empty($settings->dark_logo))
-                <img class="light-logo img-fluid" src="{{ asset('storage/app/public/' . $settings->dark_logo) }}" alt="logo" />
+                <img class="admin-brand-colored dark-logo img-fluid" src="{{ asset('storage/app/public/' . $settings->dark_logo) }}" alt="{{ $settings->site_name ?? 'Logo' }}" />
             @elseif(!empty($settings->logo))
-                <img class="light-logo img-fluid" src="{{ asset('storage/app/public/' . $settings->logo) }}" alt="logo" />
+                <img class="admin-brand-colored dark-logo img-fluid" src="{{ asset('storage/app/public/' . $settings->logo) }}" alt="{{ $settings->site_name ?? 'Logo' }}" style="filter: brightness(0.2);" />
             @endif
 
+            {{-- 2. White/Light Logo (for Dark Mode against dark navbar) --}}
             @if(!empty($settings->logo))
-                <img class="dark-logo img-fluid" src="{{ asset('storage/app/public/' . $settings->logo) }}" alt="logo" />
+                <img class="admin-brand-white light-logo img-fluid" src="{{ asset('storage/app/public/' . $settings->logo) }}" alt="{{ $settings->site_name ?? 'Logo' }}" />
             @elseif(!empty($settings->dark_logo))
-                <img class="dark-logo img-fluid" src="{{ asset('storage/app/public/' . $settings->dark_logo) }}" alt="logo" />
+                <img class="admin-brand-white light-logo img-fluid" src="{{ asset('storage/app/public/' . $settings->dark_logo) }}" alt="{{ $settings->site_name ?? 'Logo' }}" />
             @endif
 
             @if(empty($settings->logo) && empty($settings->dark_logo))

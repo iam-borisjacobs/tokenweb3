@@ -147,10 +147,21 @@
     <!-- Mobile Sidebar Header with Logo & Close Button -->
     <div class="sidebar-mobile-header d-flex align-items-center justify-content-between p-3 border-bottom d-lg-none">
         <a href="{{ route('dashboard') }}" class="d-flex align-items-center gap-2 text-decoration-none">
+            {{-- Dark/Colored Logo for Light Mode sidebar --}}
+            @if(!empty($settings->dark_logo))
+                <img class="admin-brand-colored dark-logo img-fluid" src="{{ asset('storage/app/public/' . $settings->dark_logo) }}" alt="{{ $settings->site_name ?? 'Logo' }}" style="max-height: 28px;" />
+            @elseif(!empty($settings->logo))
+                <img class="admin-brand-colored dark-logo img-fluid" src="{{ asset('storage/app/public/' . $settings->logo) }}" alt="{{ $settings->site_name ?? 'Logo' }}" style="max-height: 28px; filter: brightness(0.2);" />
+            @endif
+
+            {{-- White/Light Logo for Dark Mode sidebar --}}
             @if(!empty($settings->logo))
-                <img class="light-logo img-fluid" src="{{ asset('storage/app/public/' . $settings->logo) }}" alt="logo" style="max-height: 28px;" />
-                <img class="dark-logo img-fluid" src="{{ asset('storage/app/public/' . $settings->logo) }}" alt="logo" style="max-height: 28px;" />
-            @else
+                <img class="admin-brand-white light-logo img-fluid" src="{{ asset('storage/app/public/' . $settings->logo) }}" alt="{{ $settings->site_name ?? 'Logo' }}" style="max-height: 28px;" />
+            @elseif(!empty($settings->dark_logo))
+                <img class="admin-brand-white light-logo img-fluid" src="{{ asset('storage/app/public/' . $settings->dark_logo) }}" alt="{{ $settings->site_name ?? 'Logo' }}" style="max-height: 28px;" />
+            @endif
+
+            @if(empty($settings->logo) && empty($settings->dark_logo))
                 <span class="f-w-800 f-16 text-primary">{{ $settings->site_name ?? 'WebberFx-Pro' }}</span>
             @endif
         </a>
