@@ -34,8 +34,8 @@
                 <span class="wb-live-dot"></span>
                 <span class="text-success f-w-700">LIVE</span>
                 <span class="text-muted">|</span>
-                <span class="text-muted">BTC: <strong class="text-danger" id="wb-ticker-btc">$110,018</strong></span>
-                <span class="text-muted">ETH: <strong class="text-danger" id="wb-ticker-eth">$3,853</strong></span>
+                <span class="text-muted">BTC: <strong class="text-success" id="wb-ticker-btc">$66,850</strong></span>
+                <span class="text-muted">ETH: <strong class="text-success" id="wb-ticker-eth">$3,320</strong></span>
             </div>
 
             <!-- Center Account Balance Capsule -->
@@ -228,3 +228,124 @@
         </div>
     </div>
 </header>
+
+<!-- Live Real-Time Crypto Price Streamer -->
+<script>
+    (function() {
+        var btcEl = document.getElementById('wb-ticker-btc');
+        var ethEl = document.getElementById('wb-ticker-eth');
+        if (!btcEl || !ethEl) return;
+
+        var lastBtc = null;
+        var lastEth = null;
+
+        function formatUSD(val) {
+            if (!val || isNaN(val)) return null;
+            return '$' + Math.round(parseFloat(val)).toLocaleString('en-US');
+        }
+
+        function updateTick(el, newPrice, lastPrice, isPositiveTrend) {
+            if (!el || !newPrice) return;
+            el.textContent = formatUSD(newPrice);
+            var isUp = (isPositiveTrend !== null && isPositiveTrend !== undefined)
+                ? isPositiveTrend
+                : (lastPrice ? (newPrice >= lastPrice) : true);
+
+            el.classList.remove('text-success', 'text-danger');
+            el.classList.add(isUp ? 'text-success' : 'text-danger');
+        }
+
+        // 1. High-frequency WebSocket stream from Binance for second-by-second live ticks
+        var wsConnected = false;
+        try {
+            var ws = new WebSocket('wss://stream.binance.com:9443/ws/btcusdt@miniTicker/ethusdt@miniTicker');
+            ws.onopen = function() { wsConnected = true; };
+            ws.onmessage = function(event) {
+                try {
+                    var data = JSON.parse(event.data);
+                    if (data && data.s === 'BTCUSDT') {
+                        var p = parseFloat(data.c);
+                        var isUp = data.o ? (p >= parseFloat(data.o)) : true;
+                        updateTick(btcEl, p, lastBtc, isUp);
+                        lastBtc = p;
+                    } else if (data && data.s === 'ETHUSDT') {
+                        var pEth = parseFloat(data.c);
+                        var isUpEth = data.o ? (pEth >= parseFloat(data.o)) : true;
+                        updateTick(ethEl, pEth, lastEth, isUpEth);
+                        lastEth = pEth;
+                    }
+                } catch(e) {}
+            };
+            ws.onerror = function() { wsConnected = false; };
+            ws.onclose = function() { wsConnected = false; };
+        } catch(e) {
+            wsConnected = false;
+        }
+
+        // 2. Multi-source REST Polling Fallback (Binance -> CoinGecko -> CryptoCompare)
+        async function fetchREST() {
+            // Source A: Binance REST API
+            try {
+                var res = await fetch('https://api.binance.com/api/v3/ticker/24hr?symbols=%5B%22BTCUSDT%22,%22ETHUSDT%22%5D', { cache: 'no-store' });
+                if (res.ok) {
+                    var items = await res.json();
+                    var btc = items.find(function(i) { return i.symbol === 'BTCUSDT'; });
+                    var eth = items.find(function(i) { return i.symbol === 'ETHUSDT'; });
+                    if (btc && eth) {
+                        var bp = parseFloat(btc.lastPrice);
+                        var ep = parseFloat(eth.lastPrice);
+                        updateTick(btcEl, bp, lastBtc, parseFloat(btc.priceChangePercent) >= 0);
+                        updateTick(ethEl, ep, lastEth, parseFloat(eth.priceChangePercent) >= 0);
+                        lastBtc = bp;
+                        lastEth = ep;
+                        return;
+                    }
+                }
+            } catch(e) {}
+
+            // Source B: CoinGecko API
+            try {
+                var cgRes = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum&vs_currencies=usd&include_24hr_change=true', { cache: 'no-store' });
+                if (cgRes.ok) {
+                    var cg = await cgRes.json();
+                    if (cg.bitcoin && cg.ethereum) {
+                        var bp2 = cg.bitcoin.usd;
+                        var ep2 = cg.ethereum.usd;
+                        updateTick(btcEl, bp2, lastBtc, cg.bitcoin.usd_24h_change >= 0);
+                        updateTick(ethEl, ep2, lastEth, cg.ethereum.usd_24h_change >= 0);
+                        lastBtc = bp2;
+                        lastEth = ep2;
+                        return;
+                    }
+                }
+            } catch(e) {}
+
+            // Source C: CryptoCompare API
+            try {
+                var ccRes = await fetch('https://min-api.cryptocompare.com/data/pricemultifull?fsyms=BTC,ETH&tsyms=USD', { cache: 'no-store' });
+                if (ccRes.ok) {
+                    var cc = await ccRes.json();
+                    if (cc.RAW && cc.RAW.BTC && cc.RAW.ETH) {
+                        var bp3 = cc.RAW.BTC.USD.PRICE;
+                        var ep3 = cc.RAW.ETH.USD.PRICE;
+                        updateTick(btcEl, bp3, lastBtc, cc.RAW.BTC.USD.CHANGEPCT24HOUR >= 0);
+                        updateTick(ethEl, ep3, lastEth, cc.RAW.ETH.USD.CHANGEPCT24HOUR >= 0);
+                        lastBtc = bp3;
+                        lastEth = ep3;
+                        return;
+                    }
+                }
+            } catch(e) {}
+        }
+
+        // Fetch immediately upon load
+        fetchREST();
+
+        // Continuous refresh every 10 seconds if WebSocket is offline
+        setInterval(function() {
+            if (!wsConnected) {
+                fetchREST();
+            }
+        }, 10000);
+    })();
+</script>
