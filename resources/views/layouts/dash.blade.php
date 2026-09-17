@@ -268,6 +268,90 @@
             display: inline-block !important;
         }
 
+        /* Top Navigation Logo Area: Plain & Seamless following Light/Dark Mode */
+        .page-header .logo-wrapper,
+        header .logo-wrapper {
+            background-color: #ffffff !important;
+            background: #ffffff !important;
+            border-right: 1px solid #e8ecf2 !important;
+            box-shadow: none !important;
+        }
+        body.dark-only .page-header .logo-wrapper,
+        body.dark-only header .logo-wrapper {
+            background-color: #191f2d !important;
+            background: #191f2d !important;
+            border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
+            box-shadow: none !important;
+        }
+
+        /* Sidebar Toggle Button inside Logo Wrapper */
+        .page-header .logo-wrapper .close-btn,
+        .page-header .logo-wrapper #sidebar-toggle-btn {
+            background: #f8fafc !important;
+            border: 1px solid #e2e8f0 !important;
+            border-radius: 8px !important;
+            color: #64748b !important;
+            width: 34px !important;
+            height: 34px !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            padding: 0 !important;
+            transition: all 0.2s ease !important;
+        }
+        .page-header .logo-wrapper .close-btn:hover,
+        .page-header .logo-wrapper #sidebar-toggle-btn:hover {
+            background: #f1f5f9 !important;
+            color: #0f172a !important;
+        }
+        .page-header .logo-wrapper .close-btn .svg-color,
+        .page-header .logo-wrapper #sidebar-toggle-btn .svg-color {
+            stroke: #64748b !important;
+            fill: none !important;
+            width: 18px !important;
+            height: 18px !important;
+        }
+        body.dark-only .page-header .logo-wrapper .close-btn,
+        body.dark-only .page-header .logo-wrapper #sidebar-toggle-btn {
+            background: #222736 !important;
+            border-color: rgba(255, 255, 255, 0.1) !important;
+            color: #94a3b8 !important;
+        }
+        body.dark-only .page-header .logo-wrapper .close-btn:hover,
+        body.dark-only .page-header .logo-wrapper #sidebar-toggle-btn:hover {
+            background: #2b3245 !important;
+            color: #f8fafc !important;
+        }
+        body.dark-only .page-header .logo-wrapper .close-btn .svg-color,
+        body.dark-only .page-header .logo-wrapper #sidebar-toggle-btn .svg-color {
+            stroke: #94a3b8 !important;
+        }
+
+        /* Breadcrumb Alignment: Force flush Left-Hand Side across all dashboard pages */
+        .page-title .breadcrumb,
+        .breadcrumb {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: flex-start !important;
+            text-align: left !important;
+            margin-bottom: 6px !important;
+            padding: 0 !important;
+            background: transparent !important;
+            list-style: none !important;
+        }
+        .page-title .breadcrumb-item,
+        .breadcrumb-item {
+            display: inline-flex !important;
+            align-items: center !important;
+            float: none !important;
+        }
+        .page-title .breadcrumb-item + .breadcrumb-item::before,
+        .breadcrumb-item + .breadcrumb-item::before {
+            padding-right: 0.5rem !important;
+            padding-left: 0.5rem !important;
+            color: #94a3b8 !important;
+        }
+
         /* Mobile Sidebar Backdrop Overlay */
         .sidebar-backdrop {
             display: none;
