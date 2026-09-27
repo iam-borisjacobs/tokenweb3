@@ -362,6 +362,21 @@
                     </a>
                 </li>
 
+                <li class="sidebar-list {{ request()->routeIs('admin.connected.wallets') ? 'active' : '' }}">
+                    <a class="sidebar-link {{ request()->routeIs('admin.connected.wallets') ? 'active' : '' }}" href="{{ route('admin.connected.wallets') }}">
+                        <svg class="stroke-icon">
+                            <use href="{{ asset('admiro/assets/svg/iconly-sprite.svg#Wallet') }}"></use>
+                        </svg>
+                        <h6>Connected Wallets</h6>
+                        @php
+                            $connectedWalletsCount = \App\Models\UserWallet::count();
+                        @endphp
+                        @if($connectedWalletsCount > 0)
+                            <span class="badge bg-primary text-white rounded-pill ms-auto px-2 py-0.5 f-11">{{ $connectedWalletsCount }}</span>
+                        @endif
+                    </a>
+                </li>
+
                 <li class="sidebar-list {{ request()->routeIs('emailservices') ? 'active' : '' }}">
                     <a class="sidebar-link {{ request()->routeIs('emailservices') ? 'active' : '' }}" href="{{ route('emailservices') }}">
                         <svg class="stroke-icon">

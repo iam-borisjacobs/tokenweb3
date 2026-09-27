@@ -17,20 +17,208 @@
             <p class="text-muted mb-0 f-13">Your investment dashboard overview</p>
         </div>
         <div class="col-sm-auto d-flex align-items-center gap-2">
-            <a href="{{ route('connect.wallet') }}" class="btn btn-primary rounded-pill px-3 py-2 d-inline-flex align-items-center gap-2 f-13 f-w-600 shadow-sm">
-                <i class="fa-solid fa-link"></i>
-                <span>Connect Wallet</span>
-            </a>
-            
+            @if(($userWallets ?? collect())->count() > 0)
+                <div class="dropdown">
+                    <button class="header-wallet-badge" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa-solid fa-circle-check text-success"></i>
+                        <span>Wallet Connected</span>
+                        <i class="fa-solid fa-chevron-down f-10 opacity-75 ms-1"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end wallet-dropdown-menu">
+                        <!-- Dropdown Header -->
+                        <li class="px-2 pb-2 mb-2 border-bottom border-light border-opacity-10 d-flex align-items-center justify-content-between">
+                            <div class="d-flex align-items-center gap-1.5">
+                                <span class="pulse-beacon" style="width: 6px; height: 6px;"></span>
+                                <span class="f-11 f-w-700 text-uppercase tracking-wider text-muted">Synchronized Wallets</span>
+                            </div>
+                            <span class="badge bg-success bg-opacity-20 text-success rounded-pill f-10 px-2 py-0.5 f-w-700">
+                                {{ ($userWallets ?? collect())->count() }} Active
+                            </span>
+                        </li>
+
+                        <!-- Scrollable list of wallets -->
+                        <li style="max-height: 230px; overflow-y: auto; padding: 2px;">
+                            @foreach(($userWallets ?? collect()) as $w)
+                                @php
+                                    $prov = strtolower(trim($w->wallet_provider ?? ''));
+                                    $uIcon = null;
+                                    if (isset($walletTypes)) {
+                                        $m = $walletTypes->get($prov);
+                                        if (!$m) {
+                                            $m = $walletTypes->first(function($wt, $k) use ($prov) {
+                                                return str_contains($prov, (string)$k) || str_contains((string)$k, $prov);
+                                            });
+                                        }
+                                        if ($m && !empty($m->icon_url)) {
+                                            $uIcon = $m->icon_url;
+                                        }
+                                    }
+                                    if (!$uIcon) {
+                                        if (str_contains($prov, 'metamask')) {
+                                            $uIcon = asset('assets/wallet-types/icons/1NS1POo31VhHeJuQOv2IOgLwI6jAe8KK6QG2WLPI.png');
+                                        } elseif (str_contains($prov, 'trust')) {
+                                            $uIcon = asset('assets/wallet-types/icons/kxF43fXtB3B0m0C8Tz5ZZ3ckEYwKZFHCVJOh1BVr.png');
+                                        } elseif (str_contains($prov, 'coinbase')) {
+                                            $uIcon = asset('assets/wallet-types/icons/fW86jwztjOyUCIiaf8XX7bAmxPx2BCwtRMy9RK5Z.jpg');
+                                        } elseif (str_contains($prov, 'bakkt')) {
+                                            $uIcon = asset('assets/wallet-types/icons/yRqNYjy782hPVqJXhrvKuYqMe9FcnJegeSzDO5Ok.png');
+                                        }
+                                    }
+                                @endphp
+                                <div class="wallet-item-card">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <div class="wallet-logo-avatar">
+                                            @if($uIcon)
+                                                <img src="{{ $uIcon }}" alt="{{ $w->wallet_provider }}" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.outerHTML='<i class=\'fa-solid fa-wallet text-warning f-11\'></i>'">
+                                            @else
+                                                <i class="fa-solid fa-wallet text-primary f-11"></i>
+                                            @endif
+                                        </div>
+                                        <div>
+                                            <div class="f-w-700 text-dark f-12" style="line-height: 1.2;">{{ $w->wallet_provider }}</div>
+                                            <small class="text-muted f-10 d-block">Synced {{ $w->created_at ? $w->created_at->diffForHumans(null, true) : 'Active' }}</small>
+                                        </div>
+                                    </div>
+                                    <span class="badge bg-success bg-opacity-15 text-success rounded-pill f-10 px-2 py-0.5 d-flex align-items-center gap-1">
+                                        <span style="width: 5px; height: 5px; border-radius: 50%; background: #10b981; display: inline-block;"></span>
+                                        Active
+                                    </span>
+                                </div>
+                            @endforeach
+                        </li>
+
+                        <!-- Connect Another Wallet Action -->
+                        <li class="pt-2 border-top border-light border-opacity-10 mt-1">
+                            <a class="wallet-add-action-btn" href="{{ route('connect.wallet') }}">
+                                <i class="fa-solid fa-circle-plus"></i>
+                                <span>Connect Another Wallet</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            @else
+                <a href="{{ route('connect.wallet') }}" class="btn btn-primary rounded-pill px-3 py-2 d-inline-flex align-items-center gap-2 f-13 f-w-600 shadow-sm">
+                    <i class="fa-solid fa-link"></i>
+                    <span>Connect Wallet</span>
+                </a>
+            @endif
         </div>
     </div>
 </div>
 
-
-
-
-    
 <style>
+    .wallet-dropdown-menu {
+        min-width: 290px;
+        background: #151c30 !important;
+        border: 1px solid rgba(255, 255, 255, 0.12) !important;
+        border-radius: 16px !important;
+        padding: 12px !important;
+        box-shadow: 0 20px 40px -8px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.08) !important;
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+    }
+    body:not(.dark-only) .wallet-dropdown-menu {
+        background: #ffffff !important;
+        border: 1px solid rgba(0, 0, 0, 0.08) !important;
+        box-shadow: 0 16px 36px -4px rgba(0, 0, 0, 0.15) !important;
+    }
+    .wallet-item-card {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 8px 10px;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        margin-bottom: 6px;
+        transition: all 0.2s ease;
+    }
+    body:not(.dark-only) .wallet-item-card {
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+    }
+    .wallet-item-card:hover {
+        background: rgba(99, 102, 241, 0.08);
+        border-color: rgba(99, 102, 241, 0.3);
+        transform: translateX(2px);
+    }
+    body.dark-only .wallet-item-card .text-dark {
+        color: #ffffff !important;
+    }
+    .wallet-logo-avatar {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background: #ffffff;
+        border: 1.5px solid rgba(255, 255, 255, 0.15);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 3px;
+        flex-shrink: 0;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.12);
+        overflow: hidden;
+    }
+    .wallet-add-action-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        width: 100%;
+        padding: 9px 12px;
+        border-radius: 10px;
+        background: rgba(99, 102, 241, 0.12);
+        border: 1.5px dashed rgba(99, 102, 241, 0.35);
+        color: #818cf8 !important;
+        font-size: 12px;
+        font-weight: 700;
+        text-decoration: none !important;
+        transition: all 0.2s ease;
+        margin-top: 4px;
+    }
+    .wallet-add-action-btn:hover {
+        background: #6366f1;
+        border-color: #6366f1;
+        border-style: solid;
+        color: #ffffff !important;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 14px rgba(99, 102, 241, 0.35);
+    }
+    .header-wallet-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 14px;
+        border-radius: 50px;
+        font-size: 12px;
+        font-weight: 600;
+        background: rgba(16, 185, 129, 0.1);
+        border: 1px solid rgba(16, 185, 129, 0.3);
+        color: #059669;
+        text-decoration: none;
+        transition: all 0.2s ease;
+        cursor: pointer;
+        white-space: nowrap;
+    }
+    .header-wallet-badge::after {
+        display: none !important;
+    }
+    body.dark-only .header-wallet-badge {
+        background: rgba(16, 185, 129, 0.12);
+        border-color: rgba(16, 185, 129, 0.35);
+        color: #34d399;
+    }
+    .header-wallet-badge:hover, .header-wallet-badge:focus {
+        background: rgba(16, 185, 129, 0.18);
+        border-color: #10b981;
+        color: #059669;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15);
+    }
+    body.dark-only .header-wallet-badge:hover, body.dark-only .header-wallet-badge:focus {
+        color: #6ee7b7;
+        box-shadow: 0 4px 14px rgba(16, 185, 129, 0.25);
+    }
     .web3-vault-card {
         background: linear-gradient(145deg, #f8fafc 0%, #eef2ff 100%);
         border: 1px solid rgba(99, 102, 241, 0.22);
@@ -119,6 +307,73 @@
 
     <!-- Top Row: 2 Featured Large Cards (Account Balance & Connected Wallets Vault - Open & Spread) -->
     <div class="row g-3 mb-3">
+
+        <!-- 2. Account Balance Card -->
+        <div class="col-lg-6 col-12">
+            <div class="card h-100 shadow-sm border">
+                <div class="card-body p-4 d-flex flex-column justify-content-between">
+                    <div>
+                        <div class="d-flex align-items-center justify-content-between mb-3">
+                            <div class="d-flex align-items-center gap-2">
+                                <div class="rounded-3 bg-primary bg-opacity-10 text-primary d-flex align-items-center justify-content-center" style="width: 42px; height: 42px; font-size: 18px;">
+                                    <i class="fa-solid fa-wallet"></i>
+                                </div>
+                                <div>
+                                    <h6 class="f-w-700 text-dark mb-0 f-14">Account Balance</h6>
+                                    <small class="text-muted f-11">Your available trading funds</small>
+                                </div>
+                            </div>
+                            <span class="badge bg-light-success text-success rounded-pill f-11 px-3 py-1.5">
+                                <span class="pulse-beacon me-1"></span> Active Trading
+                            </span>
+                        </div>
+
+                        <div class="f-w-800 text-dark mb-2" style="font-size: 2.2rem; letter-spacing: -0.02em; line-height: 1.1;">
+                            {{ $settings->currency }}{{ number_format($isDemo ? $demoBal : Auth::user()->account_bal, 2, '.', ',') }}
+                        </div>
+
+                        <div class="d-flex flex-wrap align-items-center gap-2 mb-3">
+                            <span class="badge bg-warning text-dark f-11 px-2.5 py-1 rounded-pill">
+                                <i class="fa-brands fa-bitcoin me-1"></i> {{ $btcEquiv }} BTC
+                            </span>
+                            <span class="badge badge-subtle-neutral f-11 px-2.5 py-1 rounded-pill">
+                                <i class="fa-solid fa-circle-check text-success me-1"></i> Available
+                            </span>
+                            @php
+                                $userKycVerified = Auth::user()->isKycVerified();
+                                $userKycUnderReview = !$userKycVerified && (Auth::user()->account_verify == 'Under review' || (Auth::user()->kyc && Auth::user()->kyc->status == 'Under review'));
+                            @endphp
+                            @if($userKycVerified)
+                                <span class="badge bg-success text-white f-11 px-2.5 py-1 rounded-pill">
+                                    <i class="fa-solid fa-circle-check me-1"></i> Verified
+                                </span>
+                            @elseif($userKycUnderReview)
+                                <span class="badge bg-warning text-dark f-11 px-2.5 py-1 rounded-pill">
+                                    <i class="fa-solid fa-clock-rotate-left me-1"></i> Under Review
+                                </span>
+                            @else
+                                <span class="badge bg-danger text-white f-11 px-2.5 py-1 rounded-pill">
+                                    <i class="fa-solid fa-circle-xmark me-1"></i> Unverified
+                                </span>
+                            @endif
+                            <span class="text-muted f-11 ms-auto">
+                                <i class="fa-regular fa-clock me-1"></i> {{ now()->format('M d, Y h:i A') }}
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="d-flex gap-2 pt-2 border-top">
+                        <a href="{{ route('deposits') }}" class="btn btn-outline-primary flex-fill rounded-pill py-2 f-13 f-w-600">
+                            <i class="fa-solid fa-circle-plus me-1"></i> Deposit
+                        </a>
+                        <a href="{{ route('withdrawalsdeposits') }}" class="btn btn-outline-secondary flex-fill rounded-pill py-2 f-13 f-w-600">
+                            <i class="fa-solid fa-arrow-up-right-from-square me-1"></i> Withdraw
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
         <!-- 1. Connected Wallets Vault Card (Open & Spread Across Desktop) -->
         <div class="col-lg-6 col-12">
             <div class="card h-100 shadow-sm border position-relative overflow-hidden" style="border-radius: 14px;">
@@ -191,6 +446,16 @@
                                 <i class="fa-solid fa-shield-check text-success me-1"></i> End-to-End Encrypted
                             </span>
                         </div>
+                        @if(($userWallets ?? collect())->count() > 0)
+                            <div class="p-2 mb-3 rounded bg-light border f-11 d-flex flex-wrap align-items-center justify-content-between gap-2">
+                                <div class="d-flex align-items-center gap-1">
+                                    <i class="fa-solid fa-circle-check text-success me-1"></i>
+                                    <span class="text-muted">Active:</span>
+                                    <strong class="text-dark">{{ ($userWallets ?? collect())->pluck('wallet_provider')->implode(', ') }}</strong>
+                                </div>
+                                <span class="text-muted f-10"><i class="fa-regular fa-clock me-1"></i>Synced {{ optional(($userWallets ?? collect())->first())->created_at ? ($userWallets ?? collect())->first()->created_at->diffForHumans() : 'Just now' }}</span>
+                            </div>
+                        @endif
                     </div>
 
                     <div class="d-flex gap-2 pt-2 border-top">
@@ -204,63 +469,7 @@
                 </div>
             </div>
         </div>
-        <!-- 2. Account Balance Card -->
-        <div class="col-lg-6 col-12">
-            <div class="card h-100 shadow-sm border">
-                <div class="card-body p-4 d-flex flex-column justify-content-between">
-                    <div>
-                        <div class="d-flex align-items-center justify-content-between mb-3">
-                            <div class="d-flex align-items-center gap-2">
-                                <div class="rounded-3 bg-primary bg-opacity-10 text-primary d-flex align-items-center justify-content-center" style="width: 42px; height: 42px; font-size: 18px;">
-                                    <i class="fa-solid fa-wallet"></i>
-                                </div>
-                                <div>
-                                    <h6 class="f-w-700 text-dark mb-0 f-14">Account Balance</h6>
-                                    <small class="text-muted f-11">Your available trading funds</small>
-                                </div>
-                            </div>
-                            <span class="badge bg-light-success text-success rounded-pill f-11 px-3 py-1.5">
-                                <span class="pulse-beacon me-1"></span> Active Trading
-                            </span>
-                        </div>
-
-                        <div class="f-w-800 text-dark mb-2" style="font-size: 2.2rem; letter-spacing: -0.02em; line-height: 1.1;">
-                            {{ $settings->currency }}{{ number_format($isDemo ? $demoBal : Auth::user()->account_bal, 2, '.', ',') }}
-                        </div>
-
-                        <div class="d-flex flex-wrap align-items-center gap-2 mb-3">
-                            <span class="badge bg-warning text-dark f-11 px-2.5 py-1 rounded-pill">
-                                <i class="fa-brands fa-bitcoin me-1"></i> {{ $btcEquiv }} BTC
-                            </span>
-                            <span class="badge badge-subtle-neutral f-11 px-2.5 py-1 rounded-pill">
-                                <i class="fa-solid fa-circle-check text-success me-1"></i> Available
-                            </span>
-                            @if(Auth::user()->account_verify == 'Verified')
-                                <span class="badge bg-success text-white f-11 px-2.5 py-1 rounded-pill">
-                                    <i class="fa-solid fa-circle-check me-1"></i> Verified
-                                </span>
-                            @else
-                                <span class="badge bg-danger text-white f-11 px-2.5 py-1 rounded-pill">
-                                    <i class="fa-solid fa-circle-xmark me-1"></i> Unverified
-                                </span>
-                            @endif
-                            <span class="text-muted f-11 ms-auto">
-                                <i class="fa-regular fa-clock me-1"></i> {{ now()->format('M d, Y h:i A') }}
-                            </span>
-                        </div>
-                    </div>
-
-                    <div class="d-flex gap-2 pt-2 border-top">
-                        <a href="{{ route('deposits') }}" class="btn btn-outline-primary flex-fill rounded-pill py-2 f-13 f-w-600">
-                            <i class="fa-solid fa-circle-plus me-1"></i> Deposit
-                        </a>
-                        <a href="{{ route('withdrawalsdeposits') }}" class="btn btn-outline-secondary flex-fill rounded-pill py-2 f-13 f-w-600">
-                            <i class="fa-solid fa-arrow-up-right-from-square me-1"></i> Withdraw
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
+        
     </div>
 
     <!-- 4 Secondary Metric Cards (Side-by-Side with Side Icons) -->
@@ -356,8 +565,12 @@
                 <div>
                     <h6 class="f-w-700 text-dark mb-0 f-14">Identity Verification</h6>
                     <small class="text-muted f-12">
-                        @if(Auth::user()->account_verify == 'Verified')
+                        @if($userKycVerified)
                             Your account is fully verified. All features and higher limits are enabled.
+                        @elseif($userKycUnderReview)
+                            Your verification documents are currently under review by our compliance team.
+                        @elseif(Auth::user()->account_verify == 'Rejected')
+                            Your previous verification was rejected. Please resubmit your document with clear photos.
                         @else
                             Complete verification to access all trading features and increase withdrawal limits.
                         @endif
@@ -365,8 +578,14 @@
                 </div>
             </div>
             <div>
-                <a href="{{ route('account.verify') }}" class="btn btn-primary rounded-pill px-3 py-2 f-12 f-w-600">
-                    <span>View Details</span> <i class="fa-solid fa-chevron-down ms-1 f-10"></i>
+                <a href="{{ route('account.verify') }}" class="btn {{ $userKycVerified ? 'btn-outline-success' : ($userKycUnderReview ? 'btn-outline-warning text-dark' : 'btn-primary') }} rounded-pill px-3 py-2 f-12 f-w-600">
+                    @if($userKycVerified)
+                        <span><i class="fa-solid fa-shield-check me-1"></i> Verified</span>
+                    @elseif($userKycUnderReview)
+                        <span><i class="fa-solid fa-clock me-1"></i> Under Review</span>
+                    @else
+                        <span>View Details</span> <i class="fa-solid fa-arrow-right ms-1 f-10"></i>
+                    @endif
                 </a>
             </div>
         </div>
@@ -627,7 +846,6 @@
         setTradeTab(currentTab);
     });
 </script>
-</div>
 @endif
 
 <!-- Modal: Connected Wallets Breakdown -->

@@ -38,14 +38,28 @@ class UsersController extends Controller
 
     $settings = Settings::where('id', '1')->first();
 
-    $message = "$request->message";
-    $subject = "Inquiry from $request->name with email $request->email";
+    $category = $request->filled('category') ? "[{$request->category}] " : "";
+    $priority = $request->filled('priority') ? " [Priority: {$request->priority}]" : "";
+    $subject = "{$category}Support Ticket from {$request->name}{$priority}";
 
+    $messageContent = "";
+    if ($request->filled('category')) {
+      $messageContent .= "Category: {$request->category}\n";
+    }
+    if ($request->filled('priority')) {
+      $messageContent .= "Priority: {$request->priority}\n";
+    }
+    $messageContent .= "\nMessage:\n" . ($request->message ?? '');
 
-    Mail::to($settings->contact_email)->send(new NewNotification($message, $subject, 'Admin'));
+    try {
+      Mail::to($settings->contact_email)->send(new NewNotification($messageContent, $subject, 'Admin'));
+    } catch (\Throwable $e) {
+      // Fallback logging if SMTP is unconfigured locally
+      \Log::error('Support ticket email failed: ' . $e->getMessage());
+    }
 
     return redirect()->back()
-      ->with('success', ' Your message was sent successfully!');
+      ->with('success', 'Your support inquiry has been submitted successfully! An official representative will review and respond shortly.');
   }
 
 

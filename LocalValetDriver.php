@@ -22,7 +22,7 @@ class LocalValetDriver extends \Valet\Drivers\ValetDriver
         }
 
         // Only allow static assets from public asset directories
-        if (preg_match('#^/(assets|volkovdesign|storage|temp|favicons|dash|dash2|purpose|admiro|css|js|error)/#i', $uri)) {
+        if (preg_match('#^/(assets|volkovdesign|themes|storage|temp|favicons|dash|dash2|purpose|admiro|css|js|error)/#i', $uri)) {
             $path = $sitePath . $uri;
             if (is_file($path)) {
                 return $path;

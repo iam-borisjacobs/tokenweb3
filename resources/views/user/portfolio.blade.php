@@ -35,10 +35,40 @@
         border-radius: 16px;
         transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         box-shadow: 0 4px 14px rgba(0, 0, 0, 0.03);
-        align-items: stretch !important;
     }
-    .portfolio-wallet-card > * {
-        width: 100% !important;
+    .portfolio-empty-card {
+        background-color: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 16px;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.03);
+    }
+    body.dark-only .portfolio-empty-card {
+        background-color: #151c30 !important;
+        border: 1px solid rgba(255, 255, 255, 0.08) !important;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25) !important;
+    }
+    .wallet-empty-icon-circle {
+        width: 68px !important;
+        height: 68px !important;
+        min-width: 68px !important;
+        max-width: 68px !important;
+        border-radius: 50% !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        font-size: 28px !important;
+        background: rgba(245, 158, 11, 0.12) !important;
+        color: #d97706 !important;
+        border: 1.5px solid rgba(245, 158, 11, 0.28) !important;
+        margin: 0 auto 16px auto !important;
+        box-shadow: 0 4px 12px rgba(245, 158, 11, 0.12) !important;
+        flex-shrink: 0 !important;
+    }
+    body.dark-only .wallet-empty-icon-circle {
+        background: rgba(245, 158, 11, 0.15) !important;
+        color: #fbbf24 !important;
+        border-color: rgba(245, 158, 11, 0.35) !important;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3) !important;
     }
     .portfolio-wallet-card:hover {
         transform: translateY(-3px);
@@ -251,7 +281,7 @@
                     <div class="w-100">
                         <!-- Card Top Bar: Provider and Balance by the side -->
                         <div class="d-flex align-items-start justify-content-between gap-2 mb-3">
-                            <div class="d-flex align-items-center gap-2.5">
+                            <div class="d-flex align-items-center gap-2">
                                 <div class="wallet-avatar-box">
                                     @if($iconUrl)
                                         <img src="{{ $iconUrl }}" alt="{{ $w->wallet_provider }}" style="width: 32px; height: 32px; object-fit: contain;" onerror="this.outerHTML='<i class=\'fa-solid fa-wallet text-primary f-20\'></i>'">
@@ -361,7 +391,7 @@
                                 Non-Custodial Isolated Vault
                             </span>
                         </div>
-                        <a href="{{ route('mplans') }}?method=Connected+Wallet" class="btn btn-sm btn-primary rounded-pill px-3 py-1.5 f-11 f-w-600 d-inline-flex align-items-center gap-1.5 shadow-sm text-nowrap">
+                        <a href="{{ route('mplans') }}?method=Connected+Wallet" class="btn btn-sm btn-primary rounded-pill px-3 py-1.5 f-11 f-w-600 d-inline-flex align-items-center gap-2 shadow-sm text-nowrap">
                             <span>Invest from Wallet</span>
                             <i class="fa-solid fa-arrow-right f-10"></i>
                         </a>
@@ -372,9 +402,11 @@
     </div>
 @else
     <!-- Empty State -->
-    <div class="card border portfolio-wallet-card text-center p-5 mb-4">
-        <div class="mx-auto rounded-circle d-flex align-items-center justify-content-center bg-primary bg-opacity-10 text-primary mb-3" style="width: 64px; height: 64px; font-size: 26px;">
-            <i class="fa-solid fa-wallet"></i>
+    <div class="card border portfolio-empty-card text-center p-5 mb-4">
+        <div class="d-flex justify-content-center w-100">
+            <div class="wallet-empty-icon-circle">
+                <i class="fa-solid fa-wallet"></i>
+            </div>
         </div>
         <h5 class="f-w-700 text-dark mb-1">No Wallets Connected Yet</h5>
         <p class="text-muted f-13 mx-auto mb-4" style="max-width: 440px;">

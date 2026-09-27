@@ -46,7 +46,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'l_name', 'email', 'phone', 'country', 'password', 'ref_by', 'username',
+        'name', 'l_name', 'email', 'phone', 'country', 'password', 'ref_by', 'username', 'account_verify', 'kyc_id',
     ];
 
     public function getAccountBalAttribute($value)
@@ -126,6 +126,27 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function wallets(){
         return $this->hasMany(UserWallet::class, 'user_id');
+    }
+
+    public function kyc()
+    {
+        return $this->hasOne(Kyc::class, 'user_id');
+    }
+
+    public function isKycVerified(): bool
+    {
+        if ($this->account_verify === 'Verified') {
+            return true;
+        }
+
+        $kyc = $this->kyc ?: Kyc::where('user_id', $this->id)->first();
+        if ($kyc && $kyc->status === 'Verified') {
+            $this->account_verify = 'Verified';
+            self::where('id', $this->id)->update(['account_verify' => 'Verified']);
+            return true;
+        }
+
+        return false;
     }
 
     public static function search($search): \Illuminate\Database\Eloquent\Builder

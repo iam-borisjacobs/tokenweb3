@@ -21,9 +21,10 @@ class KycController extends Controller
         // If associated user exists, update user status and send email notification
         if ($user) {
             if ($request->action == 'Accept') {
-                $user->update([
-                    'account_verify' => 'Verified',
-                ]);
+                $user->account_verify = 'Verified';
+                $user->save();
+                User::where('id', $user->id)->update(['account_verify' => 'Verified']);
+
                 $application->status = "Verified";
                 $application->save();
             } else {
@@ -34,9 +35,10 @@ class KycController extends Controller
                     Storage::disk('public')->delete($application->backimg);
                 }
 
-                $user->update([
-                    'account_verify' => 'Rejected',
-                ]);
+                $user->account_verify = 'Rejected';
+                $user->save();
+                User::where('id', $user->id)->update(['account_verify' => 'Rejected']);
+
                 $application->delete();
             }
 

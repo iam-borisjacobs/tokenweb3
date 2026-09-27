@@ -51,12 +51,36 @@ require __DIR__ . '/vendor/autoload.php';
 |
 */
 
-$app = require_once __DIR__ . '/bootstrap/app.php';
+try {
+    $app = require_once __DIR__ . '/bootstrap/app.php';
 
-$kernel = $app->make(Kernel::class);
+    $kernel = $app->make(Kernel::class);
 
-$response = tap($kernel->handle(
-    $request = Request::capture()
-))->send();
+    $response = tap($kernel->handle(
+        $request = Request::capture()
+    ))->send();
 
-$kernel->terminate($request, $response);
+    $kernel->terminate($request, $response);
+} catch (\Throwable $e) {
+    $envFile = __DIR__ . '/.env';
+    $debug = false;
+    if (file_exists($envFile)) {
+        $env = file_get_contents($envFile);
+        if (preg_match('/^APP_DEBUG=true/mi', $env)) {
+            $debug = true;
+        }
+    }
+    if ($debug || (isset($_GET['debug']) && $_GET['debug'] === '1')) {
+        header('Content-Type: text/html; charset=utf-8');
+        http_response_code(500);
+        echo "<div style='font-family: monospace; background: #0d1117; color: #f85149; padding: 30px; line-height: 1.5;'>";
+        echo "<h2 style='color: #ff7b72; margin-top: 0;'>Application Boot Error (HTTP 500)</h2>";
+        echo "<p style='font-size: 16px; color: #f0f6fc;'><strong>Message:</strong> " . htmlspecialchars($e->getMessage()) . "</p>";
+        echo "<p style='color: #8b949e;'><strong>Location:</strong> " . htmlspecialchars($e->getFile()) . " on line " . $e->getLine() . "</p>";
+        echo "<h3 style='color: #58a6ff;'>Stack Trace:</h3>";
+        echo "<pre style='color: #c9d1d9; background: #161b22; padding: 15px; border-radius: 6px; overflow-x: auto; font-size: 13px;'>" . htmlspecialchars($e->getTraceAsString()) . "</pre>";
+        echo "</div>";
+        exit;
+    }
+    throw $e;
+}

@@ -4,9 +4,9 @@
 *.sql
 *.bak
 *.log
+error_log
 *.key
 *.zip
-temp/
 .lic
 database/dumps/
 scratch/
@@ -23,3 +23,5 @@ npm-debug.log
 yarn-error.log
 /.idea
 /.vscode
+/eglines
+.DS_Store

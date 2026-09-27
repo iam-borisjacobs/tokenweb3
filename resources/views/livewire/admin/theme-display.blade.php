@@ -159,6 +159,98 @@
         </div>
     </div>
 
+    <!-- Section: Front-End Landing Page Template Manager -->
+    <div class="card border p-4 shadow-sm mb-4">
+        @if (session()->has('template_message'))
+            <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
+                <i class="fa fa-check-circle me-1"></i> {{ session('template_message') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2 mb-4">
+            <div>
+                <h5 class="f-w-700 mb-1 d-flex align-items-center gap-2">
+                    <i class="fa fa-layer-group text-primary"></i> Front-End Landing Page Template Manager
+                </h5>
+                <p class="text-muted f-13 mb-0">Switch between modular website landing page templates with 1 click. All logos, company name, contact info, and investment plans are automatically shared across templates.</p>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+                <span class="badge bg-light-primary text-primary px-3 py-2 rounded-pill f-12 border">
+                    Active Template: <strong class="text-uppercase">{{ $frontend_template }}</strong>
+                </span>
+                <a href="{{ route('home') }}" target="_blank" class="btn btn-sm btn-outline-secondary rounded-pill px-3">
+                    <i class="fa fa-external-link me-1"></i> View Live Site
+                </a>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <!-- Template 1: Default / Institutional Arbitrage -->
+            <div class="col-lg-6">
+                <div class="card h-100 border {{ $frontend_template == 'default' ? 'border-primary border-2 shadow' : 'border' }} p-3 rounded-4 cursor-pointer hover-card-tile position-relative"
+                     wire:click="setFrontendTemplate('default')">
+                    @if ($frontend_template == 'default')
+                        <div class="position-absolute top-0 end-0 m-3 z-2">
+                            <span class="badge bg-primary rounded-pill px-3 py-1 f-12 shadow-sm">
+                                <i class="fa fa-check me-1"></i> Currently Active
+                            </span>
+                        </div>
+                    @endif
+                    <div class="rounded-3 overflow-hidden border mb-3 position-relative text-center d-flex align-items-center justify-content-center" 
+                         style="height: 180px; background: linear-gradient(135deg, #0b1329 0%, #111d3d 100%);">
+                        <div class="p-3 text-center">
+                            <span class="badge bg-primary text-white rounded-pill px-3 py-1 mb-2 f-11">Institutional Arbitrage</span>
+                            <h5 class="text-white f-w-800 mb-1">Capital, composed.</h5>
+                            <small class="text-muted f-11">Classic high-conviction welcome portal with live price tickers &amp; ambient lighting</small>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between pt-2">
+                        <div>
+                            <h6 class="f-w-700 mb-1 f-14">Classic Arbitrage Template</h6>
+                            <small class="text-muted f-12">Institutional Dark &bull; Ambient Glow &bull; Live Market Roller</small>
+                        </div>
+                        <button type="button" class="btn btn-sm {{ $frontend_template == 'default' ? 'btn-primary' : 'btn-outline-primary' }} rounded-pill px-4 shadow-sm">
+                            {{ $frontend_template == 'default' ? 'Selected' : 'Activate' }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Template 2: ECX Groups Crypto Investment Template -->
+            <div class="col-lg-6">
+                <div class="card h-100 border {{ $frontend_template == 'ecx' ? 'border-primary border-2 shadow' : 'border' }} p-3 rounded-4 cursor-pointer hover-card-tile position-relative"
+                     wire:click="setFrontendTemplate('ecx')">
+                    @if ($frontend_template == 'ecx')
+                        <div class="position-absolute top-0 end-0 m-3 z-2">
+                            <span class="badge bg-success rounded-pill px-3 py-1 f-12 shadow-sm">
+                                <i class="fa fa-check me-1"></i> Currently Active
+                            </span>
+                        </div>
+                    @endif
+                    <div class="rounded-3 overflow-hidden border mb-3 position-relative text-center d-flex align-items-center justify-content-center" 
+                         style="height: 180px; background: linear-gradient(135deg, #090e1a 0%, #151f38 100%); background-image: url('{{ asset('themes/ecx/assets/images/banner/home4/1.png') }}'); background-size: cover; background-position: center;">
+                        <div class="position-absolute w-100 h-100 top-0 start-0" style="background: rgba(9, 14, 26, 0.75);"></div>
+                        <div class="p-3 text-center position-relative z-1">
+                            <span class="badge bg-warning text-dark rounded-pill px-3 py-1 mb-2 f-11">ECX GROUPS THEME</span>
+                            <h5 class="text-white f-w-800 mb-1">Deposit, Invest, Withdraw</h5>
+                            <small class="text-white text-opacity-75 f-11">TradingView Ticker Tape &bull; Crypto Heatmap &bull; Swiper Sliders</small>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between pt-2">
+                        <div>
+                            <h6 class="f-w-700 mb-1 f-14">ECX Groups Crypto Template</h6>
+                            <small class="text-muted f-12">New Detachable Theme &bull; Services &bull; Roadmap &bull; Swiper Plans</small>
+                        </div>
+                        <button type="button" class="btn btn-sm {{ $frontend_template == 'ecx' ? 'btn-success' : 'btn-outline-primary' }} rounded-pill px-4 shadow-sm">
+                            {{ $frontend_template == 'ecx' ? 'Selected' : 'Activate' }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Section 2: User Dashboard / Frontend Theme Selection -->
     <div class="card border p-4 shadow-sm mb-4">
         <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2 mb-4">

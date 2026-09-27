@@ -301,15 +301,28 @@ class ViewsController extends Controller
     //Main Plans route
     public function mplans()
     {
+        $settings = Settings::where('id', '1')->first();
         $user = Auth::user();
         $userWallets = $user ? UserWallet::where('user_id', $user->id)->where('status', 'connected')->get() : collect();
         $totalWalletBal = (float) $userWallets->sum('balance');
+
+        $walletReqActive = isset($settings->require_wallet_for_investment) 
+            ? (bool) $settings->require_wallet_for_investment 
+            : (!empty($settings->modules['require_wallet_investment']));
+
+        if ($walletReqActive && $user) {
+            $hasConnectedWallet = $userWallets->count() > 0;
+            $hasDeposited = \App\Models\Deposit::where('user', $user->id)->where('status', 'Processed')->exists() || ($user->account_bal > 0);
+            if (!$hasConnectedWallet && !$hasDeposited) {
+                return redirect()->route('connect.wallet')->with('message', 'Please connect your Web3 wallet first to access Investment Plans.');
+            }
+        }
 
         return view('user.mplans')
             ->with(array(
                 'title' => 'Main Plans',
                 'plans' => Plans::where('type', 'main')->get(),
-                'settings' => Settings::where('id', '1')->first(),
+                'settings' => $settings,
                 'userWallets' => $userWallets,
                 'totalWalletBal' => $totalWalletBal,
             ));
@@ -378,7 +391,7 @@ class ViewsController extends Controller
 
     public function verificationForm()
     {
-        if (Auth::user()->account_verify == 'Verified') {
+        if (Auth::user()->isKycVerified()) {
             return redirect()->route('account.verify')->with('message', 'Your account is already verified.');
         }
         return view('user.verification', [

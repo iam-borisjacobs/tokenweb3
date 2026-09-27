@@ -2,14 +2,14 @@
 
 @section('content')
 <div class="container-fluid">
-    <div class="row mb-4">
-        <div class="col-12 d-flex justify-content-between align-items-center">
+    <div class="row mb-3 mb-md-4">
+        <div class="col-12 d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center gap-3">
             <div>
-                <h3 class="f-w-700 mb-1">Add Investment Plan</h3>
-                <p class="text-muted mb-0 f-14">Define pricing, expected returns, duration, and top-up rules for a new plan.</p>
+                <h3 class="f-w-800 text-dark mb-1 f-20 f-md-24">Add Investment Plan</h3>
+                <p class="text-muted mb-0 f-13 f-md-14">Define pricing, expected returns, duration, and top-up rules for a new plan.</p>
             </div>
             <div>
-                <a href="{{ route('plans') }}" class="btn btn-outline-primary btn-sm rounded-pill px-3">
+                <a href="{{ route('plans') }}" class="btn btn-outline-primary btn-sm rounded-pill px-3 py-1.5 f-w-600 f-13">
                     <i class="fa fa-arrow-left me-1"></i> Back to Plans
                 </a>
             </div>
@@ -21,7 +21,7 @@
 
     <div class="row">
         <div class="col-lg-12">
-            <div class="card p-4 shadow-sm border-0">
+            <div class="card p-3 p-sm-4 shadow-sm border-0">
                 <form role="form" method="post" action="{{ route('addplan') }}" enctype="multipart/form-data">
                     @csrf
                     <div class="row g-3">

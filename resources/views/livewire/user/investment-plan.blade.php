@@ -364,11 +364,12 @@
                                              wire:click="selectPlan({{ $plan->id }})">
                                             
                                             @if(!empty($plan->image))
-                                                <div class="plan-card-image-wrap mb-2 rounded-2 overflow-hidden position-relative shadow-sm" style="height: 110px; background: #0f172a;">
-                                                    <img src="{{ $plan->image_url }}" alt="{{ $plan->name }}" class="w-100 h-100" style="object-fit: cover;">
-                                                    <div class="position-absolute top-0 start-0 w-100 h-100" style="background: linear-gradient(180deg, rgba(0,0,0,0) 30%, rgba(0,0,0,0.72) 100%);"></div>
-                                                    <span class="position-absolute bottom-0 start-0 m-2 badge bg-black bg-opacity-75 text-white f-10 rounded-pill px-2 py-1 border border-white border-opacity-25">
-                                                        <i class="fa-solid {{ $plan->isTruck() ? 'fa-truck' : 'fa-coins' }} me-1"></i>{{ $plan->category_label }}
+                                                <div class="plan-card-image-wrap mb-3 overflow-hidden position-relative shadow-sm" 
+                                                     style="margin: -16px -16px 14px -16px; width: calc(100% + 32px); height: 125px; border-radius: 10px 10px 0 0; background: #0b1329;">
+                                                    <img src="{{ $plan->image_url }}" alt="{{ $plan->name }}" class="w-100 h-100" style="object-fit: cover; object-position: center;" onerror="this.onerror=null; this.src='{{ asset('themes/ecx/assets/images/plans/' . ($plan->isTruck() ? 'truck_logistics_fleet.jpg' : 'plan_gold_ecx.jpg')) }}';">
+                                                    <div class="position-absolute top-0 start-0 w-100 h-100" style="background: linear-gradient(180deg, rgba(0,0,0,0) 50%, rgba(11, 19, 41, 0.75) 100%); pointer-events: none;"></div>
+                                                    <span class="position-absolute bottom-0 start-0 m-2 badge bg-black bg-opacity-75 text-white f-10 rounded-pill px-2.5 py-1 border border-white border-opacity-25" style="backdrop-filter: blur(4px);">
+                                                        <i class="fa-solid {{ $plan->isTruck() ? 'fa-truck' : 'fa-gem' }} me-1"></i>{{ $plan->isTruck() ? $plan->category_label : 'ECX Tier' }}
                                                     </span>
                                                 </div>
                                             @endif
@@ -783,7 +784,7 @@
                                     <div>
                                         <div class="d-flex align-items-center gap-1 mb-1">
                                             <span class="badge {{ $planSelected->isTruck() ? 'bg-warning text-dark' : 'bg-primary text-white' }} f-10 rounded-pill px-2 py-1 f-w-700 shadow-sm">
-                                                <i class="fa-solid {{ $planSelected->isTruck() ? 'fa-truck' : 'fa-coins' }} me-1"></i>{{ $planSelected->category_label }}
+                                                <i class="fa-solid {{ $planSelected->isTruck() ? 'fa-truck' : 'fa-gem' }} me-1"></i>{{ $planSelected->isTruck() ? $planSelected->category_label : 'ECX Tier' }}
                                             </span>
                                             <span class="badge bg-white bg-opacity-20 text-white border border-white border-opacity-25 rounded-pill f-10 px-2 py-1">
                                                 <i class="fa-regular fa-clock me-1"></i>{{ $planSelected->expiration }}

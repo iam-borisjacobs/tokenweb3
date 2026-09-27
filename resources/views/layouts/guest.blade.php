@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
     <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
     <title>{{ $settings->site_name }} | @yield('title')</title>
@@ -30,10 +31,13 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <!-- Tabler Icons -->
+    <!-- Tabler Icons (CDN + Local Fallback) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.47.0/tabler-icons.min.css">
     <link rel="stylesheet" href="{{ asset('volkovdesign/webfont/tabler-icons.min.css') }}">
 
     @section('styles')
+        <!-- Bootstrap Core (CDN + Local Fallback for 100% Reliability on Live Servers) -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
         <link href="{{ asset('temp/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('temp/css/materialdesignicons.min.css') }}" rel="stylesheet" type="text/css" />
         <link rel="stylesheet" href="{{ asset('temp/css/line.css') }}">
@@ -100,6 +104,8 @@
     @yield('content')
 
     @section('scripts')
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
         <script src="{{ asset('temp/js/jquery-3.5.1.min.js') }}"></script>
         <script src="{{ asset('temp/js/bootstrap.bundle.min.js') }}"></script>
         <script src="{{ asset('temp/js/owl.carousel.min.js') }}"></script>

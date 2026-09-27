@@ -18,8 +18,12 @@ class Plans extends Model
      */
     public function getImageUrlAttribute()
     {
+        $defaultTruck = 'truck_logistics_fleet.jpg';
+        $defaultCrypto = 'plan_gold_ecx.jpg';
+        $fallback = $this->isTruck() ? $defaultTruck : $defaultCrypto;
+
         if (empty($this->image)) {
-            return null;
+            return asset('themes/ecx/assets/images/plans/' . $fallback);
         }
 
         if (str_starts_with($this->image, 'http://') || str_starts_with($this->image, 'https://')) {
@@ -27,12 +31,34 @@ class Plans extends Model
         }
 
         $clean = ltrim($this->image, '/');
+        $baseName = basename($clean);
 
-        if (str_starts_with($clean, 'storage/app/public/')) {
-            return asset($clean);
+        // 1. Tracked ECX theme plan image (committed to Git, directly accessible on cPanel)
+        if (file_exists(public_path('themes/ecx/assets/images/plans/' . $baseName)) || file_exists(base_path('themes/ecx/assets/images/plans/' . $baseName))) {
+            return asset('themes/ecx/assets/images/plans/' . $baseName);
         }
 
-        return asset('storage/app/public/' . $clean);
+        // 2. Direct public/photos/ folder
+        if (file_exists(public_path('photos/' . $baseName)) || file_exists(base_path('public/photos/' . $baseName))) {
+            return asset('photos/' . $baseName);
+        }
+
+        // 3. Public storage photos folder
+        if (file_exists(public_path('storage/photos/' . $baseName))) {
+            return asset('storage/photos/' . $baseName);
+        }
+
+        // 4. Public storage relative path
+        if (file_exists(public_path('storage/' . $clean))) {
+            return asset('storage/' . $clean);
+        }
+
+        // 5. If the base file exists in themes/ecx under public
+        if (file_exists(public_path('themes/ecx/assets/images/plans/' . $fallback))) {
+            return asset('themes/ecx/assets/images/plans/' . $fallback);
+        }
+
+        return asset('themes/ecx/assets/images/plans/' . $baseName);
     }
 
     /**

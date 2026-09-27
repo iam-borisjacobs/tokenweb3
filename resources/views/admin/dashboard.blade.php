@@ -3,24 +3,24 @@
 @section('content')
 <div class="container-fluid">
     <!-- Breadcrumb / Welcome Banner -->
-    <div class="row mb-4">
+    <div class="row mb-3 mb-md-4">
         <div class="col-12">
-            <div class="card border-0 shadow-sm p-4" style="background: linear-gradient(135deg, rgba(99, 98, 231, 0.08) 0%, rgba(255, 159, 67, 0.05) 100%);">
-                <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+            <div class="card border-0 shadow-sm p-3 p-sm-4" style="background: linear-gradient(135deg, rgba(99, 98, 231, 0.08) 0%, rgba(255, 159, 67, 0.05) 100%);">
+                <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3">
                     <div>
-                        <h3 class="f-w-700 mb-1">Welcome back, {{ Auth('admin')->User()->firstName }} {{ Auth('admin')->User()->lastName }}! 👋</h3>
-                        <p class="text-muted mb-0 f-14">Here is a comprehensive overview of ECX Groups performance and pending tasks today.</p>
+                        <h3 class="f-w-800 text-dark mb-1 f-20 f-md-24">Welcome back, {{ Auth('admin')->User()->firstName }} {{ Auth('admin')->User()->lastName }}! 👋</h3>
+                        <p class="text-muted mb-0 f-13 f-md-14">Here is a comprehensive overview of {{ $settings->site_name }} performance and pending tasks today.</p>
                     </div>
                     @if (Auth('admin')->User()->type == 'Super Admin' || Auth('admin')->User()->type == 'Admin')
-                        <div class="d-flex flex-wrap align-items-center gap-2">
-                            <a href="{{ route('mdeposits') }}" class="btn btn-outline-success btn-sm rounded-pill px-3 d-inline-flex align-items-center" style="height: 38px; font-weight: 600; font-size: 13px; text-decoration: none;">
-                                <i class="fa fa-arrow-down me-2 f-12"></i> Deposits
+                        <div class="d-flex flex-wrap align-items-center gap-2 w-100 w-md-auto">
+                            <a href="{{ route('mdeposits') }}" class="btn btn-outline-success btn-sm rounded-pill px-3 py-2 d-inline-flex align-items-center justify-content-center flex-fill flex-sm-grow-0" style="font-weight: 600; font-size: 13px; text-decoration: none;">
+                                <i class="fa fa-arrow-down me-1.5 f-12"></i> Deposits
                             </a>
-                            <a href="{{ route('mwithdrawals') }}" class="btn btn-outline-danger btn-sm rounded-pill px-3 d-inline-flex align-items-center" style="height: 38px; font-weight: 600; font-size: 13px; text-decoration: none;">
-                                <i class="fa fa-arrow-up me-2 f-12"></i> Withdrawals
+                            <a href="{{ route('mwithdrawals') }}" class="btn btn-outline-danger btn-sm rounded-pill px-3 py-2 d-inline-flex align-items-center justify-content-center flex-fill flex-sm-grow-0" style="font-weight: 600; font-size: 13px; text-decoration: none;">
+                                <i class="fa fa-arrow-up me-1.5 f-12"></i> Withdrawals
                             </a>
-                            <a href="{{ route('newplan') }}" class="btn btn-primary btn-sm rounded-pill px-3 d-inline-flex align-items-center shadow-sm" style="height: 38px; font-weight: 600; font-size: 13px; text-decoration: none;">
-                                <i class="fa fa-plus me-2 f-12"></i> New Plan
+                            <a href="{{ route('newplan') }}" class="btn btn-primary btn-sm rounded-pill px-3 py-2 d-inline-flex align-items-center justify-content-center shadow-sm flex-fill flex-sm-grow-0" style="font-weight: 600; font-size: 13px; text-decoration: none;">
+                                <i class="fa fa-plus me-1.5 f-12"></i> New Plan
                             </a>
                         </div>
                     @endif

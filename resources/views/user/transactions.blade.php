@@ -377,7 +377,7 @@
                                     @foreach($allTransactions as $item)
                                         <tr class="tx-row">
                                             <td>
-                                                <div class="d-flex align-items-center gap-2.5">
+                                                <div class="d-flex align-items-center gap-2">
                                                     <div class="metric-icon-circle {{ $item->icon_class }}" style="width: 32px; height: 32px; font-size: 13px;">
                                                         <i class="{{ $item->icon }}"></i>
                                                     </div>
@@ -457,7 +457,7 @@
                                     @foreach ($deposits as $deposit)
                                         <tr class="tx-row">
                                             <td>
-                                                <div class="d-flex align-items-center gap-2.5">
+                                                <div class="d-flex align-items-center gap-2">
                                                     <div class="metric-icon-circle success" style="width: 32px; height: 32px; font-size: 13px;">
                                                         <i class="fa-solid fa-arrow-down"></i>
                                                     </div>
@@ -533,7 +533,7 @@
                                     @foreach ($withdrawals as $withdrawal)
                                         <tr class="tx-row">
                                             <td>
-                                                <div class="d-flex align-items-center gap-2.5">
+                                                <div class="d-flex align-items-center gap-2">
                                                     <div class="metric-icon-circle warning" style="width: 32px; height: 32px; font-size: 13px;">
                                                         <i class="fa-solid fa-arrow-up"></i>
                                                     </div>
@@ -617,7 +617,7 @@
                                         @endphp
                                         <tr class="tx-row">
                                             <td>
-                                                <div class="d-flex align-items-center gap-2.5">
+                                                <div class="d-flex align-items-center gap-2">
                                                     <div class="metric-icon-circle primary" style="width: 32px; height: 32px; font-size: 13px;">
                                                         <i class="{{ $isPlan ? 'fa-solid fa-gem' : 'fa-solid fa-sliders' }}"></i>
                                                     </div>

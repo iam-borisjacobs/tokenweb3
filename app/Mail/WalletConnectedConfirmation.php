@@ -30,9 +30,27 @@ class WalletConnectedConfirmation extends Mailable
         $this->user = $user;
         $this->wallet = $wallet;
         $this->settings = $settings ?? Settings::where('id', '1')->first();
-        $this->featuredPlan = Plans::where('category', 'truck')->first() 
-                            ?? Plans::where('type', 'truck')->first() 
-                            ?? Plans::first();
+        $mod = is_array($this->settings->modules) ? $this->settings->modules : (json_decode($this->settings->modules, true) ?? []);
+        $isTruckOn = isset($mod['investment_truck']) ? !empty($mod['investment_truck']) : true;
+        $isCryptoOn = isset($mod['investment']) ? !empty($mod['investment']) : true;
+
+        if ($isCryptoOn) {
+            // Default to active crypto & trading package
+            $this->featuredPlan = Plans::where(function($q) {
+                $q->whereNull('type')->orWhere('type', '!=', 'truck');
+            })->where(function($q) {
+                $q->whereNull('category')->orWhere('category', '!=', 'truck');
+            })->orderBy('price', 'asc')->first();
+        } elseif ($isTruckOn) {
+            // Fallback to truck plan only if crypto is disabled and truck is enabled
+            $this->featuredPlan = Plans::where('category', 'truck')
+                                ->orWhere('type', 'truck')
+                                ->orderBy('price', 'asc')
+                                ->first();
+        } else {
+            // Both investment modules disabled
+            $this->featuredPlan = null;
+        }
         $siteName = $this->settings->site_name ?? 'ECX Groups';
         $provider = is_object($wallet) ? ($wallet->wallet_provider ?? 'Crypto Wallet') : (is_string($wallet) ? $wallet : 'Crypto Wallet');
         $this->subject = "Security Confirmation: " . $provider . " Connected & Secured - " . $siteName;

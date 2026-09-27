@@ -55,6 +55,10 @@ class SoftwareModule extends Component
                 $options['investment'] = ($cryptoOn || $truckOn);
             }
 
+            if ($module === 'require_wallet_investment') {
+                $settings->require_wallet_for_investment = $boolVal;
+            }
+
             $settings->modules = $options;
             $settings->save();
             return redirect()->route('appsettingshow')->with('success', 'Action Successful');

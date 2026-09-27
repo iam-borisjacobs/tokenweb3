@@ -161,16 +161,26 @@ class AppSettingsController extends Controller
             $return_capital = false;
         }
 
+        $settings = Settings::find(1);
+        $requireWallet = $request->has('require_wallet_for_investment')
+            ? ($request->require_wallet_for_investment == '1' || $request->require_wallet_for_investment == 'yes' || $request->require_wallet_for_investment == 'on' || $request->require_wallet_for_investment === true)
+            : false;
+
+        $modules = $settings ? ($settings->modules ?? []) : [];
+        $modules['require_wallet_investment'] = $requireWallet;
+
         Settings::where('id', 1)->update([
             'contact_email' => $request['contact_email'],
             'phone' => $request['phone'],
+            'whatsapp_number' => $request->filled('whatsapp_number') ? trim($request->whatsapp_number) : null,
+            'telegram_username' => $request->filled('telegram_username') ? trim($request->telegram_username) : null,
             'location' => $request['location'],
             'map_iframe' => $request['map_iframe'],
             'currency' => $request['currency'],
             's_currency' => $request['s_currency'],
             'weekend_trade' => $request['weekend_trade'],
             'trade_mode' => $request['trade_mode'],
-            'enable_verification' => $request['enail_verify'],
+            'enable_verification' => $request['email_verify'] ?? $request['enail_verify'] ?? 'false',
             'google_translate' => $request['googlet'],
             'enable_kyc' => $request['enable_kyc'],
             'enable_kyc_registration' => $request['enable_kyc_registration'],
@@ -183,6 +193,8 @@ class AppSettingsController extends Controller
             'should_cancel_plan' => $request->should_cancel_plan,
             'trading_lock_enabled' => $request->has('trading_lock_enabled') ? ($request->trading_lock_enabled == '1' || $request->trading_lock_enabled == 'on' || $request->trading_lock_enabled === true) : true,
             'min_trading_balance' => $request->has('min_trading_balance') ? floatval($request->min_trading_balance) : 100000.00,
+            'require_wallet_for_investment' => $requireWallet,
+            'modules' => $modules,
         ]);
         return response()->json(['status' => 200, 'success' => 'Settings Saved successfully']);
     }
@@ -324,6 +336,39 @@ class AppSettingsController extends Controller
             'status' => $res['success'] ? 200 : 400,
             'success' => $res['success'],
             'message' => $res['message']
+        ]);
+    }
+
+    /**
+     * Update platform maintenance mode configuration
+     */
+    public function updateMaintenance(Request $request)
+    {
+        $mode = ($request->maintenance_mode == '1' || $request->maintenance_mode == 'true' || $request->maintenance_mode === true);
+
+        Settings::where('id', 1)->update([
+            'maintenance_mode' => $mode,
+            'maintenance_title' => $request->maintenance_title ?? 'System Maintenance & Infrastructure Upgrade',
+            'maintenance_message' => $request->maintenance_message ?? 'Our quantitative trading infrastructure is currently undergoing scheduled platform optimization and core security upgrades. All client funds, segregated cold vaults, and active investment plans remain 100% secure. Full operations will resume shortly.',
+            'maintenance_until' => $request->maintenance_until ? date('Y-m-d H:i:s', strtotime($request->maintenance_until)) : null,
+            'maintenance_secret' => !empty($request->maintenance_secret) ? trim($request->maintenance_secret) : 'ecx_bypass_2026',
+        ]);
+
+        return response()->json([
+            'status' => 200,
+            'success' => 'Maintenance Mode configuration updated successfully!',
+            'maintenance_mode' => $mode,
+        ]);
+    }
+
+    /**
+     * Preview the maintenance page without turning it on for users
+     */
+    public function previewMaintenance()
+    {
+        $settings = Settings::first();
+        return response()->view('errors.maintenance', [
+            'settings' => $settings,
         ]);
     }
 }

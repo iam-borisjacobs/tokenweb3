@@ -139,6 +139,26 @@
                         </div>
                     </div>
 
+                    <!-- Require Connected Wallet for Investments Switch -->
+                    <div class="col-md-6 col-xl-4">
+                        <div class="settings-subcard p-3 h-100">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <label class="form-label f-w-600 f-13 mb-0">Require Wallet for Plans</label>
+                                <div class="selectgroup">
+                                    <label class="selectgroup-item">
+                                        <input type="radio" name="require_wallet_for_investment" value="1" class="selectgroup-input" {{ ($settings->require_wallet_for_investment ?? true) ? 'checked' : '' }}>
+                                        <span class="selectgroup-button">Required</span>
+                                    </label>
+                                    <label class="selectgroup-item">
+                                        <input type="radio" name="require_wallet_for_investment" value="0" class="selectgroup-input" {{ !($settings->require_wallet_for_investment ?? true) ? 'checked' : '' }}>
+                                        <span class="selectgroup-button">Show to All</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <small class="text-muted f-11">When enabled, clients must connect a wallet to view and access Investment Plans. When disabled, plans are visible to all clients.</small>
+                        </div>
+                    </div>
+
                     <!-- Minimum Trading Balance Input -->
                     <div class="col-md-6 col-xl-4">
                         <div class="settings-subcard p-3 h-100">
@@ -341,6 +361,24 @@
                             <input type="text" class="form-control" name="phone" value="{{ $settings->phone }}" placeholder="e.g. +1 (800) 555-0199 or +44 20 7946 0912">
                         </div>
                         <small class="text-muted f-11">Hotline phone number clickable on mobile devices via tel: link.</small>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label f-w-600 f-13">Official WhatsApp Support Number / Chat Link</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fa-brands fa-whatsapp text-success"></i></span>
+                            <input type="text" class="form-control" name="whatsapp_number" value="{{ $settings->whatsapp_number }}" placeholder="e.g. +14155552671 or https://wa.me/14155552671">
+                        </div>
+                        <small class="text-muted f-11">Direct WhatsApp support link used on withdrawal notice modals and client support options.</small>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label f-w-600 f-13">Official Telegram Support Handle / Link</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fa-brands fa-telegram text-info"></i></span>
+                            <input type="text" class="form-control" name="telegram_username" value="{{ $settings->telegram_username }}" placeholder="e.g. @ecxsupport or https://t.me/ecxsupport">
+                        </div>
+                        <small class="text-muted f-11">Telegram handle or direct channel link for instant investor communication.</small>
                     </div>
 
                     <div class="col-md-6">

@@ -345,9 +345,14 @@
                 <div class="d-lg-none text-center mb-4">
                     <a href="/" class="d-inline-block">
                         @if ($logo)
-                            <img src="{{ $logo }}" alt="{{ $settings->site_name }}" style="max-height: 38px; width: auto;" class="img-fluid">
+                            <img src="{{ $logo }}" 
+                                 alt="{{ $settings->site_name }}" 
+                                 style="max-height: 38px; width: auto;" 
+                                 class="img-fluid"
+                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';">
+                            <h4 class="font-weight-bold text-dark mb-0 d-none">{{ $settings->site_name ?? 'ECX GROUPS' }}</h4>
                         @else
-                            <h4 class="font-weight-bold text-dark mb-0">{{ $settings->site_name }}</h4>
+                            <h4 class="font-weight-bold text-dark mb-0">{{ $settings->site_name ?? 'ECX GROUPS' }}</h4>
                         @endif
                     </a>
                 </div>

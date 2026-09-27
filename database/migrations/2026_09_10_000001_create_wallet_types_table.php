@@ -13,14 +13,16 @@ class CreateWalletTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('wallet_types', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('icon')->nullable();
-            $table->string('status')->default('enabled');
-            $table->integer('sort_order')->default(0);
-            $table->timestamps();
-        });
+        if (!Schema::hasTable('wallet_types')) {
+            Schema::create('wallet_types', function (Blueprint $table) {
+                $table->id();
+                $table->string('name');
+                $table->string('icon')->nullable();
+                $table->string('status')->default('enabled');
+                $table->integer('sort_order')->default(0);
+                $table->timestamps();
+            });
+        }
     }
 
     /**

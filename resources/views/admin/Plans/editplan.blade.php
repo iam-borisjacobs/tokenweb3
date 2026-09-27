@@ -2,14 +2,14 @@
 
 @section('content')
 <div class="container-fluid">
-    <div class="row mb-4">
-        <div class="col-12 d-flex justify-content-between align-items-center">
+    <div class="row mb-3 mb-md-4">
+        <div class="col-12 d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center gap-3">
             <div>
-                <h3 class="f-w-700 mb-1">Update Investment Plan</h3>
-                <p class="text-muted mb-0 f-14">Modify parameters, ROI percentages, or duration for package <strong>{{ $plan->name }}</strong>.</p>
+                <h3 class="f-w-800 text-dark mb-1 f-20 f-md-24">Update Investment Plan</h3>
+                <p class="text-muted mb-0 f-13 f-md-14">Modify parameters, ROI percentages, or duration for package <strong>{{ $plan->name }}</strong>.</p>
             </div>
             <div>
-                <a href="{{ route('plans') }}" class="btn btn-outline-primary btn-sm rounded-pill px-3">
+                <a href="{{ route('plans') }}" class="btn btn-outline-primary btn-sm rounded-pill px-3 py-1.5 f-w-600 f-13">
                     <i class="fa fa-arrow-left me-1"></i> Back to Plans
                 </a>
             </div>
@@ -21,7 +21,7 @@
 
     <div class="row">
         <div class="col-lg-12">
-            <div class="card p-4 shadow-sm border-0">
+            <div class="card p-3 p-sm-4 shadow-sm border-0">
                 <form role="form" method="post" action="{{ route('updateplan') }}" enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" name="id" value="{{ $plan->id }}">
@@ -49,15 +49,15 @@
                             <small class="text-muted f-11">Upload a photo of the truck, asset, or vehicle (JPG, PNG, WebP up to 10MB).</small>
 
                             @if(!empty($plan->image))
-                                <div class="d-flex align-items-center justify-content-between mt-2 p-2 border rounded" style="background-color: #f8fafc;">
+                                <div class="d-flex flex-column flex-sm-row align-items-start align-items-sm-center justify-content-between mt-2 p-2 border rounded gap-2" style="background-color: #f8fafc;">
                                     <div class="d-flex align-items-center gap-3">
-                                        <img src="{{ $plan->image_url }}" alt="{{ $plan->name }}" style="height: 52px; width: 78px; object-fit: cover; border-radius: 6px;" class="border shadow-sm">
+                                        <img src="{{ $plan->image_url }}" alt="{{ $plan->name }}" style="height: 52px; width: 78px; object-fit: cover; border-radius: 6px;" class="border shadow-sm flex-shrink-0" onerror="this.onerror=null; this.src='{{ asset('themes/ecx/assets/images/plans/' . ($plan->isTruck() ? 'truck_logistics_fleet.jpg' : 'plan_gold_ecx.jpg')) }}';">
                                         <div>
                                             <span class="f-12 f-w-600 text-dark d-block">Current Plan Photo</span>
                                             <small class="text-muted f-11">Uploading a new file will automatically replace this image.</small>
                                         </div>
                                     </div>
-                                    <div class="form-check form-check-inline mb-0">
+                                    <div class="form-check form-check-inline mb-0 flex-shrink-0">
                                         <input class="form-check-input" type="checkbox" name="remove_image" value="1" id="removePlanImg">
                                         <label class="form-check-label f-12 text-danger cursor-pointer f-w-600" for="removePlanImg">Remove Photo</label>
                                     </div>

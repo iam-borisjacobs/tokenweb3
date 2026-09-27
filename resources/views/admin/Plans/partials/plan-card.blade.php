@@ -4,37 +4,24 @@
         <div style="height: 4px; background: {{ $plan->isTruck() ? 'linear-gradient(90deg, #ff9f43, #f39c12)' : 'linear-gradient(90deg, #6362e7, #a855f7)' }};"></div>
         
         <!-- Header Banner / Image Thumbnail -->
-        @if(!empty($plan->image))
-            <div class="position-relative overflow-hidden" style="height: 135px; background-color: #0f172a;">
-                <img src="{{ $plan->image_url }}" alt="{{ $plan->name }}" class="w-100 h-100" style="object-fit: cover;">
-                <div class="position-absolute top-0 start-0 w-100 h-100" style="background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.7) 100%);"></div>
-                
-                <!-- Category Badge on Photo -->
-                <span class="position-absolute top-0 start-0 m-2 badge {{ $plan->isTruck() ? 'bg-warning text-dark' : 'bg-primary text-white' }} f-10 rounded-pill px-2 py-1 shadow-sm">
-                    <i class="fa {{ $plan->isTruck() ? 'fa-truck' : 'fa-coins' }} me-1"></i>{{ $plan->category_label }}
-                </span>
-                
-                <!-- Duration Badge on Photo -->
-                <span class="position-absolute bottom-0 end-0 m-2 badge bg-dark bg-opacity-75 text-white border border-secondary border-opacity-50 f-10 rounded-pill px-2 py-1">
-                    <i class="fa fa-clock me-1 text-warning"></i>{{ $plan->expiration }}
-                </span>
-            </div>
-        @else
-            <div class="position-relative overflow-hidden d-flex align-items-center justify-content-between px-3 py-2" style="height: 90px; background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);">
-                <div>
-                    <span class="badge {{ $plan->isTruck() ? 'bg-warning text-dark' : 'bg-primary text-white' }} f-10 rounded-pill px-2 py-1 mb-1 shadow-sm">
-                        <i class="fa {{ $plan->isTruck() ? 'fa-truck' : 'fa-coins' }} me-1"></i>{{ $plan->category_label }}
-                    </span>
-                    <div class="text-white-50 f-10 text-uppercase f-w-600">Investment Tier</div>
-                </div>
-                <div class="text-end">
-                    <span class="badge bg-dark bg-opacity-75 text-white border border-secondary border-opacity-50 f-10 rounded-pill px-2 py-1">
-                        <i class="fa fa-clock me-1 text-warning"></i>{{ $plan->expiration }}
-                    </span>
-                </div>
-                <i class="fa {{ $plan->isTruck() ? 'fa-truck' : 'fa-chart-pie' }} position-absolute text-white opacity-10" style="font-size: 5rem; right: -10px; bottom: -15px;"></i>
-            </div>
-        @endif
+        <div class="position-relative overflow-hidden plan-card-media" style="width: 100%; aspect-ratio: 16 / 9; min-height: 170px; background-color: #0b1120;">
+            <img src="{{ $plan->image_url }}" 
+                 alt="{{ $plan->name }}" 
+                 class="w-100 h-100 plan-card-img" 
+                 style="object-fit: cover; object-position: center; display: block;"
+                 onerror="this.onerror=null; this.src='{{ asset('themes/ecx/assets/images/plans/' . ($plan->isTruck() ? 'truck_logistics_fleet.jpg' : 'plan_gold_ecx.jpg')) }}';">
+            <div class="position-absolute top-0 start-0 w-100 h-100" style="background: linear-gradient(180deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0) 40%, rgba(0,0,0,0.5) 100%); pointer-events: none;"></div>
+            
+            <!-- Category Badge on Photo -->
+            <span class="position-absolute top-0 start-0 m-2 badge {{ $plan->isTruck() ? 'bg-warning text-dark' : 'bg-primary text-white' }} f-11 rounded-pill px-2.5 py-1 shadow-sm">
+                <i class="fa {{ $plan->isTruck() ? 'fa-truck' : 'fa-coins' }} me-1"></i>{{ $plan->category_label }}
+            </span>
+            
+            <!-- Duration Badge on Photo -->
+            <span class="position-absolute bottom-0 end-0 m-2 badge bg-dark bg-opacity-75 text-white border border-secondary border-opacity-50 f-11 rounded-pill px-2.5 py-1" style="backdrop-filter: blur(4px);">
+                <i class="fa fa-clock me-1 text-warning"></i>{{ $plan->expiration }}
+            </span>
+        </div>
 
         <div class="card-body p-3 d-flex flex-column justify-content-between flex-grow-1">
             <div>

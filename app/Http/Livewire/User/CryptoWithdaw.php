@@ -56,7 +56,7 @@ class CryptoWithdaw extends Component
 
         if (Auth::user()->sendotpemail == "Yes" and $this->otpCode != Auth::user()->withdrawotp) {
             session()->flash('error', 'OTP is incorrect, please recheck the code');
-        } elseif ($settings->enable_kyc == "yes" and Auth::user()->account_verify != "Verified") {
+        } elseif ($settings->enable_kyc == "yes" and !Auth::user()->isKycVerified()) {
             session()->flash('error', 'Your account must be verified before you can make withdrawal. please complete your KYC verification');
         } elseif (Auth::user()->account_bal < $to_withdraw) {
             session()->flash('error', 'Sorry, your account balance is insufficient for this request.');

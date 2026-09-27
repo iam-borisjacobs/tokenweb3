@@ -10,6 +10,24 @@
         transform: translateY(-3px);
         box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12) !important;
     }
+    .plan-card-media {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        min-height: 180px;
+        background-color: #0b1120;
+        overflow: hidden;
+    }
+    .plan-card-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        transition: transform 0.35s ease;
+    }
+    .plan-admin-card:hover .plan-card-img {
+        transform: scale(1.04);
+    }
     .plan-metric-box {
         background-color: #f8fafc;
         border: 1px solid #e2e8f0;
@@ -56,53 +74,118 @@
         background: rgba(99, 98, 231, 0.12);
         border-color: rgba(99, 98, 231, 0.3);
     }
-    .admin-plan-tabs .nav-link {
-        color: #64748b;
-        font-weight: 600;
-        border-radius: 50px;
-        padding: 8px 18px;
-        transition: all 0.2s ease;
-        border: 1px solid transparent;
-        font-size: 13px;
+    .plan-tabs-wrapper {
+        max-width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        padding-bottom: 2px;
     }
-    .admin-plan-tabs .nav-link:hover {
+    .plan-tabs-wrapper::-webkit-scrollbar {
+        display: none;
+    }
+    .plan-tabs-bar {
+        display: inline-flex !important;
+        align-items: center !important;
+        flex-wrap: nowrap !important;
+        white-space: nowrap !important;
+        gap: 6px;
+        background-color: #f1f5f9;
+        border: 1px solid #e2e8f0;
+        border-radius: 50px;
+        padding: 5px;
+        margin: 0;
+    }
+    body.dark-only .plan-tabs-bar {
+        background-color: #151c30 !important;
+        border-color: rgba(255, 255, 255, 0.08) !important;
+    }
+    .plan-tab-btn {
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 6px;
+        padding: 8px 18px;
+        border-radius: 50px;
+        border: 1px solid transparent;
+        background: transparent;
+        color: #64748b;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        white-space: nowrap !important;
+        outline: none;
+        line-height: 1.3;
+        flex-shrink: 0;
+    }
+    body.dark-only .plan-tab-btn {
+        color: #94a3b8;
+    }
+    .plan-tab-btn:hover {
         color: #0f172a;
         background-color: rgba(99, 98, 231, 0.08);
     }
-    .admin-plan-tabs .nav-link.active {
+    body.dark-only .plan-tab-btn:hover {
+        color: #ffffff;
+        background-color: rgba(255, 255, 255, 0.06);
+    }
+    .plan-tab-btn.active {
         background-color: var(--theme-default, #6362e7) !important;
         color: #ffffff !important;
         box-shadow: 0 4px 12px rgba(99, 98, 231, 0.35);
     }
-    body.dark-only .admin-plan-tabs {
-        background-color: #151c30 !important;
-        border-color: rgba(255, 255, 255, 0.08) !important;
-    }
-    body.dark-only .admin-plan-tabs .nav-link {
-        color: #94a3b8;
-    }
-    body.dark-only .admin-plan-tabs .nav-link:hover {
-        color: #ffffff;
-        background-color: rgba(255, 255, 255, 0.06);
-    }
-    body.dark-only .admin-plan-tabs .nav-link.active {
+    body.dark-only .plan-tab-btn.active {
         background-color: #6362e7 !important;
         color: #ffffff !important;
+    }
+    .plan-tab-badge {
+        font-size: 11px;
+        font-weight: 700;
+        padding: 2px 7px;
+        border-radius: 50px;
+        display: inline-block;
+        line-height: 1.2;
+    }
+    .badge-truck {
+        background-color: #f59e0b;
+        color: #1e293b;
+    }
+    .badge-crypto {
+        background-color: #6362e7;
+        color: #ffffff;
+    }
+    .badge-all {
+        background-color: #64748b;
+        color: #ffffff;
+    }
+    .plan-tab-btn.active .plan-tab-badge {
+        background-color: rgba(255, 255, 255, 0.25) !important;
+        color: #ffffff !important;
+    }
+    @media (max-width: 575.98px) {
+        .plan-tabs-bar {
+            border-radius: 12px;
+            padding: 4px;
+            gap: 4px;
+        }
+        .plan-tab-btn {
+            border-radius: 8px;
+            padding: 7px 12px;
+            font-size: 12px;
+        }
     }
 </style>
 
 <div class="container-fluid">
-    <div class="row mb-4">
-        <div class="col-12 d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
-            <div>
-                <h3 class="f-w-700 mb-1">Investment Plans</h3>
-                <p class="text-muted mb-0 f-14">Configure, publish, and manage investment packages available to clients.</p>
-            </div>
-            <div>
-                <a class="btn btn-primary px-4 py-2 rounded-pill shadow-sm" href="{{ route('newplan') }}">
-                    <i class="fa fa-plus me-1"></i> Add New Plan
-                </a>
-            </div>
+    <div class="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center gap-3 mb-4">
+        <div>
+            <h3 class="f-w-700 text-dark mb-1">Investment Plans</h3>
+            <p class="text-muted mb-0 f-14">Configure, publish, and manage investment packages available to clients.</p>
+        </div>
+        <div class="flex-shrink-0">
+            <a class="btn btn-primary px-4 py-2 rounded-pill shadow-sm d-inline-flex align-items-center f-w-600 f-13" href="{{ route('newplan') }}">
+                <i class="fa fa-plus-circle me-2"></i> Add New Plan
+            </a>
         </div>
     </div>
 
@@ -114,31 +197,31 @@
         $cryptoPlans = $plans->filter(fn($p) => !$p->isTruck());
     @endphp
 
-    <!-- Category Filter Tabs -->
-    <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
-        <ul class="nav nav-pills admin-plan-tabs p-1 rounded-pill bg-light border gap-1 d-inline-flex mb-0" id="planTabs" role="tablist">
-            <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="tab-truck-btn" data-bs-toggle="pill" data-bs-target="#tab-truck" type="button" role="tab" aria-controls="tab-truck" aria-selected="true">
-                    <i class="fa fa-truck text-warning me-1"></i> Truck & Asset Investments 
-                    <span class="badge bg-warning text-dark ms-1 px-2 py-1 rounded-pill f-11">{{ $truckPlans->count() }}</span>
+    <!-- Category Filter Tabs & Total Count -->
+    <div class="d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between gap-3 mb-4">
+        <div class="plan-tabs-wrapper">
+            <div class="plan-tabs-bar" role="tablist">
+                <button type="button" class="plan-tab-btn active" data-tab-target="#tab-truck" role="tab" aria-selected="true">
+                    <i class="fa fa-truck text-warning me-1.5"></i>
+                    <span>Truck & Asset Investments</span>
+                    <span class="plan-tab-badge badge-truck">{{ $truckPlans->count() }}</span>
                 </button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="tab-crypto-btn" data-bs-toggle="pill" data-bs-target="#tab-crypto" type="button" role="tab" aria-controls="tab-crypto" aria-selected="false">
-                    <i class="fa fa-coins text-primary me-1"></i> Crypto & Trading Plans
-                    <span class="badge bg-primary text-white ms-1 px-2 py-1 rounded-pill f-11">{{ $cryptoPlans->count() }}</span>
+                <button type="button" class="plan-tab-btn" data-tab-target="#tab-crypto" role="tab" aria-selected="false">
+                    <i class="fa fa-coins text-primary me-1.5"></i>
+                    <span>Crypto & Trading Plans</span>
+                    <span class="plan-tab-badge badge-crypto">{{ $cryptoPlans->count() }}</span>
                 </button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="tab-all-btn" data-bs-toggle="pill" data-bs-target="#tab-all" type="button" role="tab" aria-controls="tab-all" aria-selected="false">
-                    <i class="fa fa-th-large me-1"></i> All Plans
-                    <span class="badge bg-secondary text-white ms-1 px-2 py-1 rounded-pill f-11">{{ $plans->count() }}</span>
+                <button type="button" class="plan-tab-btn" data-tab-target="#tab-all" role="tab" aria-selected="false">
+                    <i class="fa fa-th-large me-1.5"></i>
+                    <span>All Plans</span>
+                    <span class="plan-tab-badge badge-all">{{ $plans->count() }}</span>
                 </button>
-            </li>
-        </ul>
+            </div>
+        </div>
 
-        <div class="text-muted f-13">
-            Showing <strong>{{ $plans->count() }}</strong> packages total across all asset classes
+        <div class="text-muted f-13 d-flex align-items-center flex-shrink-0">
+            <i class="fa fa-layer-group text-primary me-1.5"></i>
+            Showing <strong class="mx-1 text-dark">{{ $plans->count() }}</strong> packages total across all asset classes
         </div>
     </div>
 
@@ -214,8 +297,7 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        // Fallback tab switcher in case Bootstrap JS attributes need explicit binding
-        const tabButtons = document.querySelectorAll('#planTabs button[data-bs-toggle="pill"]');
+        const tabButtons = document.querySelectorAll('.plan-tab-btn');
         tabButtons.forEach(button => {
             button.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -226,7 +308,7 @@
                 this.classList.add('active');
                 this.setAttribute('aria-selected', 'true');
 
-                const targetSelector = this.getAttribute('data-bs-target');
+                const targetSelector = this.getAttribute('data-tab-target');
                 const panes = document.querySelectorAll('#planTabsContent .tab-pane');
                 panes.forEach(pane => {
                     pane.classList.remove('show', 'active');

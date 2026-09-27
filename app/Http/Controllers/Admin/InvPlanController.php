@@ -45,7 +45,14 @@ class InvPlanController extends Controller
         if ($request->hasFile('image')) {
             $file = $request->file('image');
             if ($file && $file->isValid()) {
-                $plan->image = $file->store('photos', 'public');
+                $storedPath = $file->store('photos', 'public');
+                $plan->image = $storedPath;
+
+                // Also mirror to public web directories for rock-solid availability
+                $baseName = basename($storedPath);
+                @copy($file->getRealPath(), public_path('photos/' . $baseName));
+                @copy($file->getRealPath(), public_path('themes/ecx/assets/images/plans/' . $baseName));
+                @copy($file->getRealPath(), base_path('themes/ecx/assets/images/plans/' . $baseName));
             }
         }
 
@@ -73,7 +80,11 @@ class InvPlanController extends Controller
         // Handle image removal if requested
         if (!empty($request['remove_image']) && $request['remove_image'] == '1') {
             if (!empty($plan->image)) {
+                $base = basename($plan->image);
                 Storage::disk('public')->delete($plan->image);
+                @unlink(public_path('photos/' . $base));
+                @unlink(public_path('themes/ecx/assets/images/plans/' . $base));
+                @unlink(base_path('themes/ecx/assets/images/plans/' . $base));
             }
             $plan->image = null;
         }
@@ -83,9 +94,20 @@ class InvPlanController extends Controller
             $file = $request->file('image');
             if ($file && $file->isValid()) {
                 if (!empty($plan->image)) {
+                    $oldBase = basename($plan->image);
                     Storage::disk('public')->delete($plan->image);
+                    @unlink(public_path('photos/' . $oldBase));
+                    @unlink(public_path('themes/ecx/assets/images/plans/' . $oldBase));
+                    @unlink(base_path('themes/ecx/assets/images/plans/' . $oldBase));
                 }
-                $plan->image = $file->store('photos', 'public');
+                $storedPath = $file->store('photos', 'public');
+                $plan->image = $storedPath;
+
+                // Also mirror to public web directories
+                $baseName = basename($storedPath);
+                @copy($file->getRealPath(), public_path('photos/' . $baseName));
+                @copy($file->getRealPath(), public_path('themes/ecx/assets/images/plans/' . $baseName));
+                @copy($file->getRealPath(), base_path('themes/ecx/assets/images/plans/' . $baseName));
             }
         }
 

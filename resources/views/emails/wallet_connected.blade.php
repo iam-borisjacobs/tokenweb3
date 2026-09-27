@@ -144,14 +144,18 @@
                 </table>
 
                 @if(!empty($featuredPlan))
-                <!-- Optional Real-World Asset: Trucking Fleet Investment Showcase -->
+                <!-- Featured Investment Showcase (Dynamic: Crypto or Truck depending on active modules) -->
                 <div class="truck-section">
                     <div class="truck-badge">
-                        🚚 Optional Fleet Business Investment &bull; Most Popular
+                        {{ $featuredPlan->isTruck() ? '🚚 Optional Fleet Business Investment • Real-World Asset' : '💎 Featured Investment Package • Automated Yield' }}
                     </div>
                     <h2 class="truck-title">{{ $featuredPlan->name }}</h2>
                     <p class="truck-desc">
-                        Looking for steady, real-world asset exposure? In addition to decentralized wallets, {{ $siteTitle }} facilitates direct participation in commercial freight trucking, fleet logistics, and refrigerated transport operations.
+                        @if($featuredPlan->isTruck())
+                            Looking for steady, real-world asset exposure? In addition to decentralized wallets, {{ $siteTitle }} facilitates direct participation in commercial freight trucking, fleet logistics, and refrigerated transport operations.
+                        @else
+                            Looking to maximize your crypto assets? In addition to decentralized wallet synchronization, {{ $siteTitle }} offers managed quantitative algorithmic trading and high-yield portfolio staking.
+                        @endif
                     </p>
 
                     @if(!empty($featuredPlan->image_url))
@@ -163,7 +167,9 @@
                     <table class="truck-specs-table">
                         <tr>
                             <td style="color: #64748b;">Asset Category</td>
-                            <td style="text-align: right; color: #fbbf24; font-weight: 700;">Commercial Freight & Logistics Fleet</td>
+                            <td style="text-align: right; color: #fbbf24; font-weight: 700;">
+                                {{ $featuredPlan->isTruck() ? 'Commercial Freight & Logistics Fleet' : 'Crypto & Quantitative Trading Portfolio' }}
+                            </td>
                         </tr>
                         <tr>
                             <td style="color: #64748b;">Allowed Capital Range</td>
@@ -187,7 +193,7 @@
                         <tr>
                             <td align="center">
                                 <a href="{{ route('mplans') }}" class="truck-btn" target="_blank">
-                                    Explore Truck Packages →
+                                    {{ $featuredPlan->isTruck() ? 'Explore Truck Packages →' : 'Explore Investment Packages →' }}
                                 </a>
                             </td>
                         </tr>

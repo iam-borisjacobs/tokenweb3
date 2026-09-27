@@ -1,19 +1,19 @@
 <div>
     <!-- Page Header & Action Bar -->
-    <div class="row mb-4">
-        <div class="col-12 d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-3">
+    <div class="row mb-3 mb-md-4">
+        <div class="col-12 d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center gap-3">
             <div>
-                <h3 class="f-w-700 mb-1">
+                <h3 class="f-w-800 text-dark mb-1 f-20 f-md-24">
                     <i class="fa fa-users text-primary me-2"></i> {{ $settings->site_name }} Users Directory
                 </h3>
-                <p class="text-muted mb-0 f-13">Browse, search, manage, and perform administrative operations on client accounts.</p>
+                <p class="text-muted mb-0 f-12 f-md-13">Browse, search, manage, and perform administrative operations on client accounts.</p>
             </div>
-            <div class="d-flex align-items-center gap-2">
-                <button class="btn btn-primary btn-sm rounded-pill px-4 py-2 f-w-600 shadow-sm" type="button"
+            <div class="d-flex align-items-center gap-2 flex-wrap w-100 w-sm-auto">
+                <button class="btn btn-primary btn-sm rounded-pill px-3 py-2 f-w-600 shadow-sm flex-fill flex-sm-grow-0" type="button"
                     data-bs-toggle="modal" data-bs-target="#adduser">
                     <i class="fa fa-user-plus me-1"></i> Add New User
                 </button>
-                <a class="btn btn-outline-secondary btn-sm rounded-pill px-3 py-2 f-w-600" href="{{ route('emailservices') }}">
+                <a class="btn btn-outline-secondary btn-sm rounded-pill px-3 py-2 f-w-600 flex-fill flex-sm-grow-0 text-center" href="{{ route('emailservices') }}">
                     <i class="fa fa-envelope me-1"></i> Send Broadcast
                 </a>
             </div>
@@ -24,7 +24,7 @@
     <x-success-alert />
 
     <!-- Users Table Card -->
-    <div class="card p-4 shadow-sm border-0 mb-4">
+    <div class="card p-3 p-sm-4 shadow-sm border-0 mb-4">
         <!-- Search and Bulk Action Toolbar -->
         <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4 pb-3 border-bottom">
             <div class="flex-grow-1" style="max-width: 400px;">

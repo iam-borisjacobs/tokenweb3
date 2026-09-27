@@ -14,7 +14,9 @@ class AddDarkLogoToSettingsTable extends Migration
     public function up()
     {
         Schema::table('settings', function (Blueprint $table) {
-            $table->string('dark_logo')->nullable()->after('logo');
+            if (!Schema::hasColumn('settings', 'dark_logo')) {
+                $table->string('dark_logo')->nullable()->after('logo');
+            }
         });
     }
 

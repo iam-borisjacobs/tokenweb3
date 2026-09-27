@@ -33,7 +33,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        if (config('app.env') === 'production' || env('FORCE_HTTPS', false)) {
+        if (
+            config('app.env') === 'production' 
+            || env('FORCE_HTTPS', false) 
+            || (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
+            || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https')
+            || (isset($_SERVER['SERVER_PORT']) && (int)$_SERVER['SERVER_PORT'] === 443)
+            || (!app()->runningInConsole() && !in_array(request()->getHost(), ['localhost', '127.0.0.1', 'eglines.test']))
+        ) {
             URL::forceScheme('https');
         }
 

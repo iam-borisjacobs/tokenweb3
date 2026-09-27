@@ -18,5 +18,7 @@ Route::get('terms', [HomePageController::class, 'terms'])->name('terms');
 Route::get('privacy', [HomePageController::class, 'privacy'])->name('privacy');
 Route::get('about', [HomePageController::class, 'about'])->name('about');
 Route::get('contact', [HomePageController::class, 'contact'])->name('contact');
+Route::post('contact', [HomePageController::class, 'sendcontact'])->name('contact.send');
 Route::get('faq', [HomePageController::class, 'faq'])->name('faq');
+Route::get('services', [HomePageController::class, 'services'])->name('services');
 Route::get('security', [HomePageController::class, 'security'])->name('security');

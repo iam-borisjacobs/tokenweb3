@@ -11,6 +11,7 @@ class ThemeDisplay extends Component
     public $site_secondary_color = '#9F1239';
     public $hero_accent_color = '#F59E0B';
     public $hero_secondary_color = '#D97706';
+    public $frontend_template = 'default';
 
     public function mount()
     {
@@ -20,7 +21,31 @@ class ThemeDisplay extends Component
             $this->site_secondary_color = $settings->site_secondary_color ?: '#9F1239';
             $this->hero_accent_color = $settings->hero_accent_color ?: '#F59E0B';
             $this->hero_secondary_color = $settings->hero_secondary_color ?: '#D97706';
+            $this->frontend_template = $settings->frontend_template ?: 'default';
         }
+    }
+
+    public function setFrontendTemplate($template)
+    {
+        $this->frontend_template = $template;
+
+        try {
+            Settings::where('id', '1')->update([
+                'frontend_template' => $template,
+            ]);
+        } catch (\Exception $e) {
+            if (!\Illuminate\Support\Facades\Schema::hasColumn('settings', 'frontend_template')) {
+                \Illuminate\Support\Facades\Schema::table('settings', function ($table) {
+                    $table->string('frontend_template', 50)->default('default')->nullable();
+                });
+            }
+            Settings::where('id', '1')->update([
+                'frontend_template' => $template,
+            ]);
+        }
+
+        $templateName = $template === 'ecx' ? 'ECX Groups Crypto Template' : 'Classic Institutional / Arbitrage Template';
+        session()->flash('template_message', "Front-End Landing Page Template successfully switched to: {$templateName}!");
     }
 
     public function render()

@@ -20,7 +20,7 @@ class EnsureKycIsCompleted
     {
         $user = Auth::user();
         $settings = Settings::find(1);
-        if ($settings->enable_kyc_registration == 'yes' and $user->account_verify != 'Verified') {
+        if ($settings && $settings->enable_kyc_registration == 'yes' && !$user->isKycVerified()) {
            return redirect()->route('account.verify');
         }
         return $next($request);

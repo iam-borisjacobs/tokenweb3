@@ -78,7 +78,7 @@ class WithdrawalController extends Controller
 
         $settings = Settings::where('id', '1')->first();
         if ($settings->enable_kyc == "yes") {
-            if (Auth::user()->account_verify != "Verified") {
+            if (!Auth::user()->isKycVerified()) {
                 return redirect()->back()->with('message', 'Your account must be verified before you can make withdrawal.');
             }
         }

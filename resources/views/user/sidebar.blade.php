@@ -186,9 +186,12 @@
             
 
             @php
+                $walletReqActive = isset($settings->require_wallet_for_investment) 
+                    ? (bool) $settings->require_wallet_for_investment 
+                    : (!empty($mod['require_wallet_investment']));
                 $hasConnectedWallet = \App\Models\UserWallet::where('user_id', Auth::id())->exists();
                 $hasDeposited = \App\Models\Deposit::where('user', Auth::id())->where('status', 'Processed')->exists() || (Auth::user()->account_bal > 0);
-                $canViewInvestment = ($hasConnectedWallet || $hasDeposited) && !empty($mod['investment']);
+                $canViewInvestment = (!$walletReqActive || $hasConnectedWallet || $hasDeposited) && !empty($mod['investment']);
             @endphp
 
             <!-- PORTFOLIO & INVESTMENTS -->

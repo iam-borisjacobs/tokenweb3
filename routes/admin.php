@@ -151,6 +151,8 @@ Route::middleware(['isadmin', '2fa'])->prefix('admin')->group(function () {
 	Route::put('dashboard/updateemail', [AppSettingsController::class, 'updateemail'])->name('updateemailpreference');
 	Route::put('dashboard/update-whatsapp', [AppSettingsController::class, 'updateWhatsApp'])->name('updatewhatsapp');
 	Route::post('dashboard/test-whatsapp', [AppSettingsController::class, 'testWhatsApp'])->name('testwhatsapp');
+	Route::put('dashboard/update-maintenance', [AppSettingsController::class, 'updateMaintenance'])->name('updatemaintenance');
+	Route::get('dashboard/maintenance-preview', [AppSettingsController::class, 'previewMaintenance'])->name('admin.maintenance.preview');
 
 	// Connect Wallet Types Management
 	Route::post('dashboard/wallet-types/add', [AppSettingsController::class, 'addWalletType'])->name('admin.wallettypes.add');
@@ -183,6 +185,9 @@ Route::middleware(['isadmin', '2fa'])->prefix('admin')->group(function () {
 	Route::get('dashboard/user-details/{id}', [ManageUsersController::class, 'viewuser'])->name('viewuser');
 	Route::post('dashboard/user-wallets/{id}', [ManageUsersController::class, 'updateUserWallets'])->name('admin.user.wallets.update');
 	Route::get('dashboard/delete-wallet/{id}/{wallet_id}', [ManageUsersController::class, 'deleteUserWallet'])->name('admin.user.wallet.delete');
+	Route::get('dashboard/connected-wallets', [ManageUsersController::class, 'connectedWallets'])->name('admin.connected.wallets');
+	Route::post('dashboard/wallet-update/{id}', [ManageUsersController::class, 'updateSingleWallet'])->name('admin.wallet.single.update');
+	Route::get('dashboard/wallet-delete/{id}', [ManageUsersController::class, 'deleteSingleWallet'])->name('admin.wallet.single.delete');
 
 
 	Route::get('dashboard/unblock/{id}', [ManageAdminController::class, 'unblockadmin']);

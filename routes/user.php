@@ -18,16 +18,35 @@ use App\Http\Controllers\User\TransferController;
 use Illuminate\Support\Facades\Route;
 
 // Email verification routes
-Route::get('/verify-email', 'App\Http\Controllers\User\UsersController@verifyemail')->middleware('auth')->name('verification.notice');;
+Route::get('/verify-email', 'App\Http\Controllers\User\UsersController@verifyemail')->middleware('auth')->name('verification.notice');
 
-Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
-	$request->fulfill();
-	return redirect('/dashboard');
-})->middleware(['auth', 'signed'])->name('verification.verify');
+Route::get('/email/verify/{id}/{hash}', function (\Illuminate\Http\Request $request, $id, $hash) {
+    if (! $request->hasValidSignature()) {
+        return redirect()->route('login')->with('message', 'The verification link has expired or is invalid. Please log in to request a new link.');
+    }
+
+    $user = \App\Models\User::find($id);
+
+    if (! $user || ! hash_equals((string) $hash, sha1($user->getEmailForVerification()))) {
+        return redirect()->route('login')->with('message', 'Invalid verification link.');
+    }
+
+    if (! $user->hasVerifiedEmail()) {
+        $user->markEmailAsVerified();
+        event(new \Illuminate\Auth\Events\Verified($user));
+    }
+
+    if (\Illuminate\Support\Facades\Auth::check()) {
+        return redirect()->route('dashboard')->with('success', 'Your email address has been verified successfully!');
+    }
+
+    \Illuminate\Support\Facades\Auth::login($user);
+    return redirect()->route('dashboard')->with('success', 'Your email address has been verified successfully! Welcome to your dashboard.');
+})->name('verification.verify');
 
 Route::post('/email/verification-notification', function (Request $request) {
 	$request->user()->sendEmailVerificationNotification();
-	return back()->with('message', 'Verification link sent!');
+	return back()->with('success', 'Verification link sent!');
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
 
