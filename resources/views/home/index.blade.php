@@ -441,7 +441,7 @@
 
                 <div class="col-12 col-sm-6 col-xl-3">
                     <div class="stats">
-                        <span class="stats__value">{{ number_format($total_users ?? 5812) }}+</span>
+                        <span class="stats__value">25,000 +</span>
                         <p class="stats__name">Protected Investors</p>
                     </div>
                 </div>
