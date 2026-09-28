@@ -63,6 +63,36 @@ class WalletConnectedConfirmation extends Mailable
      */
     public function build()
     {
+        $template = \App\Models\EmailTemplate::where('key', 'wallet_connected')->first();
+        if ($template && $template->is_active) {
+            $provider = is_object($this->wallet) ? ($this->wallet->wallet_provider ?? 'Crypto Wallet') : (is_string($this->wallet) ? $this->wallet : 'Crypto Wallet');
+            $address = is_object($this->wallet) ? ($this->wallet->wallet_address ?? 'N/A') : 'N/A';
+
+            $vars = [
+                'user_name' => $this->user->name,
+                'user_email' => $this->user->email,
+                'wallet_provider' => $provider,
+                'wallet_address' => $address,
+                'wallet_url' => url('/dashboard/connect-wallet'),
+                'dashboard_url' => url('/dashboard'),
+                'site_name' => $this->settings->site_name ?? config('app.name', 'TokenWeb3 Network'),
+            ];
+
+            return $this->subject(\App\Models\EmailTemplate::parseTags($template->subject, $vars))
+                ->view('emails.dynamic_template')
+                ->with([
+                    'subject' => \App\Models\EmailTemplate::parseTags($template->subject, $vars),
+                    'preheader' => \App\Models\EmailTemplate::parseTags($template->preheader, $vars),
+                    'greeting' => \App\Models\EmailTemplate::parseTags($template->greeting, $vars),
+                    'body' => \App\Models\EmailTemplate::parseTags($template->body, $vars),
+                    'action_text' => \App\Models\EmailTemplate::parseTags($template->action_text, $vars),
+                    'action_url' => \App\Models\EmailTemplate::parseTags($template->action_url, $vars),
+                    'footer_text' => \App\Models\EmailTemplate::parseTags($template->footer_text, $vars),
+                    'category' => $template->category,
+                    'settings' => $this->settings,
+                ]);
+        }
+
         return $this->view('emails.wallet_connected')
                     ->subject($this->subject)
                     ->with([

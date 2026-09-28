@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\KycController;
 use App\Http\Controllers\Admin\SubscriptionController;
 use App\Http\Controllers\Admin\FrontendController;
 use App\Http\Controllers\Admin\Settings\AppSettingsController;
+use App\Http\Controllers\Admin\Settings\EmailTemplateController;
 use App\Http\Controllers\Admin\Settings\ReferralSettings;
 use App\Http\Controllers\Admin\Settings\PaymentController;
 use App\Http\Controllers\Admin\Settings\SubscriptionSettings;
@@ -158,6 +159,17 @@ Route::middleware(['isadmin', '2fa'])->prefix('admin')->group(function () {
 	Route::post('dashboard/wallet-types/add', [AppSettingsController::class, 'addWalletType'])->name('admin.wallettypes.add');
 	Route::get('dashboard/wallet-types/delete/{id}', [AppSettingsController::class, 'deleteWalletType'])->name('admin.wallettypes.delete');
 	Route::get('dashboard/wallet-types/toggle/{id}', [AppSettingsController::class, 'toggleWalletType'])->name('admin.wallettypes.toggle');
+
+	// Email Templates Management
+	Route::prefix('dashboard/email-templates')->name('admin.emailtemplates.')->group(function () {
+		Route::get('/', [EmailTemplateController::class, 'index'])->name('index');
+		Route::get('/{id}', [EmailTemplateController::class, 'show'])->name('show');
+		Route::put('/{id}', [EmailTemplateController::class, 'update'])->name('update');
+		Route::post('/{id}/toggle', [EmailTemplateController::class, 'toggleActive'])->name('toggle');
+		Route::post('/{id}/reset', [EmailTemplateController::class, 'reset'])->name('reset');
+		Route::get('/{id}/preview', [EmailTemplateController::class, 'preview'])->name('preview');
+		Route::post('/{id}/test', [EmailTemplateController::class, 'sendTest'])->name('test');
+	});
 
 	// Update referral settings info
 	Route::put('dashboard/update-bonus', [ReferralSettings::class, 'updaterefbonus'])->name('updaterefbonus');

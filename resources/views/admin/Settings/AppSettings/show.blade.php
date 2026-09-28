@@ -483,6 +483,7 @@
                         <li class="dropdown-header">Comms & Auth</li>
                         <li><button type="button" class="dropdown-item" data-target-tab="#email"><i class="fa fa-envelope text-warning"></i> Email & Google Captcha</button></li>
                         <li><button type="button" class="dropdown-item" data-target-tab="#whatsapp"><i class="fa fa-whatsapp text-success"></i> WhatsApp Alerts</button></li>
+                        <li><button type="button" class="dropdown-item" data-target-tab="#email-templates"><i class="fa fa-envelope-open-text text-primary"></i> Email Templates</button></li>
                     </ul>
                 </div>
 
@@ -533,6 +534,11 @@
                             <i class="fa fa-whatsapp"></i> WhatsApp
                         </button>
                     </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" data-bs-toggle="pill" data-bs-target="#email-templates" type="button" role="tab">
+                            <i class="fa fa-envelope-open-text"></i> Templates
+                        </button>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -548,7 +554,7 @@
                         <h6 class="f-w-700 mb-0">Configuration Hub</h6>
                         <small class="text-muted f-11">Manage platform settings</small>
                     </div>
-                    <span class="badge bg-light-primary text-primary rounded-pill f-10">9 Sections</span>
+                    <span class="badge bg-light-primary text-primary rounded-pill f-10">10 Sections</span>
                 </div>
 
                 <div class="nav flex-column" id="desktopSettingsTabs" role="tablist">
@@ -639,6 +645,13 @@
                             <span class="settings-rail-desc">Automated message alerts</span>
                         </div>
                     </button>
+                    <button class="settings-rail-btn" data-bs-toggle="pill" data-bs-target="#email-templates" type="button" role="tab" id="rail-email-templates-tab">
+                        <div class="settings-rail-icon"><i class="fa fa-envelope-open-text text-primary"></i></div>
+                        <div class="flex-grow-1">
+                            <span class="settings-rail-title">Email Templates</span>
+                            <span class="settings-rail-desc">Outgoing system emails editor</span>
+                        </div>
+                    </button>
                 </div>
             </div>
         </div>
@@ -675,6 +688,9 @@
                     <div class="tab-pane fade" id="maintenance" role="tabpanel" aria-labelledby="maintenance-tab">
                         @include('admin.Settings.AppSettings.maintenance')
                     </div>
+                    <div class="tab-pane fade" id="email-templates" role="tabpanel" aria-labelledby="email-templates-tab">
+                        @include('admin.Settings.AppSettings.email_templates')
+                    </div>
                 </div>
             </div>
         </div>
@@ -701,7 +717,8 @@
                 '#wallets': { label: 'Crypto Deposit Wallets', icon: 'fa-wallet', color: 'text-success' },
                 '#wallet-types': { label: 'Supported Wallets', icon: 'fa-plug', color: 'text-info' },
                 '#email': { label: 'Email & Authentication', icon: 'fa-envelope', color: 'text-warning' },
-                '#whatsapp': { label: 'WhatsApp Alerts', icon: 'fa-whatsapp', color: 'text-success' }
+                '#whatsapp': { label: 'WhatsApp Alerts', icon: 'fa-whatsapp', color: 'text-success' },
+                '#email-templates': { label: 'Email Templates', icon: 'fa-envelope-open-text', color: 'text-primary' }
             };
 
             // Unified Tab Activation Controller

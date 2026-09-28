@@ -30,6 +30,32 @@ class NewRegistration extends Mailable
      */
     public function build()
     {
+        $template = \App\Models\EmailTemplate::where('key', 'social_registration')->first();
+        if ($template && $template->is_active) {
+            $settings = \App\Models\Settings::find(1);
+            $vars = [
+                'user_name' => 'Investor',
+                'password' => $this->demo->password ?? '',
+                'site_name' => $this->demo->sender ?? ($settings->site_name ?? config('app.name')),
+                'dashboard_url' => url('/dashboard'),
+                'login_url' => url('/login'),
+            ];
+
+            return $this->subject(\App\Models\EmailTemplate::parseTags($template->subject, $vars))
+                ->view('emails.dynamic_template')
+                ->with([
+                    'subject' => \App\Models\EmailTemplate::parseTags($template->subject, $vars),
+                    'preheader' => \App\Models\EmailTemplate::parseTags($template->preheader, $vars),
+                    'greeting' => \App\Models\EmailTemplate::parseTags($template->greeting, $vars),
+                    'body' => \App\Models\EmailTemplate::parseTags($template->body, $vars),
+                    'action_text' => \App\Models\EmailTemplate::parseTags($template->action_text, $vars),
+                    'action_url' => \App\Models\EmailTemplate::parseTags($template->action_url, $vars),
+                    'footer_text' => \App\Models\EmailTemplate::parseTags($template->footer_text, $vars),
+                    'category' => $template->category,
+                    'settings' => $settings,
+                ]);
+        }
+
         return $this->markdown('emails.demotext');
     }
 }

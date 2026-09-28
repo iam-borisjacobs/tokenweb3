@@ -9,6 +9,7 @@ use App\Models\SettingsCont;
 use App\Models\Wdmethod;
 use App\Models\WalletType;
 use App\Models\WhatsAppSetting;
+use App\Models\EmailTemplate;
 use App\Services\WhatsAppService;
 use Illuminate\Support\Facades\Storage;
 
@@ -29,6 +30,11 @@ class AppSettingsController extends Controller
             'cryptoMethods' => Wdmethod::where('methodtype', 'crypto')->orderByDesc('id')->get(),
             'walletTypes' => WalletType::orderBy('name', 'asc')->get(),
             'whatsappSettings' => WhatsAppSetting::getSettings(),
+            'emailTemplates' => tap(EmailTemplate::query(), function () {
+                if (EmailTemplate::count() === 0) {
+                    EmailTemplate::seedDefaults();
+                }
+            })->orderBy('category', 'asc')->orderBy('name', 'asc')->get(),
         ]);
     }
 

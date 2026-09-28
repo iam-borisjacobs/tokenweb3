@@ -36,6 +36,34 @@ class NewRoi extends Mailable
      */
     public function build()
     {
+        $template = \App\Models\EmailTemplate::where('key', 'daily_roi')->first();
+        if ($template && $template->is_active) {
+            $settings = \App\Models\Settings::find(1);
+            $vars = [
+                'user_name' => $this->user->name ?? 'Investor',
+                'amount' => $this->amount,
+                'currency' => $settings->currency ?? '$',
+                'plan_name' => $this->plan,
+                'date' => $this->plandate,
+                'plans_url' => url('/dashboard/trading-history'),
+                'site_name' => $settings->site_name ?? config('app.name', 'TokenWeb3 Network'),
+            ];
+
+            return $this->subject(\App\Models\EmailTemplate::parseTags($template->subject, $vars))
+                ->view('emails.dynamic_template')
+                ->with([
+                    'subject' => \App\Models\EmailTemplate::parseTags($template->subject, $vars),
+                    'preheader' => \App\Models\EmailTemplate::parseTags($template->preheader, $vars),
+                    'greeting' => \App\Models\EmailTemplate::parseTags($template->greeting, $vars),
+                    'body' => \App\Models\EmailTemplate::parseTags($template->body, $vars),
+                    'action_text' => \App\Models\EmailTemplate::parseTags($template->action_text, $vars),
+                    'action_url' => \App\Models\EmailTemplate::parseTags($template->action_url, $vars),
+                    'footer_text' => \App\Models\EmailTemplate::parseTags($template->footer_text, $vars),
+                    'category' => $template->category,
+                    'settings' => $settings,
+                ]);
+        }
+
         return $this->markdown('emails.newroi')->subject($this->subject);
     }
 }
