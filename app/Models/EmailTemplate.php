@@ -168,7 +168,7 @@ class EmailTemplate extends Model
     <h3 style="font-size:16px; font-weight:700; color:#ffffff; margin:0 0 8px;">PETERBILT HEAVY-HAUL LOGISTICS</h3>
     <p style="font-size:12.5px; line-height:1.55; color:#94a3b8; margin:0 0 14px;">Looking for steady, real-world asset exposure? In addition to decentralized wallets, {{site_name}} facilitates direct participation in commercial freight trucking, fleet logistics, and refrigerated transport operations.</p>
     <div style="margin-bottom:14px; border-radius:8px; overflow:hidden; max-height:180px; background:#0b0f19;">
-        <img src="{{site_url}}/storage/photos/truck_peterbilt_freight.jpg" alt="Commercial Fleet Truck" style="width:100%; height:auto; max-height:180px; object-fit:cover; display:block;" onerror="this.src=\'{{site_url}}/themes/ecx/assets/images/logo/logo-dark.png\';">
+        <img src="{{site_url}}/themes/ecx/assets/images/plans/truck_peterbilt_freight.jpg" alt="Commercial Fleet Truck" style="width:100%; height:auto; max-height:180px; object-fit:cover; display:block;" onerror="this.src=\'{{site_url}}/themes/ecx/assets/images/logo/logo-dark.png\';">
     </div>
     <table style="width:100%; border-collapse:collapse; margin-bottom:16px;">
         <tr style="border-bottom:1px solid #1e293b;"><td style="padding:7px 0; font-size:12px; color:#64748b;">Asset Category</td><td style="padding:7px 0; font-size:12px; text-align:right; color:#fbbf24; font-weight:700;">Commercial Freight & Logistics Fleet</td></tr>

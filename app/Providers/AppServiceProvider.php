@@ -50,8 +50,36 @@ class AppServiceProvider extends ServiceProvider
 
         Paginator::useBootstrap();
 
+        try {
+            \App\Helpers\MetaBannerHelper::ensureMetaBannerExists();
+        } catch (\Throwable $e) {
+            // Silently continue if filesystem write is restricted
+        }
+
         // Sharing settings with all view
         $settings = Settings::where('id', '1')->first();
+        if ($settings) {
+            $dirty = false;
+            if (empty($settings->description) || str_contains(strtolower($settings->description), 'largest cryptocurrency exchange') || str_contains(strtolower($settings->description), 'online trader')) {
+                $settings->description = 'Enterprise-grade digital asset defense, 1:1 segregated cold vault custody, and market-neutral algorithmic arbitrage platform.';
+                $dirty = true;
+            }
+            if (empty($settings->site_title) || $settings->site_title === $settings->site_name || str_contains(strtolower($settings->site_title), 'online trader')) {
+                $settings->site_title = 'Asset Protection & Institutional Arbitrage';
+                $dirty = true;
+            }
+            if (str_contains(strtolower($settings->site_name ?? ''), 'online trader')) {
+                $settings->site_name = 'Tokenweb3 Network';
+                $dirty = true;
+            }
+            if ($dirty) {
+                try {
+                    $settings->save();
+                } catch (\Exception $e) {
+                    // Fallback gracefully if database is locked or read-only
+                }
+            }
+        }
         $terms =  TermsPrivacy::find(1);
         $moreset =  SettingsCont::find(1);
 

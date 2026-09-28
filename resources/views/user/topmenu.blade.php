@@ -215,7 +215,7 @@
                             <i class="fa fa-key text-warning me-2 f-12"></i> Account Security
                         </a>
                         <div class="dropdown-divider my-2"></div>
-                        <a class="dropdown-item py-2 rounded text-danger" href="{{ route('logout') }}"
+                        <a class="dropdown-item py-2 rounded text-danger" href="{{ route('logout.get') }}"
                             onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                             <i class="fa fa-sign-out-alt me-2 f-12"></i> Logout
                         </a>

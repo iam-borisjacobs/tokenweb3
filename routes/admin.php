@@ -34,7 +34,7 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('adminlogin')->group(function () {
 	Route::get('login', [LoginController::class, 'showLoginForm'])->name('adminloginform')->middleware('adminguest');
 	Route::post('login', [LoginController::class, 'adminlogin'])->name('adminlogin');
-	Route::post('logout', [LoginController::class, 'adminlogout'])->name('adminlogout');
+	Route::match(['get', 'post'], 'logout', [LoginController::class, 'adminlogout'])->name('adminlogout');
 	Route::get('dashboard', [LoginController::class, 'validate_admin'])->name('validate_admin');
 });
 

@@ -219,8 +219,8 @@
                     </p>
 
                     @php
-                        $truckImg = !empty($featuredPlan->picture) ? asset('storage/photos/' . $featuredPlan->picture) : asset('storage/photos/truck_peterbilt_freight.jpg');
-                        $truckFallback = asset('storage/photos/truck_freightliner_cascadia.jpg');
+                        $truckImg = !empty($featuredPlan->picture) ? asset('themes/ecx/assets/images/plans/' . basename($featuredPlan->picture)) : asset('themes/ecx/assets/images/plans/truck_peterbilt_freight.jpg');
+                        $truckFallback = asset('themes/ecx/assets/images/plans/truck_freightliner_cascadia.jpg');
                     @endphp
                     <div style="margin-bottom: 14px; border-radius: 8px; overflow: hidden; max-height: 180px; background-color: #0b0f19;">
                         <img src="{{ $truckImg }}" alt="{{ $featuredPlan->name }}" style="width: 100%; height: auto; max-height: 180px; object-fit: cover; display: block;" onerror="this.src='{{ $truckFallback }}';">

@@ -677,7 +677,7 @@
                 <li class="sidebar-list {{ request()->routeIs('aboutonlinetrade') ? 'active' : '' }}">
                     <a class="sidebar-link {{ request()->routeIs('aboutonlinetrade') ? 'active' : '' }}" href="{{ url('/admin/dashboard/about') }}">
                         <i class="fa fa-info-circle f-16 me-2 text-muted"></i>
-                        <h6>About Onlinetrader</h6>
+                        <h6>System Architecture</h6>
                     </a>
                 </li>
             @endif

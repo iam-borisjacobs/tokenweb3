@@ -14,7 +14,7 @@
         <meta itemprop="name" content="{{$settings->site_name}} - {{$settings->site_title}}">
         <meta itemprop="description"
             content="{{$settings->description}}">
-        <meta itemprop="image" content="{{asset('temp/images/meta.png')}}">
+        <meta itemprop="image" content="{{ asset('temp/images/meta.png') }}?v={{ time() }}">
         
         <link rel="icon" href="{{ asset('storage/app/public/'. $settings->favicon) }}" type="image/png"/>
         @section('styles')

@@ -13,10 +13,15 @@
     <meta name="author" content="{{ $settings->site_name ?? 'ECX Groups' }}">
 
     <!-- Open Graph -->
-    <meta property="og:title" content="{{ $settings->site_name ?? 'ECX Groups' }} - {{ $settings->site_title ?? 'Investment Platform' }}">
-    <meta property="og:site_name" content="{{ $settings->site_name ?? 'ECX Groups' }}">
-    <meta property="og:description" content="{{ $settings->description ?? 'Welcome to ECX Groups, the premier cryptocurrency and investment management platform.' }}">
+    <meta property="og:title" content="{{ $settings->site_name ?? 'Tokenweb3 Network' }} - {{ $settings->site_title ?? 'Institutional Asset Defense & Arbitrage' }}">
+    <meta property="og:site_name" content="{{ $settings->site_name ?? 'Tokenweb3 Network' }}">
+    <meta property="og:description" content="{{ $settings->description ?? 'Enterprise-grade digital asset defense, 1:1 segregated cold vault custody, and market-neutral algorithmic arbitrage platform.' }}">
     <meta property="og:type" content="website">
+    <meta property="og:image" content="{{ asset('temp/images/meta.png') }}?v={{ time() }}">
+    <meta property="og:image:width" content="1280">
+    <meta property="og:image:height" content="720">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="{{ asset('temp/images/meta.png') }}?v={{ time() }}">
 
     <!-- Favicon -->
     @if(!empty($settings->favicon))

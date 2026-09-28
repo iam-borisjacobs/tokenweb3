@@ -8,15 +8,42 @@
     <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
     <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
 
-    <title>{{ $settings->site_name }} – @yield('title', $settings->site_title)</title>
-    <meta name="description" content="{{ $settings->description }}">
-    <meta name="keywords" content="crypto, asset protection, arbitrage, investment, trading, portfolio security">
-    <meta name="author" content="{{ $settings->site_name }}">
+    @php
+        $siteName = $settings->site_name ?? 'Tokenweb3 Network';
+        $siteTitle = (!empty($settings->site_title) && $settings->site_title !== $siteName)
+            ? $settings->site_title 
+            : 'Asset Protection & Institutional Arbitrage';
+        $siteDesc = (!empty($settings->description) && !str_contains(strtolower($settings->description), 'largest cryptocurrency exchange') && !str_contains(strtolower($settings->description), 'online trader'))
+            ? $settings->description
+            : 'Enterprise-grade digital asset defense, 1:1 segregated cold vault custody, and market-neutral algorithmic arbitrage platform.';
+        $metaImage = asset('temp/images/meta.png') . '?v=' . (file_exists(public_path('temp/images/meta.png')) ? filemtime(public_path('temp/images/meta.png')) : time());
+    @endphp
 
-    <!-- Open Graph / Meta -->
-    <meta property="og:title" content="{{ $settings->site_name }} – {{ $settings->site_title }}">
-    <meta property="og:description" content="{{ $settings->description }}">
-    <meta property="og:image" content="{{ asset('temp/images/meta.png') }}">
+    <title>{{ $siteName }} – @yield('title', $siteTitle)</title>
+    <meta name="title" content="{{ $siteName }} – @yield('title', $siteTitle)">
+    <meta name="description" content="{{ $siteDesc }}">
+    <meta name="keywords" content="crypto, asset protection, arbitrage, investment, trading, portfolio security, cold storage">
+    <meta name="author" content="{{ $siteName }}">
+
+    <!-- Open Graph / WhatsApp / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:site_name" content="{{ $siteName }}">
+    <meta property="og:title" content="{{ $siteName }} – {{ $siteTitle }}">
+    <meta property="og:description" content="{{ $siteDesc }}">
+    <meta property="og:image" content="{{ $metaImage }}">
+    <meta property="og:image:secure_url" content="{{ $metaImage }}">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1280">
+    <meta property="og:image:height" content="720">
+    <meta property="og:image:alt" content="{{ $siteName }} – Institutional Asset Defense & Arbitrage">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="{{ url()->current() }}">
+    <meta name="twitter:title" content="{{ $siteName }} – {{ $siteTitle }}">
+    <meta name="twitter:description" content="{{ $siteDesc }}">
+    <meta name="twitter:image" content="{{ $metaImage }}">
 
     <!-- Favicons -->
     @if(!empty($settings->favicon))
