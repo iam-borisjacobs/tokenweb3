@@ -234,14 +234,27 @@
                         <small class="text-muted f-11 d-none d-sm-inline">Updates in real-time as you type</small>
                     </div>
 
-                    <!-- Viewport Toggle: Desktop vs Mobile -->
-                    <div class="btn-group btn-group-sm" role="group" id="previewDeviceToggle">
-                        <button type="button" class="btn btn-outline-secondary active px-3" data-device="desktop" title="Desktop Email View">
-                            <i class="fa fa-desktop me-1"></i> Desktop
-                        </button>
-                        <button type="button" class="btn btn-outline-secondary px-3" data-device="mobile" title="Mobile Phone View">
-                            <i class="fa fa-mobile me-1"></i> Phone
-                        </button>
+                    <!-- Toolbar: Inbox Theme & Viewport Toggles -->
+                    <div class="d-flex align-items-center gap-2">
+                        <!-- Theme Toggle: Dark vs Light Inbox -->
+                        <div class="btn-group btn-group-sm" role="group" id="previewThemeToggle" title="Toggle Inbox Theme Preview">
+                            <button type="button" class="btn btn-outline-secondary active px-2 px-sm-3" data-theme="dark" title="Dark Mode Inbox View">
+                                <i class="fa fa-moon-o me-1"></i> Dark
+                            </button>
+                            <button type="button" class="btn btn-outline-secondary px-2 px-sm-3" data-theme="light" title="Light Mode Inbox View">
+                                <i class="fa fa-sun-o me-1 text-warning"></i> Light
+                            </button>
+                        </div>
+
+                        <!-- Viewport Toggle: Desktop vs Mobile -->
+                        <div class="btn-group btn-group-sm" role="group" id="previewDeviceToggle">
+                            <button type="button" class="btn btn-outline-secondary active px-2 px-sm-3" data-device="desktop" title="Desktop Email View">
+                                <i class="fa fa-desktop me-1"></i> Desktop
+                            </button>
+                            <button type="button" class="btn btn-outline-secondary px-2 px-sm-3" data-device="mobile" title="Mobile Phone View">
+                                <i class="fa fa-mobile me-1"></i> Phone
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -265,13 +278,25 @@
                             <div class="mockup-header text-center">
                                 @php
                                     $siteTitle = $settings->site_name ?? 'TokenWeb3 Network';
-                                    $logoUrl = !empty($settings->dark_logo) ? asset('storage/' . $settings->dark_logo) : (!empty($settings->logo) ? asset('storage/' . $settings->logo) : null);
+                                    $darkLogoUrl = !empty($settings->dark_logo) ? asset('storage/' . $settings->dark_logo) : null;
+                                    $lightLogoUrl = !empty($settings->logo) ? asset('storage/' . $settings->logo) : null;
+                                    $themeLogo = asset('themes/standard/assets/images/logo.png');
+                                    $initialLogo = $darkLogoUrl ?: ($lightLogoUrl ?: $themeLogo);
                                 @endphp
-                                @if($logoUrl)
-                                    <img src="{{ $logoUrl }}" alt="{{ $siteTitle }}" class="mockup-logo">
-                                @else
-                                    <h4 class="mockup-brand-title mb-0">{{ $siteTitle }}</h4>
-                                @endif
+                                <div class="mockup-logo-wrapper" id="mockupLogoWrapper">
+                                    <img src="{{ $initialLogo }}" alt="{{ $siteTitle }}" class="mockup-logo" id="mockupLogoImg"
+                                         data-dark-src="{{ $darkLogoUrl ?: ($lightLogoUrl ?: $themeLogo) }}"
+                                         data-light-src="{{ $lightLogoUrl ?: ($darkLogoUrl ?: $themeLogo) }}"
+                                         onerror="this.onerror=null; this.src='{{ $themeLogo }}'; this.onerror=function(){ this.style.display='none'; document.getElementById('mockupSvgLogo').style.display='inline-flex'; };">
+                                    <div id="mockupSvgLogo" style="display: none; align-items: center; justify-content: center; gap: 8px;">
+                                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M12 2L3 7V12C3 17.52 6.84 22.74 12 24C17.16 22.74 21 17.52 21 12V7L12 2Z" fill="#6362e7"/>
+                                            <path d="M12 6L6 9.5V13C6 16.5 8.5 20.5 12 21.5C15.5 20.5 18 16.5 18 13V9.5L12 6Z" fill="#4338ca"/>
+                                            <path d="M10 12.5L8.5 11L7.5 12L10 14.5L16.5 8L15.5 7L10 12.5Z" fill="#ffffff"/>
+                                        </svg>
+                                        <h4 class="mockup-brand-title mb-0" id="mockupSvgTitle">{{ $siteTitle }}</h4>
+                                    </div>
+                                </div>
                                 <div class="mt-2">
                                     <span class="mockup-badge" id="previewCategoryBadge">Onboarding & Auth</span>
                                 </div>
@@ -294,11 +319,11 @@
 
                             <!-- Email Footer -->
                             <div class="mockup-footer text-center">
-                                <p class="mb-2 text-muted f-12" id="previewFooterDisclaimer">If you did not create this account, please immediately contact our 24/7 security desk.</p>
-                                <div class="f-11 text-muted">
+                                <p class="mb-2 f-12" id="previewFooterDisclaimer">If you did not create this account, please immediately contact our 24/7 security desk.</p>
+                                <div class="f-11">
                                     &copy; {{ date('Y') }} <strong>{{ $siteTitle }}</strong>. All rights reserved.
                                 </div>
-                                <div class="f-10 text-muted mt-1 opacity-75">
+                                <div class="f-10 mt-1 opacity-75">
                                     Automated dispatch sent to alex.wright@example.com
                                 </div>
                             </div>
@@ -450,6 +475,88 @@
         background-color: #0b0f19;
         padding: 20px 24px;
         border-top: 1px solid #1e293b;
+        color: #94a3b8;
+    }
+    .mockup-footer p {
+        color: #94a3b8 !important;
+    }
+    .mockup-footer div {
+        color: #64748b !important;
+    }
+    .mockup-logo-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 40px;
+    }
+
+    /* Light Mode Inbox Simulation Styles */
+    .mail-client-window.is-light-email {
+        background-color: #e2e8f0;
+    }
+    .mail-client-window.is-light-email .mail-client-meta {
+        background: #ffffff;
+        border-color: #cbd5e1;
+        color: #1e293b;
+    }
+    .mail-client-window.is-light-email .mail-client-meta .text-muted {
+        color: #64748b !important;
+    }
+    .mail-client-window.is-light-email .email-mockup-card {
+        background-color: #ffffff !important;
+        border-color: #cbd5e1 !important;
+        color: #334155 !important;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08) !important;
+    }
+    .mail-client-window.is-light-email .mockup-header {
+        background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%) !important;
+        border-bottom: 1px solid #e2e8f0 !important;
+    }
+    .mail-client-window.is-light-email .mockup-brand-title {
+        color: #0f172a !important;
+    }
+    .mail-client-window.is-light-email .mockup-badge {
+        background: #eef2ff !important;
+        border-color: #c7d2fe !important;
+        color: #4338ca !important;
+    }
+    .mail-client-window.is-light-email .mockup-body {
+        color: #334155 !important;
+    }
+    .mail-client-window.is-light-email .mockup-greeting {
+        color: #0f172a !important;
+    }
+    .mail-client-window.is-light-email .mockup-content p {
+        color: #334155 !important;
+    }
+    .mail-client-window.is-light-email .mockup-content strong {
+        color: #0f172a !important;
+    }
+    .mail-client-window.is-light-email .mockup-content code {
+        background: #f1f5f9 !important;
+        border-color: #cbd5e1 !important;
+        color: #0284c7 !important;
+    }
+    .mail-client-window.is-light-email .mockup-content table {
+        border-color: #e2e8f0 !important;
+        background-color: #ffffff !important;
+        color: #334155 !important;
+    }
+    .mail-client-window.is-light-email .mockup-content table td,
+    .mail-client-window.is-light-email .mockup-content table th {
+        border-color: #e2e8f0 !important;
+        color: #334155 !important;
+    }
+    .mail-client-window.is-light-email .mockup-footer {
+        background-color: #f8fafc !important;
+        border-top: 1px solid #e2e8f0 !important;
+        color: #64748b !important;
+    }
+    .mail-client-window.is-light-email .mockup-footer p {
+        color: #64748b !important;
+    }
+    .mail-client-window.is-light-email .mockup-footer div {
+        color: #94a3b8 !important;
     }
 
     /* Tag Chip Badges */
@@ -952,6 +1059,32 @@
                 testEmailFeedback.className = 'mt-2 f-12 text-danger';
                 testEmailFeedback.innerHTML = '<i class="fa fa-exclamation-triangle me-1"></i> Network error while dispatching test email.';
                 console.error(err);
+            });
+        });
+
+        // Inbox Theme Toggle (Dark vs Light Inbox)
+        document.querySelectorAll('#previewThemeToggle button').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                var theme = this.getAttribute('data-theme');
+                document.querySelectorAll('#previewThemeToggle button').forEach(function(b) {
+                    b.classList.remove('active', 'btn-primary');
+                    b.classList.add('btn-outline-secondary');
+                });
+                this.classList.remove('btn-outline-secondary');
+                this.classList.add('active', 'btn-primary');
+
+                var logoImg = document.getElementById('mockupLogoImg');
+                if (theme === 'light') {
+                    mailClientFrame.classList.add('is-light-email');
+                    if (logoImg && logoImg.getAttribute('data-light-src')) {
+                        logoImg.src = logoImg.getAttribute('data-light-src');
+                    }
+                } else {
+                    mailClientFrame.classList.remove('is-light-email');
+                    if (logoImg && logoImg.getAttribute('data-dark-src')) {
+                        logoImg.src = logoImg.getAttribute('data-dark-src');
+                    }
+                }
             });
         });
 

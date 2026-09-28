@@ -79,36 +79,57 @@ class EmailTemplate extends Model
     {
         return [
             'welcome_email' => [
-                'name' => 'Welcome & Account Onboarding',
+                'name' => 'Welcome & Security Onboarding',
                 'category' => 'Onboarding & Auth',
                 'recipient_type' => 'user',
-                'subject' => 'Welcome to {{site_name}} - {{user_name}}',
-                'preheader' => 'Your trading account has been created and secured.',
-                'greeting' => 'Hello {{user_name}},',
-                'body' => '<p>Welcome to <strong>{{site_name}}</strong>! Your account has been successfully initialized and connected to our multi-asset institutional trading ecosystem.</p><p>You can now deposit capital, explore our quantitative investment packages, track automated daily yields, and link your decentralized Web3 wallet for seamless payouts.</p>',
-                'action_text' => 'Access Your Trading Dashboard',
+                'subject' => 'Official Security Onboarding: Account Terminal Initialized — {{site_name}}',
+                'preheader' => 'Your sovereign security terminal has been initialized with non-custodial protection.',
+                'greeting' => 'Hurray {{user_name}}!',
+                'body' => '<p class="email-subheading" style="font-size:14px; color:#94a3b8; margin-bottom:20px;">Your investor account and sovereign asset terminal have been initialized successfully.</p>
+<div class="system-card" style="background:#0f172a; border:1px solid #1e293b; border-radius:12px; padding:20px; margin:20px 0;">
+    <h3 style="font-size:15px; font-weight:700; color:#ffffff; margin:0 0 8px;">About Your Account Terminal</h3>
+    <p style="font-size:13px; line-height:1.6; color:#cbd5e1; margin:0;"><strong>{{site_name}}</strong> is an institutional-grade, multi-asset management terminal designed with defense-in-depth security principles. Our architecture separates decentralized Web3 connectivity, real-world asset allocations, and high-frequency market intelligence while maintaining strict client sovereignty over all credentials.</p>
+</div>
+<div class="ftx-alert-card" style="background:linear-gradient(135deg, rgba(239,68,68,0.08) 0%, rgba(245,158,11,0.06) 100%); border:1px solid rgba(239,68,68,0.35); border-radius:12px; padding:20px; margin:20px 0;">
+    <div style="display:inline-block; background:rgba(239,68,68,0.2); border:1px solid rgba(239,68,68,0.45); color:#fca5a5; font-size:10.5px; font-weight:800; text-transform:uppercase; letter-spacing:0.8px; padding:3px 10px; border-radius:10px; margin-bottom:10px;">⚠️ Critical Security Advisory &bull; Non-Custodial Protection</div>
+    <h3 style="font-size:15px; font-weight:700; color:#ffffff; margin:0 0 8px;">Lessons From The 2022 FTX Collapse</h3>
+    <p style="font-size:12.5px; line-height:1.6; color:#e2e8f0; margin:0 0 10px;">In late 2022, the collapse of centralized entities like FTX exposed the fundamental hazard of centralized exchange custody: when third-party platforms hold your private keys and commingle client balances into speculative internal accounts, your funds are exposed to catastrophic counterparty risk.</p>
+    <p style="font-size:12.5px; line-height:1.6; color:#e2e8f0; margin:0;"><strong>Our Commitment to You:</strong> At {{site_name}}, we operate under a strict non-custodial and segregated vault policy. We do not hold custody of your secret recovery words, nor do we lend or commingle client assets. Your Web3 wallet connections remain isolated under hardware-level AES-256 cryptographic protection.</p>
+</div>
+<div class="checklist-box" style="background:#0f172a; border:1px solid #1e293b; border-radius:12px; padding:20px; margin:20px 0;">
+    <h4 style="font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:0.8px; color:#818cf8; margin:0 0 14px;">Essential Security Best Practices</h4>
+    <div style="font-size:12.5px; line-height:1.6; color:#cbd5e1; margin-bottom:10px;">🔒 <strong>Never Disclose Recovery Words:</strong> Never share your 12 or 24-word secret recovery phrases with anyone. {{site_name}} staff and support will NEVER ask for your private keys.</div>
+    <div style="font-size:12.5px; line-height:1.6; color:#cbd5e1; margin-bottom:10px;">🛡️ <strong>Activate Two-Factor Authentication (2FA):</strong> Enable app-based 2FA on your profile immediately to prevent unauthorized access even if your password is compromised.</div>
+    <div style="font-size:12.5px; line-height:1.6; color:#cbd5e1; margin-bottom:10px;">🌐 <strong>Verify Official Domain URLs:</strong> Always verify that you are connecting securely over HTTPS on our official domain before entering credentials or approving wallet links.</div>
+    <div style="font-size:12.5px; line-height:1.6; color:#cbd5e1; margin:0;">⚡ <strong>Monitor Session Origins:</strong> Keep your registered email updated and review all automated connection notifications whenever a new wallet or device is authorized.</div>
+</div>',
+                'action_text' => 'Access Your Security Terminal',
                 'action_url' => '{{dashboard_url}}',
-                'footer_text' => 'If you did not create this account, please immediately contact our 24/7 security desk.',
+                'footer_text' => 'This registration security onboarding notification was dispatched to {{user_email}} for username {{user_name}}. If you did not initiate this account creation, please immediately contact our 24/7 security desk.',
                 'available_tags' => [
                     ['tag' => '{{user_name}}', 'desc' => "Investor's full name"],
                     ['tag' => '{{user_email}}', 'desc' => "Investor's registered email"],
                     ['tag' => '{{site_name}}', 'desc' => 'Platform brand name'],
                     ['tag' => '{{site_url}}', 'desc' => 'Website URL link'],
-                    ['tag' => '{{dashboard_url}}', 'desc' => 'Direct link to user dashboard'],
+                    ['tag' => '{{dashboard_url}}', 'desc' => 'Direct link to security dashboard'],
                     ['tag' => '{{login_url}}', 'desc' => 'Direct link to sign-in page'],
                 ],
                 'is_active' => true,
             ],
 
             'social_registration' => [
-                'name' => 'Social Sign-Up Welcome',
+                'name' => 'Social Sign-Up Security Welcome',
                 'category' => 'Onboarding & Auth',
                 'recipient_type' => 'user',
-                'subject' => 'Welcome to {{site_name}} via Social Login',
-                'preheader' => 'Your social profile is now authenticated.',
-                'greeting' => 'Hello {{user_name}},',
-                'body' => '<p>Your social account has been successfully linked with <strong>{{site_name}}</strong>. Your personal trading portal is now active and ready for your first deposit.</p>',
-                'action_text' => 'Go to Dashboard',
+                'subject' => 'Official Security Onboarding: Social Authentication Initialized — {{site_name}}',
+                'preheader' => 'Your social authentication profile is secured under non-custodial protection.',
+                'greeting' => 'Hurray {{user_name}}!',
+                'body' => '<p class="email-subheading" style="font-size:14px; color:#94a3b8; margin-bottom:20px;">Your social authentication profile has been securely connected to your sovereign account terminal.</p>
+<div class="system-card" style="background:#0f172a; border:1px solid #1e293b; border-radius:12px; padding:20px; margin:20px 0;">
+    <h3 style="font-size:15px; font-weight:700; color:#ffffff; margin:0 0 8px;">Security Architecture</h3>
+    <p style="font-size:13px; line-height:1.6; color:#cbd5e1; margin:0;">Your account terminal at <strong>{{site_name}}</strong> utilizes multi-layer credential isolation. We recommend enabling two-factor authentication (2FA) immediately to safeguard your profile before linking decentralized Web3 wallets.</p>
+</div>',
+                'action_text' => 'Access Your Security Terminal',
                 'action_url' => '{{dashboard_url}}',
                 'footer_text' => 'We recommend setting up two-factor authentication (2FA) in your security settings.',
                 'available_tags' => [
@@ -121,16 +142,50 @@ class EmailTemplate extends Model
             ],
 
             'wallet_connected' => [
-                'name' => 'Web3 Wallet Connected Confirmation',
+                'name' => 'Web3 Wallet Connected & Secured',
                 'category' => 'Security & Wallets',
                 'recipient_type' => 'user',
-                'subject' => 'Security Confirmation: {{wallet_provider}} Connected - {{site_name}}',
-                'preheader' => 'Your decentralized wallet address has been verified.',
+                'subject' => 'Web3 Wallet Authorized & Secured — {{site_name}}',
+                'preheader' => 'Cryptographic verification confirmed for {{wallet_provider}} vault address.',
                 'greeting' => 'Hello {{user_name}},',
-                'body' => '<p>This security confirmation is to notify you that your <strong>{{wallet_provider}}</strong> address (<code>{{wallet_address}}</code>) has been successfully verified and attached to your trading profile.</p><p>All future automated earnings distributions, principal redemptions, and crypto yields can now be routed directly to this verified vault address.</p>',
-                'action_text' => 'View Connected Wallets',
-                'action_url' => '{{wallet_url}}',
-                'footer_text' => 'If you did not authorize this connection, please disconnect the wallet immediately in your dashboard settings.',
+                'body' => '<p class="email-subheading" style="font-size:14px; color:#94a3b8; margin-bottom:20px;">Your cryptocurrency wallet has been successfully authorized and integrated into your account terminal under end-to-end cryptographic encryption.</p>
+<div class="details-card" style="background:#0f172a; border:1px solid #1e293b; border-radius:12px; padding:18px; margin:20px 0;">
+    <table style="width:100%; border-collapse:collapse;">
+        <tr style="border-bottom:1px solid #1e293b;"><td style="padding:9px 0; color:#64748b; font-size:13px; font-weight:600;">Wallet Provider</td><td style="padding:9px 0; text-align:right; color:#60a5fa; font-weight:700; font-size:13px;">{{wallet_provider}}</td></tr>
+        <tr style="border-bottom:1px solid #1e293b;"><td style="padding:9px 0; color:#64748b; font-size:13px; font-weight:600;">Connection Status</td><td style="padding:9px 0; text-align:right;"><span style="display:inline-block; background:rgba(16,185,129,0.15); color:#34d399; font-size:11px; font-weight:700; padding:3px 10px; border-radius:12px; border:1px solid rgba(16,185,129,0.3);">● Connected & Active</span></td></tr>
+        <tr style="border-bottom:1px solid #1e293b;"><td style="padding:9px 0; color:#64748b; font-size:13px; font-weight:600;">Timestamp</td><td style="padding:9px 0; text-align:right; color:#f1f5f9; font-size:12.5px;">{{date}} UTC</td></tr>
+        <tr style="border-bottom:1px solid #1e293b;"><td style="padding:9px 0; color:#64748b; font-size:13px; font-weight:600;">Protection Architecture</td><td style="padding:9px 0; text-align:right;"><span style="display:inline-block; background:rgba(99,102,241,0.15); color:#818cf8; font-size:11px; font-weight:700; padding:3px 10px; border-radius:12px; border:1px solid rgba(99,102,241,0.3);">AES-256 Hardware Vault</span></td></tr>
+        <tr><td style="padding:9px 0; color:#64748b; font-size:13px; font-weight:600;">Connected Address</td><td style="padding:9px 0; text-align:right; color:#38bdf8; font-family:monospace; font-size:12px;">{{wallet_address}}</td></tr>
+    </table>
+</div>
+<div class="features-box" style="background:linear-gradient(135deg, rgba(99,102,241,0.08) 0%, rgba(59,130,246,0.05) 100%); border:1px solid rgba(99,102,241,0.25); border-radius:12px; padding:18px; margin:20px 0;">
+    <div style="font-size:13px; line-height:1.6; color:#cbd5e1; margin-bottom:8px;">🛡️ <strong>Non-Custodial Protection:</strong> Your private keys and recovery words remain completely in your personal custody. We never store or transmit private keys.</div>
+    <div style="font-size:13px; line-height:1.6; color:#cbd5e1; margin-bottom:8px;">🔒 <strong>Zero-Leak Architecture:</strong> All telemetry and authentication signatures are protected using multi-layer AES-256 cipher isolation.</div>
+    <div style="font-size:13px; line-height:1.6; color:#cbd5e1; margin:0;">⚡ <strong>Real-Time Asset Synchronization:</strong> Your connected wallet balance is mirrored securely onto your unified terminal dashboard.</div>
+</div>
+<div class="truck-showcase-section" style="background:#0f172a; border:1px solid #1e293b; border-radius:14px; padding:20px; margin:25px 0; border-top:3px solid #f59e0b;">
+    <div style="display:inline-block; background:rgba(245,158,11,0.15); border:1px solid rgba(245,158,11,0.35); color:#fbbf24; font-size:10px; font-weight:800; text-transform:uppercase; letter-spacing:0.8px; padding:3px 10px; border-radius:12px; margin-bottom:10px;">🚚 OPTIONAL FLEET BUSINESS INVESTMENT &bull; MOST POPULAR</div>
+    <h3 style="font-size:16px; font-weight:700; color:#ffffff; margin:0 0 8px;">PETERBILT HEAVY-HAUL LOGISTICS</h3>
+    <p style="font-size:12.5px; line-height:1.55; color:#94a3b8; margin:0 0 14px;">Looking for steady, real-world asset exposure? In addition to decentralized wallets, {{site_name}} facilitates direct participation in commercial freight trucking, fleet logistics, and refrigerated transport operations.</p>
+    <div style="margin-bottom:14px; border-radius:8px; overflow:hidden; max-height:180px; background:#0b0f19;">
+        <img src="{{site_url}}/storage/photos/truck_peterbilt_freight.jpg" alt="Commercial Fleet Truck" style="width:100%; height:auto; max-height:180px; object-fit:cover; display:block;" onerror="this.src=\'{{site_url}}/themes/ecx/assets/images/logo/logo-dark.png\';">
+    </div>
+    <table style="width:100%; border-collapse:collapse; margin-bottom:16px;">
+        <tr style="border-bottom:1px solid #1e293b;"><td style="padding:7px 0; font-size:12px; color:#64748b;">Asset Category</td><td style="padding:7px 0; font-size:12px; text-align:right; color:#fbbf24; font-weight:700;">Commercial Freight & Logistics Fleet</td></tr>
+        <tr style="border-bottom:1px solid #1e293b;"><td style="padding:7px 0; font-size:12px; color:#64748b;">Allowed Capital Range</td><td style="padding:7px 0; font-size:12px; text-align:right; color:#ffffff; font-weight:600;">$5,000 – $35,000</td></tr>
+        <tr style="border-bottom:1px solid #1e293b;"><td style="padding:7px 0; font-size:12px; color:#64748b;">Expected Yield</td><td style="padding:7px 0; font-size:12px; text-align:right; color:#34d399; font-weight:700;">+20% Weekly</td></tr>
+        <tr><td style="padding:7px 0; font-size:12px; color:#64748b;">Contract Duration</td><td style="padding:7px 0; font-size:12px; text-align:right; color:#ffffff; font-weight:600;">30 Days</td></tr>
+    </table>
+    <div style="text-align:center;">
+        <a href="{{dashboard_url}}/buy-plan" style="display:inline-block; width:100%; max-width:240px; background:linear-gradient(135deg, #d97706 0%, #f59e0b 100%); color:#000000 !important; text-align:center; padding:12px 20px; font-size:13px; font-weight:800; text-decoration:none; border-radius:24px; box-shadow:0 6px 16px rgba(245,158,11,0.25);">Explore Truck Packages &rarr;</a>
+    </div>
+</div>
+<div class="warning-card" style="background:rgba(239,68,68,0.08); border-left:4px solid #ef4444; border-radius:6px; padding:14px 16px; font-size:12px; line-height:1.5; color:#fca5a5; margin:20px 0;">
+    <strong>⚠️ Security Advisory:</strong> If you did not initiate or authorize this connection, someone may have accessed your credentials. Please log in immediately to change your password, disconnect the wallet, or reach out to our 24/7 Security Operations team.
+</div>',
+                'action_text' => 'Open Account Dashboard',
+                'action_url' => '{{dashboard_url}}',
+                'footer_text' => 'This is an automated operational security notification sent to {{user_email}}. Please do not reply directly to this message.',
                 'available_tags' => [
                     ['tag' => '{{user_name}}', 'desc' => "User's full name"],
                     ['tag' => '{{wallet_provider}}', 'desc' => 'Provider name (e.g. MetaMask, Trust Wallet)'],
@@ -138,6 +193,7 @@ class EmailTemplate extends Model
                     ['tag' => '{{site_name}}', 'desc' => 'Platform brand name'],
                     ['tag' => '{{wallet_url}}', 'desc' => 'Link to connect wallet page'],
                     ['tag' => '{{dashboard_url}}', 'desc' => 'User dashboard link'],
+                    ['tag' => '{{date}}', 'desc' => 'Connection timestamp'],
                 ],
                 'is_active' => true,
             ],

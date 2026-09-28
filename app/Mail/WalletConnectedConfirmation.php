@@ -34,21 +34,21 @@ class WalletConnectedConfirmation extends Mailable
         $isTruckOn = isset($mod['investment_truck']) ? !empty($mod['investment_truck']) : true;
         $isCryptoOn = isset($mod['investment']) ? !empty($mod['investment']) : true;
 
-        if ($isCryptoOn) {
-            // Default to active crypto & trading package
+        if ($isTruckOn) {
+            // Prioritize popular commercial truck fleet plan (Tier 2 / popular Peterbilt or Freightliner)
+            $this->featuredPlan = Plans::where(function($q) {
+                $q->where('category', 'truck')->orWhere('type', 'truck');
+            })->where('id', 16)->first()
+            ?? Plans::where(function($q) {
+                $q->where('category', 'truck')->orWhere('type', 'truck');
+            })->first();
+        } elseif ($isCryptoOn) {
             $this->featuredPlan = Plans::where(function($q) {
                 $q->whereNull('type')->orWhere('type', '!=', 'truck');
             })->where(function($q) {
                 $q->whereNull('category')->orWhere('category', '!=', 'truck');
             })->orderBy('price', 'asc')->first();
-        } elseif ($isTruckOn) {
-            // Fallback to truck plan only if crypto is disabled and truck is enabled
-            $this->featuredPlan = Plans::where('category', 'truck')
-                                ->orWhere('type', 'truck')
-                                ->orderBy('price', 'asc')
-                                ->first();
         } else {
-            // Both investment modules disabled
             $this->featuredPlan = null;
         }
         $siteName = $this->settings->site_name ?? 'ECX Groups';

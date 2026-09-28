@@ -87,27 +87,72 @@
             color: #a5b4fc !important;
         }
 
+        /* Vibrant Themed Icon Bubbles (Light & Dark Mode) */
+        .nav-icon-bubble {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            flex-shrink: 0;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
         .settings-rail-icon {
-            width: 34px;
-            height: 34px;
-            border-radius: 8px;
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
             font-size: 15px;
             flex-shrink: 0;
-            background: #f1f5f9;
-            color: #64748b;
-            transition: all 0.2s ease;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        body.dark-only .settings-rail-icon {
-            background: #111827;
-            color: #94a3b8;
-        }
+
+        .bubble-indigo { background: #e0e7ff; color: #4f46e5; }
+        body.dark-only .bubble-indigo { background: rgba(99, 102, 241, 0.25); color: #a5b4fc; }
+
+        .bubble-amber { background: #fef3c7; color: #d97706; }
+        body.dark-only .bubble-amber { background: rgba(245, 158, 11, 0.25); color: #fbbf24; }
+
+        .bubble-cyan { background: #e0f2fe; color: #0284c7; }
+        body.dark-only .bubble-cyan { background: rgba(14, 165, 233, 0.25); color: #38bdf8; }
+
+        .bubble-purple { background: #f3e8ff; color: #9333ea; }
+        body.dark-only .bubble-purple { background: rgba(168, 85, 247, 0.25); color: #c084fc; }
+
+        .bubble-slate { background: #f1f5f9; color: #475569; }
+        body.dark-only .bubble-slate { background: rgba(148, 163, 184, 0.22); color: #cbd5e1; }
+
+        .bubble-emerald { background: #d1fae5; color: #059669; }
+        body.dark-only .bubble-emerald { background: rgba(16, 185, 129, 0.25); color: #34d399; }
+
+        .bubble-blue { background: #dbeafe; color: #2563eb; }
+        body.dark-only .bubble-blue { background: rgba(59, 130, 246, 0.25); color: #60a5fa; }
+
+        .bubble-rose { background: #ffe4e6; color: #e11d48; }
+        body.dark-only .bubble-rose { background: rgba(244, 63, 94, 0.25); color: #fb7185; }
+
+        .bubble-green { background: #dcfce7; color: #16a34a; }
+        body.dark-only .bubble-green { background: rgba(34, 197, 94, 0.25); color: #4ade80; }
+
+        .bubble-fuchsia { background: #fae8ff; color: #c026d3; }
+        body.dark-only .bubble-fuchsia { background: rgba(217, 70, 239, 0.25); color: #e879f9; }
+
+        /* Active Glow States */
         .settings-rail-btn.active .settings-rail-icon {
             background: var(--theme-default, #6362e7) !important;
             color: #ffffff !important;
-            box-shadow: 0 4px 10px rgba(99, 98, 231, 0.35);
+            box-shadow: 0 4px 12px rgba(99, 98, 231, 0.4) !important;
+        }
+
+        .mobile-settings-carousel .nav-link.active .nav-icon-bubble {
+            background: #ffffff !important;
+            color: var(--theme-default, #6362e7) !important;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
         }
         .settings-rail-title {
             font-size: 13.5px;
@@ -147,8 +192,8 @@
             display: flex;
             overflow-x: auto;
             flex-wrap: nowrap;
-            gap: 8px;
-            padding-bottom: 4px;
+            gap: 10px;
+            padding: 4px 2px 8px 2px;
             margin-top: 10px;
             -webkit-overflow-scrolling: touch;
             scrollbar-width: none;
@@ -159,28 +204,28 @@
         .mobile-settings-carousel .nav-link {
             flex: 0 0 auto;
             white-space: nowrap;
-            padding: 8px 14px;
-            font-size: 12.5px;
+            padding: 6px 14px 6px 8px;
+            font-size: 13px;
             font-weight: 600;
             border-radius: 50rem;
-            background: #f1f5f9;
-            color: #64748b;
+            background: #f8fafc;
+            color: #475569;
             border: 1px solid #e2e8f0;
             display: inline-flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
             transition: all 0.2s ease;
         }
         body.dark-only .mobile-settings-carousel .nav-link {
             background: #111827;
             border-color: #273142;
-            color: #94a3b8;
+            color: #cbd5e1;
         }
         .mobile-settings-carousel .nav-link.active {
             background: var(--theme-default, #6362e7) !important;
             color: #ffffff !important;
             border-color: var(--theme-default, #6362e7) !important;
-            box-shadow: 0 3px 8px rgba(99, 98, 231, 0.35);
+            box-shadow: 0 4px 12px rgba(99, 98, 231, 0.35);
         }
 
         /* Mobile Dropdown Trigger */
@@ -456,7 +501,9 @@
                 <div class="dropdown">
                     <button class="mobile-active-trigger" type="button" id="mobileSettingsDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                         <div class="d-flex align-items-center gap-2">
-                            <i class="fa fa-cubes text-primary" id="mobileActiveIcon"></i>
+                            <span class="nav-icon-bubble bubble-indigo" id="mobileActiveBubble">
+                                <i class="fa fa-cubes" id="mobileActiveIcon"></i>
+                            </span>
                             <span id="mobileActiveLabel">Feature Modules</span>
                         </div>
                         <span class="badge bg-primary bg-opacity-10 text-primary f-11 rounded-pill px-3 py-1">
@@ -465,25 +512,25 @@
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end w-100 mobile-settings-dropdown-menu shadow-lg" aria-labelledby="mobileSettingsDropdown">
                         <li class="dropdown-header">Platform & System</li>
-                        <li><button type="button" class="dropdown-item active" data-target-tab="#module"><i class="fa fa-cubes text-primary"></i> Feature Modules</button></li>
-                        <li><button type="button" class="dropdown-item" data-target-tab="#maintenance"><i class="fa fa-wrench text-warning"></i> Maintenance Mode</button></li>
+                        <li><button type="button" class="dropdown-item active" data-target-tab="#module"><span class="nav-icon-bubble bubble-indigo me-2"><i class="fa fa-cubes"></i></span> Feature Modules</button></li>
+                        <li><button type="button" class="dropdown-item" data-target-tab="#maintenance"><span class="nav-icon-bubble bubble-amber me-2"><i class="fa fa-wrench"></i></span> Maintenance Mode</button></li>
                         
                         <li><hr class="dropdown-divider my-1"></li>
                         <li class="dropdown-header">Branding & Design</li>
-                        <li><button type="button" class="dropdown-item" data-target-tab="#info"><i class="fa fa-globe text-info"></i> Website Information</button></li>
-                        <li><button type="button" class="dropdown-item" data-target-tab="#display"><i class="fa fa-paint-brush text-primary"></i> Theme & Display</button></li>
-                        <li><button type="button" class="dropdown-item" data-target-tab="#pref"><i class="fa fa-sliders text-secondary"></i> Preferences</button></li>
+                        <li><button type="button" class="dropdown-item" data-target-tab="#info"><span class="nav-icon-bubble bubble-cyan me-2"><i class="fa fa-globe"></i></span> Website Information</button></li>
+                        <li><button type="button" class="dropdown-item" data-target-tab="#display"><span class="nav-icon-bubble bubble-purple me-2"><i class="fa fa-paint-brush"></i></span> Theme & Display</button></li>
+                        <li><button type="button" class="dropdown-item" data-target-tab="#pref"><span class="nav-icon-bubble bubble-slate me-2"><i class="fa fa-sliders"></i></span> Preferences</button></li>
                         
                         <li><hr class="dropdown-divider my-1"></li>
                         <li class="dropdown-header">Payments & Wallets</li>
-                        <li><button type="button" class="dropdown-item" data-target-tab="#wallets"><i class="fa fa-wallet text-success"></i> Crypto Deposit Wallets</button></li>
-                        <li><button type="button" class="dropdown-item" data-target-tab="#wallet-types"><i class="fa fa-plug text-info"></i> Connect Wallet Icons</button></li>
+                        <li><button type="button" class="dropdown-item" data-target-tab="#wallets"><span class="nav-icon-bubble bubble-emerald me-2"><i class="fa fa-wallet"></i></span> Crypto Deposit Wallets</button></li>
+                        <li><button type="button" class="dropdown-item" data-target-tab="#wallet-types"><span class="nav-icon-bubble bubble-blue me-2"><i class="fa fa-plug"></i></span> Connect Wallet Icons</button></li>
                         
                         <li><hr class="dropdown-divider my-1"></li>
                         <li class="dropdown-header">Comms & Auth</li>
-                        <li><button type="button" class="dropdown-item" data-target-tab="#email"><i class="fa fa-envelope text-warning"></i> Email & Google Captcha</button></li>
-                        <li><button type="button" class="dropdown-item" data-target-tab="#whatsapp"><i class="fa fa-whatsapp text-success"></i> WhatsApp Alerts</button></li>
-                        <li><button type="button" class="dropdown-item" data-target-tab="#email-templates"><i class="fa fa-envelope-open-text text-primary"></i> Email Templates</button></li>
+                        <li><button type="button" class="dropdown-item" data-target-tab="#email"><span class="nav-icon-bubble bubble-rose me-2"><i class="fa fa-envelope"></i></span> Email & Google Captcha</button></li>
+                        <li><button type="button" class="dropdown-item" data-target-tab="#whatsapp"><span class="nav-icon-bubble bubble-green me-2"><i class="fa fa-whatsapp"></i></span> WhatsApp Alerts</button></li>
+                        <li><button type="button" class="dropdown-item" data-target-tab="#email-templates"><span class="nav-icon-bubble bubble-fuchsia me-2"><i class="fa fa-envelope-open-text"></i></span> Email Templates</button></li>
                     </ul>
                 </div>
 
@@ -491,52 +538,52 @@
                 <ul class="nav mobile-settings-carousel" id="mobileCarouselTabs" role="tablist">
                     <li class="nav-item" role="presentation">
                         <button class="nav-link active" data-bs-toggle="pill" data-bs-target="#module" type="button" role="tab">
-                            <i class="fa fa-cubes"></i> Modules
+                            <span class="nav-icon-bubble bubble-indigo"><i class="fa fa-cubes"></i></span> Modules
                         </button>
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" data-bs-toggle="pill" data-bs-target="#maintenance" type="button" role="tab">
-                            <i class="fa fa-wrench"></i> Maintenance
+                            <span class="nav-icon-bubble bubble-amber"><i class="fa fa-wrench"></i></span> Maintenance
                         </button>
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" data-bs-toggle="pill" data-bs-target="#info" type="button" role="tab">
-                            <i class="fa fa-globe"></i> Web Info
+                            <span class="nav-icon-bubble bubble-cyan"><i class="fa fa-globe"></i></span> Web Info
                         </button>
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" data-bs-toggle="pill" data-bs-target="#display" type="button" role="tab">
-                            <i class="fa fa-paint-brush"></i> Theme
+                            <span class="nav-icon-bubble bubble-purple"><i class="fa fa-paint-brush"></i></span> Theme
                         </button>
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" data-bs-toggle="pill" data-bs-target="#pref" type="button" role="tab">
-                            <i class="fa fa-sliders"></i> Preferences
+                            <span class="nav-icon-bubble bubble-slate"><i class="fa fa-sliders"></i></span> Preferences
                         </button>
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" data-bs-toggle="pill" data-bs-target="#wallets" type="button" role="tab">
-                            <i class="fa fa-wallet"></i> Wallets
+                            <span class="nav-icon-bubble bubble-emerald"><i class="fa fa-wallet"></i></span> Wallets
                         </button>
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" data-bs-toggle="pill" data-bs-target="#wallet-types" type="button" role="tab">
-                            <i class="fa fa-plug"></i> Web3 Icons
+                            <span class="nav-icon-bubble bubble-blue"><i class="fa fa-plug"></i></span> Web3 Icons
                         </button>
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" data-bs-toggle="pill" data-bs-target="#email" type="button" role="tab">
-                            <i class="fa fa-envelope"></i> Email/Auth
+                            <span class="nav-icon-bubble bubble-rose"><i class="fa fa-envelope"></i></span> Email/Auth
                         </button>
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" data-bs-toggle="pill" data-bs-target="#whatsapp" type="button" role="tab">
-                            <i class="fa fa-whatsapp"></i> WhatsApp
+                            <span class="nav-icon-bubble bubble-green"><i class="fa fa-whatsapp"></i></span> WhatsApp
                         </button>
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" data-bs-toggle="pill" data-bs-target="#email-templates" type="button" role="tab">
-                            <i class="fa fa-envelope-open-text"></i> Templates
+                            <span class="nav-icon-bubble bubble-fuchsia"><i class="fa fa-envelope-open-text"></i></span> Templates
                         </button>
                     </li>
                 </ul>
@@ -563,14 +610,14 @@
                         <i class="fa fa-server f-10"></i> Platform & System
                     </div>
                     <button class="settings-rail-btn active" data-bs-toggle="pill" data-bs-target="#module" type="button" role="tab" id="rail-module-tab">
-                        <div class="settings-rail-icon"><i class="fa fa-cubes"></i></div>
+                        <div class="settings-rail-icon bubble-indigo"><i class="fa fa-cubes"></i></div>
                         <div class="flex-grow-1">
                             <span class="settings-rail-title">Feature Modules</span>
                             <span class="settings-rail-desc">Trading, trucks & swap toggles</span>
                         </div>
                     </button>
                     <button class="settings-rail-btn" data-bs-toggle="pill" data-bs-target="#maintenance" type="button" role="tab" id="rail-maintenance-tab">
-                        <div class="settings-rail-icon"><i class="fa fa-wrench"></i></div>
+                        <div class="settings-rail-icon bubble-amber"><i class="fa fa-wrench"></i></div>
                         <div class="flex-grow-1">
                             <div class="d-flex align-items-center justify-content-between">
                                 <span class="settings-rail-title">Maintenance Mode</span>
@@ -587,21 +634,21 @@
                         <i class="fa fa-paint-brush f-10"></i> Branding & Design
                     </div>
                     <button class="settings-rail-btn" data-bs-toggle="pill" data-bs-target="#info" type="button" role="tab" id="rail-info-tab">
-                        <div class="settings-rail-icon"><i class="fa fa-globe"></i></div>
+                        <div class="settings-rail-icon bubble-cyan"><i class="fa fa-globe"></i></div>
                         <div class="flex-grow-1">
                             <span class="settings-rail-title">Website Information</span>
                             <span class="settings-rail-desc">Brand name, logos & SEO tags</span>
                         </div>
                     </button>
                     <button class="settings-rail-btn" data-bs-toggle="pill" data-bs-target="#display" type="button" role="tab" id="rail-display-tab">
-                        <div class="settings-rail-icon"><i class="fa fa-paint-brush"></i></div>
+                        <div class="settings-rail-icon bubble-purple"><i class="fa fa-paint-brush"></i></div>
                         <div class="flex-grow-1">
                             <span class="settings-rail-title">Theme & Display</span>
                             <span class="settings-rail-desc">Colors, dark mode & layout</span>
                         </div>
                     </button>
                     <button class="settings-rail-btn" data-bs-toggle="pill" data-bs-target="#pref" type="button" role="tab" id="rail-pref-tab">
-                        <div class="settings-rail-icon"><i class="fa fa-sliders"></i></div>
+                        <div class="settings-rail-icon bubble-slate"><i class="fa fa-sliders"></i></div>
                         <div class="flex-grow-1">
                             <span class="settings-rail-title">Preferences</span>
                             <span class="settings-rail-desc">Currencies, fees & defaults</span>
@@ -613,14 +660,14 @@
                         <i class="fa fa-wallet f-10"></i> Payments & Wallets
                     </div>
                     <button class="settings-rail-btn" data-bs-toggle="pill" data-bs-target="#wallets" type="button" role="tab" id="rail-wallets-tab">
-                        <div class="settings-rail-icon"><i class="fa fa-wallet"></i></div>
+                        <div class="settings-rail-icon bubble-emerald"><i class="fa fa-wallet"></i></div>
                         <div class="flex-grow-1">
                             <span class="settings-rail-title">Deposit Wallets</span>
                             <span class="settings-rail-desc">USDT, BTC & ETH addresses</span>
                         </div>
                     </button>
                     <button class="settings-rail-btn" data-bs-toggle="pill" data-bs-target="#wallet-types" type="button" role="tab" id="rail-wallet-types-tab">
-                        <div class="settings-rail-icon"><i class="fa fa-plug"></i></div>
+                        <div class="settings-rail-icon bubble-blue"><i class="fa fa-plug"></i></div>
                         <div class="flex-grow-1">
                             <span class="settings-rail-title">Supported Wallets</span>
                             <span class="settings-rail-desc">Web3 connection providers</span>
@@ -632,21 +679,21 @@
                         <i class="fa fa-shield f-10"></i> Comms & Auth
                     </div>
                     <button class="settings-rail-btn" data-bs-toggle="pill" data-bs-target="#email" type="button" role="tab" id="rail-email-tab">
-                        <div class="settings-rail-icon"><i class="fa fa-envelope"></i></div>
+                        <div class="settings-rail-icon bubble-rose"><i class="fa fa-envelope"></i></div>
                         <div class="flex-grow-1">
                             <span class="settings-rail-title">Email & Auth</span>
                             <span class="settings-rail-desc">SMTP, OAuth & reCAPTCHA</span>
                         </div>
                     </button>
                     <button class="settings-rail-btn" data-bs-toggle="pill" data-bs-target="#whatsapp" type="button" role="tab" id="rail-whatsapp-tab">
-                        <div class="settings-rail-icon"><i class="fa fa-whatsapp text-success"></i></div>
+                        <div class="settings-rail-icon bubble-green"><i class="fa fa-whatsapp"></i></div>
                         <div class="flex-grow-1">
                             <span class="settings-rail-title">WhatsApp Alerts</span>
                             <span class="settings-rail-desc">Automated message alerts</span>
                         </div>
                     </button>
                     <button class="settings-rail-btn" data-bs-toggle="pill" data-bs-target="#email-templates" type="button" role="tab" id="rail-email-templates-tab">
-                        <div class="settings-rail-icon"><i class="fa fa-envelope-open-text text-primary"></i></div>
+                        <div class="settings-rail-icon bubble-fuchsia"><i class="fa fa-envelope-open-text"></i></div>
                         <div class="flex-grow-1">
                             <span class="settings-rail-title">Email Templates</span>
                             <span class="settings-rail-desc">Outgoing system emails editor</span>
@@ -709,16 +756,16 @@
 
             // Tab Metadata Dictionary for Mobile Hub & Status
             var tabMeta = {
-                '#module': { label: 'Feature Modules', icon: 'fa-cubes', color: 'text-primary' },
-                '#maintenance': { label: 'Maintenance Mode', icon: 'fa-wrench', color: 'text-warning' },
-                '#info': { label: 'Website Information', icon: 'fa-globe', color: 'text-info' },
-                '#display': { label: 'Theme & Display', icon: 'fa-paint-brush', color: 'text-primary' },
-                '#pref': { label: 'Preferences', icon: 'fa-sliders', color: 'text-secondary' },
-                '#wallets': { label: 'Crypto Deposit Wallets', icon: 'fa-wallet', color: 'text-success' },
-                '#wallet-types': { label: 'Supported Wallets', icon: 'fa-plug', color: 'text-info' },
-                '#email': { label: 'Email & Authentication', icon: 'fa-envelope', color: 'text-warning' },
-                '#whatsapp': { label: 'WhatsApp Alerts', icon: 'fa-whatsapp', color: 'text-success' },
-                '#email-templates': { label: 'Email Templates', icon: 'fa-envelope-open-text', color: 'text-primary' }
+                '#module': { label: 'Feature Modules', icon: 'fa-cubes', bubbleClass: 'bubble-indigo' },
+                '#maintenance': { label: 'Maintenance Mode', icon: 'fa-wrench', bubbleClass: 'bubble-amber' },
+                '#info': { label: 'Website Information', icon: 'fa-globe', bubbleClass: 'bubble-cyan' },
+                '#display': { label: 'Theme & Display', icon: 'fa-paint-brush', bubbleClass: 'bubble-purple' },
+                '#pref': { label: 'Preferences', icon: 'fa-sliders', bubbleClass: 'bubble-slate' },
+                '#wallets': { label: 'Crypto Deposit Wallets', icon: 'fa-wallet', bubbleClass: 'bubble-emerald' },
+                '#wallet-types': { label: 'Supported Wallets', icon: 'fa-plug', bubbleClass: 'bubble-blue' },
+                '#email': { label: 'Email & Authentication', icon: 'fa-envelope', bubbleClass: 'bubble-rose' },
+                '#whatsapp': { label: 'WhatsApp Alerts', icon: 'fa-whatsapp', bubbleClass: 'bubble-green' },
+                '#email-templates': { label: 'Email Templates', icon: 'fa-envelope-open-text', bubbleClass: 'bubble-fuchsia' }
             };
 
             // Unified Tab Activation Controller
@@ -744,8 +791,10 @@
                 // 3. Update Mobile Dropdown Header & Active item
                 var meta = tabMeta[target];
                 var iconEl = document.getElementById('mobileActiveIcon');
+                var bubbleEl = document.getElementById('mobileActiveBubble');
                 var labelEl = document.getElementById('mobileActiveLabel');
-                if (iconEl) iconEl.className = 'fa ' + meta.icon + ' ' + meta.color;
+                if (iconEl) iconEl.className = 'fa ' + meta.icon;
+                if (bubbleEl) bubbleEl.className = 'nav-icon-bubble ' + meta.bubbleClass;
                 if (labelEl) labelEl.textContent = meta.label;
 
                 // 4. Update dropdown menu items active state

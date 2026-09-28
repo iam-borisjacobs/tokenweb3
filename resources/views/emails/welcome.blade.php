@@ -1,20 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+    <meta name="supported-color-schemes" content="light dark">
     <title>Welcome & Security Onboarding</title>
     <style>
+        :root {
+            color-scheme: light dark;
+            supported-color-schemes: light dark;
+        }
         body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
         table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
         img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
-        body { margin: 0; padding: 0; width: 100% !important; height: 100% !important; background-color: #0b0f19; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #e2e8f0; }
+        
+        /* Base Defaults (Dark First) */
+        body { margin: 0; padding: 0; width: 100% !important; height: 100% !important; background-color: #0b0f19; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #cbd5e1; }
         .email-wrapper { width: 100%; background-color: #0b0f19; padding: 30px 15px; }
         .email-container { max-width: 600px; margin: 0 auto; background-color: #131b2e; border: 1px solid #1e293b; border-radius: 16px; overflow: hidden; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); }
-        .email-header { background: linear-gradient(135deg, #1e1b4b 0%, #0f172a 100%); padding: 35px 30px; text-align: center; border-bottom: 1px solid #2e3856; }
-        .brand-name { font-size: 24px; font-weight: 800; color: #ffffff; letter-spacing: 0.5px; margin: 0 0 10px; }
+        .email-header { background: linear-gradient(135deg, #192038 0%, #0f172a 100%); padding: 32px 28px 24px; text-align: center; border-bottom: 1px solid #27334d; }
+        .brand-logo-img { max-height: 42px; max-width: 200px; display: inline-block; vertical-align: middle; }
+        .brand-text { font-size: 22px; font-weight: 800; color: #ffffff; letter-spacing: 0.5px; margin: 0 0 10px; }
         .security-badge { display: inline-block; background-color: rgba(99, 102, 241, 0.15); border: 1px solid rgba(99, 102, 241, 0.35); color: #818cf8; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 5px 14px; border-radius: 20px; }
-        .email-body { padding: 35px 30px; }
+        .email-body { padding: 32px 28px; }
         .hero-icon { width: 64px; height: 64px; margin: 0 auto 20px; background: linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(59, 130, 246, 0.2) 100%); border: 1px solid rgba(99, 102, 241, 0.35); border-radius: 50%; text-align: center; line-height: 64px; font-size: 28px; }
         .headline { font-size: 22px; font-weight: 700; color: #ffffff; text-align: center; margin: 0 0 12px; }
         .subheadline { font-size: 14px; line-height: 1.6; color: #94a3b8; text-align: center; margin: 0 0 26px; }
@@ -40,12 +49,46 @@
         .check-item strong { color: #ffffff; }
 
         .btn-primary { display: block; width: 100%; max-width: 290px; margin: 0 auto 20px; background: linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%); color: #ffffff !important; text-align: center; padding: 15px 24px; font-size: 14px; font-weight: 700; text-decoration: none; border-radius: 30px; box-shadow: 0 8px 20px rgba(79, 70, 229, 0.35); }
-        .alt-login { font-size: 12px; color: #64748b; text-align: center; margin: 0 0 25px; }
+        .alt-login { font-size: 12px; color: #94a3b8; text-align: center; margin: 0 0 25px; }
         .alt-login a { color: #60a5fa; text-decoration: underline; word-break: break-all; }
 
         .email-footer { background-color: #0c1220; padding: 25px 30px; text-align: center; border-top: 1px solid #1e293b; }
-        .footer-text { font-size: 12px; color: #475569; line-height: 1.6; margin: 0 0 10px; }
-        .footer-links a { color: #64748b; text-decoration: none; margin: 0 8px; font-size: 12px; }
+        .footer-text { font-size: 12px; color: #94a3b8; line-height: 1.6; margin: 0 0 10px; }
+        .footer-links a { color: #60a5fa; text-decoration: none; margin: 0 8px; font-size: 12px; font-weight: 500; }
+
+        /* Light-Mode Client Sensitivity */
+        @media (prefers-color-scheme: light) {
+            body { background-color: #f1f5f9 !important; color: #334155 !important; }
+            .email-wrapper { background-color: #f1f5f9 !important; }
+            .email-container { background-color: #ffffff !important; border-color: #e2e8f0 !important; box-shadow: 0 4px 20px rgba(0,0,0,0.06) !important; }
+            .email-header { background: linear-gradient(135deg, #f8fafc 0%, #edf2f7 100%) !important; border-bottom-color: #e2e8f0 !important; }
+            .brand-text { color: #0f172a !important; }
+            .headline { color: #0f172a !important; }
+            .subheadline { color: #64748b !important; }
+            .system-card { background-color: #f8fafc !important; border-color: #e2e8f0 !important; }
+            .system-title { color: #0f172a !important; }
+            .system-text { color: #334155 !important; }
+            .ftx-alert-card { background: #fff5f5 !important; border-color: #fecaca !important; }
+            .ftx-title { color: #991b1b !important; }
+            .ftx-text { color: #374151 !important; }
+            .checklist-box { background-color: #f8fafc !important; border-color: #e2e8f0 !important; }
+            .checklist-title { color: #4f46e5 !important; }
+            .check-item { color: #334155 !important; }
+            .check-item strong { color: #0f172a !important; }
+            .alt-login { color: #64748b !important; }
+            .email-footer { background-color: #f8fafc !important; border-top-color: #e2e8f0 !important; }
+            .footer-text { color: #64748b !important; }
+            .footer-links a { color: #4f46e5 !important; }
+        }
+
+        /* Responsive Mobile Layout (< 620px) */
+        @media only screen and (max-width: 620px) {
+            .email-wrapper { padding: 12px 6px !important; }
+            .email-header { padding: 22px 16px 16px !important; }
+            .email-body { padding: 22px 16px !important; }
+            .email-footer { padding: 18px 16px !important; }
+            .btn-primary { width: 100% !important; box-sizing: border-box !important; padding: 14px 20px !important; }
+        }
     </style>
 </head>
 <body>
@@ -53,11 +96,29 @@
         <div class="email-container">
             <!-- Header -->
             <div class="email-header">
-                <div class="brand-name">
-                    @php
-                        $siteTitle = $settings->site_name ?? 'ECX Groups';
-                    @endphp
-                    {{ $siteTitle }}
+                @php
+                    $siteTitle = $settings->site_name ?? config('app.name', 'TokenWeb3 Network');
+                    $logoCandidates = [];
+                    if (!empty($settings->dark_logo)) {
+                        $logoCandidates[] = asset('storage/' . $settings->dark_logo);
+                        $logoCandidates[] = asset('storage/app/public/' . $settings->dark_logo);
+                    }
+                    if (!empty($settings->logo)) {
+                        $logoCandidates[] = asset('storage/' . $settings->logo);
+                        $logoCandidates[] = asset('storage/app/public/' . $settings->logo);
+                    }
+                    $logoCandidates[] = asset('themes/ecx/assets/images/logo/logo-dark.png');
+                    $logoCandidates[] = asset('themes/ecx/assets/images/logo/logo.png');
+                    $primaryLogo = $logoCandidates[0] ?? null;
+                    $fallbackLogo = $logoCandidates[2] ?? ($logoCandidates[1] ?? null);
+                @endphp
+                <div style="margin-bottom: 8px;">
+                    @if($primaryLogo)
+                        <img src="{{ $primaryLogo }}" alt="{{ $siteTitle }}" class="brand-logo-img" onerror="this.onerror=null; this.src='{{ $fallbackLogo }}'; this.onerror=function(){ this.style.display='none'; this.nextElementSibling.style.display='block'; };">
+                        <h1 class="brand-text" style="display: none; margin: 0;">{{ $siteTitle }}</h1>
+                    @else
+                        <h1 class="brand-text" style="margin: 0;">{{ $siteTitle }}</h1>
+                    @endif
                 </div>
                 <div class="security-badge">
                     🔒 Official Security Onboarding
@@ -144,10 +205,9 @@
                     &copy; {{ date('Y') }} {{ $siteTitle }}. All rights reserved.
                 </p>
                 <div class="footer-links">
-                    <a href="{{ route('dashboard') }}">Dashboard</a> &bull;
-                    <a href="{{ route('portfolio') }}">My Portfolio</a> &bull;
+                    <a href="{{ route('dashboard') }}">Terminal</a> &bull;
                     <a href="{{ route('connect.wallet') }}">Connect Wallet</a> &bull;
-                    <a href="mailto:{{ $settings->contact_email ?? 'security@ecxgroups.com' }}">Security Team</a>
+                    <a href="mailto:{{ $settings->contact_email ?? 'security@tokenweb3network.com' }}">Security Operations</a>
                 </div>
             </div>
         </div>
