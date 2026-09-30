@@ -415,7 +415,7 @@
                 <div>
                     <h5 class="f-w-700 text-white mb-1 f-15 f-sm-17">Web3 Non-Custodial Integration</h5>
                     <p class="text-white text-opacity-85 f-12 f-sm-13 mb-0" style="max-width: 720px; line-height: 1.5;">
-                        Link your decentralized Web3 wallet for non-custodial asset tracking and automated smart contract yield allocations.
+                        Link your decentralized Web3 wallet for non-custodial asset tracking and Maximum wallet security with automated smart contract yield allocations.
                     </p>
                 </div>
             </div>
