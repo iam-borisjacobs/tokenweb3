@@ -196,5 +196,9 @@
 
     @livewireScripts
     <script src="https://cdn.jsdelivr.net/gh/livewire/turbolinks@v0.1.4/dist/livewire-turbolinks.js" data-turbolinks-eval="false" data-turbo-eval="false"></script>
+    <!-- Live Chat Widget -->
+    @if(!empty($settings->tawk_to))
+        {!! $settings->tawk_to !!}
+    @endif
 </body>
 </html>

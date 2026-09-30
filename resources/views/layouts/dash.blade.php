@@ -1338,6 +1338,10 @@
     @section('scripts')
     @show
     @livewireScripts
+    <!-- Live Chat Widget -->
+    @if(!empty($settings->tawk_to))
+        {!! $settings->tawk_to !!}
+    @endif
 </body>
 
 </html>

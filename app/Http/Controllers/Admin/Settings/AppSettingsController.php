@@ -102,7 +102,7 @@ class AppSettingsController extends Controller
             'dark_logo' => $pathdark,
             'merchant_key' => $request->merchant_key,
             'favicon' => $pathfav,
-            'tawk_to' => strip_tags($request['tawk_to']),
+            'tawk_to' => $request['tawk_to'],
             'site_address' => $request['site_address'],
             'welcome_message' => $request->welcome_message,
         ];
