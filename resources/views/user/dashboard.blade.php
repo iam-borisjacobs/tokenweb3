@@ -308,72 +308,6 @@
     <!-- Top Row: 2 Featured Large Cards (Account Balance & Connected Wallets Vault - Open & Spread) -->
     <div class="row g-3 mb-3">
 
-        <!-- 2. Account Balance Card -->
-        <div class="col-lg-6 col-12">
-            <div class="card h-100 shadow-sm border">
-                <div class="card-body p-4 d-flex flex-column justify-content-between">
-                    <div>
-                        <div class="d-flex align-items-center justify-content-between mb-3">
-                            <div class="d-flex align-items-center gap-2">
-                                <div class="rounded-3 bg-primary bg-opacity-10 text-primary d-flex align-items-center justify-content-center" style="width: 42px; height: 42px; font-size: 18px;">
-                                    <i class="fa-solid fa-wallet"></i>
-                                </div>
-                                <div>
-                                    <h6 class="f-w-700 text-dark mb-0 f-14">Account Balance</h6>
-                                    <small class="text-muted f-11">Your available trading funds</small>
-                                </div>
-                            </div>
-                            <span class="badge bg-light-success text-success rounded-pill f-11 px-3 py-1.5">
-                                <span class="pulse-beacon me-1"></span> Active Trading
-                            </span>
-                        </div>
-
-                        <div class="f-w-800 text-dark mb-2" style="font-size: 2.2rem; letter-spacing: -0.02em; line-height: 1.1;">
-                            {{ $settings->currency }}{{ number_format($isDemo ? $demoBal : Auth::user()->account_bal, 2, '.', ',') }}
-                        </div>
-
-                        <div class="d-flex flex-wrap align-items-center gap-2 mb-3">
-                            <span class="badge bg-warning text-dark f-11 px-2.5 py-1 rounded-pill">
-                                <i class="fa-brands fa-bitcoin me-1"></i> {{ $btcEquiv }} BTC
-                            </span>
-                            <span class="badge badge-subtle-neutral f-11 px-2.5 py-1 rounded-pill">
-                                <i class="fa-solid fa-circle-check text-success me-1"></i> Available
-                            </span>
-                            @php
-                                $userKycVerified = Auth::user()->isKycVerified();
-                                $userKycUnderReview = !$userKycVerified && (Auth::user()->account_verify == 'Under review' || (Auth::user()->kyc && Auth::user()->kyc->status == 'Under review'));
-                            @endphp
-                            @if($userKycVerified)
-                                <span class="badge bg-success text-white f-11 px-2.5 py-1 rounded-pill">
-                                    <i class="fa-solid fa-circle-check me-1"></i> Verified
-                                </span>
-                            @elseif($userKycUnderReview)
-                                <span class="badge bg-warning text-dark f-11 px-2.5 py-1 rounded-pill">
-                                    <i class="fa-solid fa-clock-rotate-left me-1"></i> Under Review
-                                </span>
-                            @else
-                                <span class="badge bg-danger text-white f-11 px-2.5 py-1 rounded-pill">
-                                    <i class="fa-solid fa-circle-xmark me-1"></i> Unverified
-                                </span>
-                            @endif
-                            <span class="text-muted f-11 ms-auto">
-                                <i class="fa-regular fa-clock me-1"></i> {{ now()->format('M d, Y h:i A') }}
-                            </span>
-                        </div>
-                    </div>
-
-                    <div class="d-flex gap-2 pt-2 border-top">
-                        <a href="{{ route('deposits') }}" class="btn btn-outline-primary flex-fill rounded-pill py-2 f-13 f-w-600">
-                            <i class="fa-solid fa-circle-plus me-1"></i> Deposit
-                        </a>
-                        <a href="{{ route('withdrawalsdeposits') }}" class="btn btn-outline-secondary flex-fill rounded-pill py-2 f-13 f-w-600">
-                            <i class="fa-solid fa-arrow-up-right-from-square me-1"></i> Withdraw
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
         <!-- 1. Connected Wallets Vault Card (Open & Spread Across Desktop) -->
         <div class="col-lg-6 col-12">
             <div class="card h-100 shadow-sm border position-relative overflow-hidden" style="border-radius: 14px;">
@@ -464,6 +398,72 @@
                         </button>
                         <a href="{{ route('connect.wallet') }}" class="btn btn-outline-primary flex-fill rounded-pill py-2 f-13 f-w-600">
                             <i class="fa-solid fa-plus me-1"></i> Connect Another
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. Account Balance Card -->
+        <div class="col-lg-6 col-12">
+            <div class="card h-100 shadow-sm border">
+                <div class="card-body p-4 d-flex flex-column justify-content-between">
+                    <div>
+                        <div class="d-flex align-items-center justify-content-between mb-3">
+                            <div class="d-flex align-items-center gap-2">
+                                <div class="rounded-3 bg-primary bg-opacity-10 text-primary d-flex align-items-center justify-content-center" style="width: 42px; height: 42px; font-size: 18px;">
+                                    <i class="fa-solid fa-wallet"></i>
+                                </div>
+                                <div>
+                                    <h6 class="f-w-700 text-dark mb-0 f-14">Account Balance</h6>
+                                    <small class="text-muted f-11">Your available trading funds</small>
+                                </div>
+                            </div>
+                            <span class="badge bg-light-success text-success rounded-pill f-11 px-3 py-1.5">
+                                <span class="pulse-beacon me-1"></span> Active Trading
+                            </span>
+                        </div>
+
+                        <div class="f-w-800 text-dark mb-2" style="font-size: 2.2rem; letter-spacing: -0.02em; line-height: 1.1;">
+                            {{ $settings->currency }}{{ number_format($isDemo ? $demoBal : Auth::user()->account_bal, 2, '.', ',') }}
+                        </div>
+
+                        <div class="d-flex flex-wrap align-items-center gap-2 mb-3">
+                            <span class="badge bg-warning text-dark f-11 px-2.5 py-1 rounded-pill">
+                                <i class="fa-brands fa-bitcoin me-1"></i> {{ $btcEquiv }} BTC
+                            </span>
+                            <span class="badge badge-subtle-neutral f-11 px-2.5 py-1 rounded-pill">
+                                <i class="fa-solid fa-circle-check text-success me-1"></i> Available
+                            </span>
+                            @php
+                                $userKycVerified = Auth::user()->isKycVerified();
+                                $userKycUnderReview = !$userKycVerified && (Auth::user()->account_verify == 'Under review' || (Auth::user()->kyc && Auth::user()->kyc->status == 'Under review'));
+                            @endphp
+                            @if($userKycVerified)
+                                <span class="badge bg-success text-white f-11 px-2.5 py-1 rounded-pill">
+                                    <i class="fa-solid fa-circle-check me-1"></i> Verified
+                                </span>
+                            @elseif($userKycUnderReview)
+                                <span class="badge bg-warning text-dark f-11 px-2.5 py-1 rounded-pill">
+                                    <i class="fa-solid fa-clock-rotate-left me-1"></i> Under Review
+                                </span>
+                            @else
+                                <span class="badge bg-danger text-white f-11 px-2.5 py-1 rounded-pill">
+                                    <i class="fa-solid fa-circle-xmark me-1"></i> Unverified
+                                </span>
+                            @endif
+                            <span class="text-muted f-11 ms-auto">
+                                <i class="fa-regular fa-clock me-1"></i> {{ now()->format('M d, Y h:i A') }}
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="d-flex gap-2 pt-2 border-top">
+                        <a href="{{ route('deposits') }}" class="btn btn-outline-primary flex-fill rounded-pill py-2 f-13 f-w-600">
+                            <i class="fa-solid fa-circle-plus me-1"></i> Deposit
+                        </a>
+                        <a href="{{ route('withdrawalsdeposits') }}" class="btn btn-outline-secondary flex-fill rounded-pill py-2 f-13 f-w-600">
+                            <i class="fa-solid fa-arrow-up-right-from-square me-1"></i> Withdraw
                         </a>
                     </div>
                 </div>
