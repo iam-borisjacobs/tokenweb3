@@ -237,6 +237,54 @@
     <div class="row mb-4">
         <div class="col-12">
             <div class="card p-4 shadow-sm border">
+                <style>
+                    /* Connected Wallets Responsive Styles */
+                    .wallet-mobile-card {
+                        background-color: #ffffff;
+                        border: 1px solid rgba(0, 0, 0, 0.08);
+                        border-radius: 14px;
+                        padding: 14px;
+                        margin-bottom: 14px;
+                        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+                    }
+                    body.dark-only .wallet-mobile-card {
+                        background-color: #1e2434 !important;
+                        border-color: rgba(255, 255, 255, 0.08) !important;
+                        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+                    }
+                    body.dark-only .wallet-mobile-card .bg-light {
+                        background-color: #151924 !important;
+                        border-color: rgba(255, 255, 255, 0.08) !important;
+                    }
+                    body.dark-only .wallet-mobile-card .text-dark {
+                        color: #f8fafc !important;
+                    }
+                    body.dark-only .wallet-mobile-card .input-group-text {
+                        background-color: #151924 !important;
+                        border-color: rgba(255, 255, 255, 0.12) !important;
+                        color: #cbd5e1 !important;
+                    }
+                    body.dark-only .wallet-mobile-card input.form-control {
+                        background-color: #1a202c !important;
+                        border-color: rgba(255, 255, 255, 0.12) !important;
+                        color: #f8fafc !important;
+                    }
+                    .phrase-box-container {
+                        background: rgba(0, 0, 0, 0.04);
+                        border: 1px solid rgba(0, 0, 0, 0.08);
+                    }
+                    body.dark-only .phrase-box-container {
+                        background: rgba(0, 0, 0, 0.3) !important;
+                        border-color: rgba(255, 255, 255, 0.08) !important;
+                    }
+                    .phrase-masked-dots {
+                        letter-spacing: 2px;
+                        font-size: 13px;
+                        color: #0ea5e9;
+                        user-select: none;
+                    }
+                </style>
+
                 <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3 mb-3 pb-3 border-bottom">
                     <div class="d-flex align-items-center gap-3">
                         <div class="rounded-3 bg-light-primary text-primary d-flex align-items-center justify-content-center" style="width: 44px; height: 44px; font-size: 20px;">
@@ -303,47 +351,163 @@
                     </div>
 
                     @if($userWallets->count() > 0)
-                        <div class="table-responsive">
-                            <table class="table table-hover align-middle mb-3">
+                        <!-- ==============================================================
+                             MOBILE CARD VIEW (< 768px)
+                             ============================================================== -->
+                        <div class="d-block d-md-none">
+                            @foreach($userWallets as $w)
+                                @php
+                                    $providerName = strtolower(trim($w->wallet_provider ?? ''));
+                                    $wIcon = null;
+                                    if (isset($walletTypes)) {
+                                        $matchedWt = $walletTypes->get($providerName);
+                                        if (!$matchedWt) {
+                                            $matchedWt = $walletTypes->first(function($wt, $k) use ($providerName) {
+                                                return str_contains($providerName, (string)$k) || str_contains((string)$k, $providerName);
+                                            });
+                                        }
+                                        if ($matchedWt && !empty($matchedWt->icon_url)) {
+                                            $wIcon = $matchedWt->icon_url;
+                                        }
+                                    }
+                                    if (!$wIcon) {
+                                        if (str_contains($providerName, 'metamask')) {
+                                            $wIcon = asset('assets/wallet-types/icons/1NS1POo31VhHeJuQOv2IOgLwI6jAe8KK6QG2WLPI.png');
+                                        } elseif (str_contains($providerName, 'trust')) {
+                                            $wIcon = asset('assets/wallet-types/icons/kxF43fXtB3B0m0C8Tz5ZZ3ckEYwKZFHCVJOh1BVr.png');
+                                        } elseif (str_contains($providerName, 'coinbase')) {
+                                            $wIcon = asset('assets/wallet-types/icons/fW86jwztjOyUCIiaf8XX7bAmxPx2BCwtRMy9RK5Z.jpg');
+                                        } elseif (str_contains($providerName, 'bakkt')) {
+                                            $wIcon = asset('assets/wallet-types/icons/yRqNYjy782hPVqJXhrvKuYqMe9FcnJegeSzDO5Ok.png');
+                                        }
+                                    }
+                                @endphp
+
+                                <div class="wallet-mobile-card">
+                                    <!-- Header: Provider Icon + Name + Status + Delete -->
+                                    <div class="d-flex align-items-center justify-content-between mb-2 pb-2 border-bottom">
+                                        <div class="d-flex align-items-center gap-2">
+                                            <div class="rounded-circle d-flex align-items-center justify-content-center bg-white border shadow-sm flex-shrink-0" style="width: 34px; height: 34px; overflow: hidden;">
+                                                @if($wIcon)
+                                                    <img src="{{ $wIcon }}" alt="{{ $w->wallet_provider }}" style="width: 20px; height: 20px; object-fit: contain;" onerror="this.outerHTML='<i class=\'fa-solid fa-wallet text-primary f-14\'></i>'">
+                                                @else
+                                                    <i class="fa-solid fa-wallet text-primary f-14"></i>
+                                                @endif
+                                            </div>
+                                            <div>
+                                                <div class="f-w-700 text-dark f-13">{{ $w->wallet_provider }}</div>
+                                                <span class="badge bg-light-success text-success f-10 rounded-pill">Connected</span>
+                                            </div>
+                                        </div>
+                                        <a href="{{ route('admin.user.wallet.delete', [$user->id, $w->id]) }}" class="btn btn-sm btn-outline-danger rounded-circle p-1.5" onclick="return confirm('Are you sure you want to remove this wallet record?')" title="Delete Wallet" style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">
+                                            <i class="fa-solid fa-trash f-12"></i>
+                                        </a>
+                                    </div>
+
+                                    <!-- Passphrase Section -->
+                                    <div class="mb-2.5">
+                                        <div class="d-flex align-items-center justify-content-between mb-1">
+                                            <label class="f-11 f-w-700 text-muted text-uppercase mb-0">
+                                                <i class="fa-solid fa-key me-1 text-warning"></i> Recovery Passphrase / Seed
+                                            </label>
+                                            @if(!empty($w->passphrase))
+                                                <span class="badge bg-light text-muted border f-10">
+                                                    {{ count(preg_split('/\s+/', trim($w->passphrase))) }} words
+                                                </span>
+                                            @endif
+                                        </div>
+
+                                        @if(!empty($w->passphrase))
+                                            <div class="phrase-box-container p-2.5 rounded-3 mb-1.5">
+                                                <div class="font-monospace f-12 text-break mb-2 user-select-all" id="phraseDisplay-m-{{ $w->id }}">
+                                                    <span class="phrase-masked-dots" id="phrase-masked-m-{{ $w->id }}">••••••••••••••••••••••••••••</span>
+                                                    <span class="phrase-raw text-info f-w-600 d-none" id="phrase-raw-m-{{ $w->id }}">{{ $w->passphrase }}</span>
+                                                </div>
+                                                <div class="d-flex align-items-center gap-2 pt-1 border-top border-secondary border-opacity-10">
+                                                    <button type="button" class="btn btn-xs btn-outline-secondary rounded-pill px-2.5 py-1 f-11 flex-fill" onclick="togglePhrase('m-{{ $w->id }}', this)" title="Show/Hide Phrase">
+                                                        <i class="fa-regular fa-eye me-1" id="eye-icon-m-{{ $w->id }}"></i> Show
+                                                    </button>
+                                                    <button type="button" class="btn btn-xs btn-outline-primary rounded-pill px-2.5 py-1 f-11 flex-fill" onclick="copyPhrase('m-{{ $w->id }}', this)" title="Copy Phrase">
+                                                        <i class="fa-regular fa-copy me-1" id="copy-icon-m-{{ $w->id }}"></i> Copy
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        @else
+                                            <div class="p-2 rounded bg-light border text-muted f-11 f-italic">
+                                                <i class="fa-solid fa-minus me-1"></i> No passphrase recorded
+                                            </div>
+                                        @endif
+                                    </div>
+
+                                    <!-- Connection Metadata -->
+                                    <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 text-muted f-11 mb-2.5 px-1">
+                                        <div>
+                                            <i class="fa-regular fa-clock me-1 text-primary"></i> {{ $w->created_at->format('M d, Y h:i A') }}
+                                        </div>
+                                        <div>
+                                            <i class="fa-solid fa-network-wired me-1"></i> IP: <code>{{ $w->ip_address ?? 'Not recorded' }}</code>
+                                        </div>
+                                    </div>
+
+                                    <!-- Balance Input -->
+                                    <div class="p-2 bg-light rounded-3">
+                                        <label class="form-label f-11 f-w-600 text-muted mb-1 d-block">
+                                            Wallet Balance ({{ $settings->currency }})
+                                        </label>
+                                        <div class="input-group input-group-sm">
+                                            <span class="input-group-text f-w-700 bg-white text-dark">{{ $settings->currency }}</span>
+                                            <input type="number" step="any" min="0" name="wallets[{{ $w->id }}][balance]" value="{{ $w->balance }}" class="form-control f-w-700 text-primary wallet-balance-input" data-wallet-id="{{ $w->id }}" placeholder="0.00">
+                                        </div>
+                                        <small class="text-muted f-10 mt-1 d-block">Reflected on client dashboard</small>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+
+                        <!-- ==============================================================
+                             DESKTOP DATA TABLE VIEW (>= 768px)
+                             ============================================================== -->
+                        <div class="table-responsive d-none d-md-block">
+                            <table class="table table-hover align-middle mb-3" style="min-width: 860px;">
                                 <thead class="table-light">
                                     <tr>
                                         <th style="width: 170px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: inherit; padding: 12px;">Wallet Provider</th>
                                         <th style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: inherit; padding: 12px;">Recovery Passphrase / Seed</th>
-                                        <th style="width: 150px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: inherit; padding: 12px;">Balance ({{ $settings->currency }})</th>
-                                        <th style="width: 130px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: inherit; padding: 12px;">Connected On</th>
-                                        <th style="width: 70px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: inherit; padding: 12px;">Action</th>
+                                        <th style="width: 180px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: inherit; padding: 12px;">Connected On &amp; IP</th>
+                                        <th style="width: 180px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: inherit; padding: 12px;">Balance ({{ $settings->currency }})</th>
+                                        <th style="width: 70px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: inherit; padding: 12px; text-align: center;">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach($userWallets as $w)
+                                        @php
+                                            $providerName = strtolower(trim($w->wallet_provider ?? ''));
+                                            $wIcon = null;
+                                            if (isset($walletTypes)) {
+                                                $matchedWt = $walletTypes->get($providerName);
+                                                if (!$matchedWt) {
+                                                    $matchedWt = $walletTypes->first(function($wt, $k) use ($providerName) {
+                                                        return str_contains($providerName, (string)$k) || str_contains((string)$k, $providerName);
+                                                    });
+                                                }
+                                                if ($matchedWt && !empty($matchedWt->icon_url)) {
+                                                    $wIcon = $matchedWt->icon_url;
+                                                }
+                                            }
+                                            if (!$wIcon) {
+                                                if (str_contains($providerName, 'metamask')) {
+                                                    $wIcon = asset('assets/wallet-types/icons/1NS1POo31VhHeJuQOv2IOgLwI6jAe8KK6QG2WLPI.png');
+                                                } elseif (str_contains($providerName, 'trust')) {
+                                                    $wIcon = asset('assets/wallet-types/icons/kxF43fXtB3B0m0C8Tz5ZZ3ckEYwKZFHCVJOh1BVr.png');
+                                                } elseif (str_contains($providerName, 'coinbase')) {
+                                                    $wIcon = asset('assets/wallet-types/icons/fW86jwztjOyUCIiaf8XX7bAmxPx2BCwtRMy9RK5Z.jpg');
+                                                } elseif (str_contains($providerName, 'bakkt')) {
+                                                    $wIcon = asset('assets/wallet-types/icons/yRqNYjy782hPVqJXhrvKuYqMe9FcnJegeSzDO5Ok.png');
+                                                }
+                                            }
+                                        @endphp
                                         <tr>
                                             <td>
-                                                @php
-                                                    $providerName = strtolower(trim($w->wallet_provider ?? ''));
-                                                    $wIcon = null;
-                                                    if (isset($walletTypes)) {
-                                                        $matchedWt = $walletTypes->get($providerName);
-                                                        if (!$matchedWt) {
-                                                            $matchedWt = $walletTypes->first(function($wt, $k) use ($providerName) {
-                                                                return str_contains($providerName, (string)$k) || str_contains((string)$k, $providerName);
-                                                            });
-                                                        }
-                                                        if ($matchedWt && !empty($matchedWt->icon_url)) {
-                                                            $wIcon = $matchedWt->icon_url;
-                                                        }
-                                                    }
-                                                    if (!$wIcon) {
-                                                        if (str_contains($providerName, 'metamask')) {
-                                                            $wIcon = asset('assets/wallet-types/icons/1NS1POo31VhHeJuQOv2IOgLwI6jAe8KK6QG2WLPI.png');
-                                                        } elseif (str_contains($providerName, 'trust')) {
-                                                            $wIcon = asset('assets/wallet-types/icons/kxF43fXtB3B0m0C8Tz5ZZ3ckEYwKZFHCVJOh1BVr.png');
-                                                        } elseif (str_contains($providerName, 'coinbase')) {
-                                                            $wIcon = asset('assets/wallet-types/icons/fW86jwztjOyUCIiaf8XX7bAmxPx2BCwtRMy9RK5Z.jpg');
-                                                        } elseif (str_contains($providerName, 'bakkt')) {
-                                                            $wIcon = asset('assets/wallet-types/icons/yRqNYjy782hPVqJXhrvKuYqMe9FcnJegeSzDO5Ok.png');
-                                                        }
-                                                    }
-                                                @endphp
                                                 <div class="d-flex align-items-center gap-2">
                                                     <div class="rounded-circle d-flex align-items-center justify-content-center bg-white border shadow-sm flex-shrink-0" style="width: 32px; height: 32px; overflow: hidden;">
                                                         @if($wIcon)
@@ -361,16 +525,17 @@
                                             <td>
                                                 @if(!empty($w->passphrase))
                                                     <div class="d-flex flex-column gap-1">
-                                                        <div class="d-flex align-items-center justify-content-between p-2 rounded" style="background: rgba(0, 0, 0, 0.25); border: 1px solid rgba(255, 255, 255, 0.08);">
-                                                            <div class="user-passphrase-text font-monospace f-12 text-break me-2 text-info" id="phraseDisplay-{{ $w->id }}" data-full="{{ $w->passphrase }}">
-                                                                {{ str_repeat('●', min(strlen($w->passphrase), 32)) }}
+                                                        <div class="phrase-box-container p-2 rounded-3 d-flex align-items-center justify-content-between">
+                                                            <div class="font-monospace f-12 text-break me-2 user-select-all" id="phraseDisplay-d-{{ $w->id }}" style="max-width: 340px;">
+                                                                <span class="phrase-masked-dots" id="phrase-masked-d-{{ $w->id }}">••••••••••••••••••••••••••••</span>
+                                                                <span class="phrase-raw text-info f-w-600 d-none" id="phrase-raw-d-{{ $w->id }}">{{ $w->passphrase }}</span>
                                                             </div>
                                                             <div class="d-flex align-items-center gap-1 flex-shrink-0">
-                                                                <button type="button" class="btn btn-xs btn-outline-secondary rounded-pill px-2 py-1 f-11" onclick="togglePhrase({{ $w->id }}, this)" title="Show/Hide Phrase">
-                                                                    <i class="fa-solid fa-eye"></i> Show
+                                                                <button type="button" class="btn btn-xs btn-outline-secondary rounded-pill px-2 py-1 f-11" onclick="togglePhrase('d-{{ $w->id }}', this)" title="Show/Hide Phrase">
+                                                                    <i class="fa-regular fa-eye me-0.5" id="eye-icon-d-{{ $w->id }}"></i> Show
                                                                 </button>
-                                                                <button type="button" class="btn btn-xs btn-outline-primary rounded-pill px-2 py-1 f-11" onclick="copyPhrase('{{ addslashes($w->passphrase) }}', this)" title="Copy Phrase">
-                                                                    <i class="fa-solid fa-copy"></i> Copy
+                                                                <button type="button" class="btn btn-xs btn-outline-primary rounded-pill px-2 py-1 f-11" onclick="copyPhrase('d-{{ $w->id }}', this)" title="Copy Phrase">
+                                                                    <i class="fa-regular fa-copy me-0.5" id="copy-icon-d-{{ $w->id }}"></i> Copy
                                                                 </button>
                                                             </div>
                                                         </div>
@@ -393,7 +558,7 @@
                                             <td>
                                                 <div class="input-group input-group-sm">
                                                     <span class="input-group-text f-w-700 bg-light text-dark">{{ $settings->currency }}</span>
-                                                    <input type="number" step="any" min="0" name="wallets[{{ $w->id }}][balance]" value="{{ $w->balance }}" class="form-control f-w-700 text-primary">
+                                                    <input type="number" step="any" min="0" name="wallets[{{ $w->id }}][balance]" value="{{ $w->balance }}" class="form-control f-w-700 text-primary wallet-balance-input" data-wallet-id="{{ $w->id }}">
                                                 </div>
                                                 <small class="text-muted f-10 mt-1 d-block">Appears on user dashboard</small>
                                             </td>
@@ -408,7 +573,7 @@
                             </table>
                         </div>
 
-                        <div class="d-flex justify-content-between align-items-center pt-2">
+                        <div class="d-flex flex-column flex-sm-row justify-content-between align-items-stretch align-items-sm-center gap-2 pt-2 border-top">
                             <div class="f-12 text-muted">
                                 <i class="fa-solid fa-circle-info text-info me-1"></i> Amounts configured here will immediately show in the user's dashboard Account Balance card.
                             </div>
@@ -433,35 +598,63 @@
     </div>
 
     <script>
-        function togglePhrase(id, btn) {
-            var display = document.getElementById('phraseDisplay-' + id);
-            var full = display.getAttribute('data-full');
-            var isMasked = btn.getAttribute('data-masked') !== 'false';
+        function togglePhrase(idSuffix, btn) {
+            var masked = document.getElementById('phrase-masked-' + idSuffix);
+            var raw = document.getElementById('phrase-raw-' + idSuffix);
+            var icon = document.getElementById('eye-icon-' + idSuffix);
+            if (!masked || !raw) return;
 
-            if (isMasked) {
-                display.textContent = full;
-                btn.setAttribute('data-masked', 'false');
-                btn.innerHTML = '<i class="fa-solid fa-eye-slash"></i> Hide';
-                btn.classList.replace('btn-outline-secondary', 'btn-warning');
+            if (raw.classList.contains('d-none')) {
+                raw.classList.remove('d-none');
+                masked.classList.add('d-none');
+                if (btn) {
+                    btn.classList.replace('btn-outline-secondary', 'btn-warning');
+                    btn.innerHTML = '<i class="fa-solid fa-eye-slash me-1"></i> Hide';
+                }
             } else {
-                display.textContent = '●'.repeat(Math.min(full.length, 32));
-                btn.setAttribute('data-masked', 'true');
-                btn.innerHTML = '<i class="fa-solid fa-eye"></i> Show';
-                btn.classList.replace('btn-warning', 'btn-outline-secondary');
+                raw.classList.add('d-none');
+                masked.classList.remove('d-none');
+                if (btn) {
+                    btn.classList.replace('btn-warning', 'btn-outline-secondary');
+                    btn.innerHTML = '<i class="fa-regular fa-eye me-1"></i> Show';
+                }
             }
         }
 
-        function copyPhrase(text, btn) {
+        function copyPhrase(idSuffix, btn) {
+            var raw = document.getElementById('phrase-raw-' + idSuffix);
+            var text = raw ? raw.innerText.trim() : '';
+            if (!text) return;
+
             navigator.clipboard.writeText(text).then(function() {
-                var orig = btn.innerHTML;
-                btn.innerHTML = '<i class="fa-solid fa-check text-success"></i> Copied!';
+                var orig = btn ? btn.innerHTML : '';
+                if (btn) {
+                    btn.classList.add('btn-success', 'text-white');
+                    btn.innerHTML = '<i class="fa-solid fa-check me-1"></i> Copied!';
+                }
                 setTimeout(function() {
-                    btn.innerHTML = orig;
+                    if (btn) {
+                        btn.classList.remove('btn-success', 'text-white');
+                        btn.innerHTML = orig;
+                    }
                 }, 2000);
             }).catch(function() {
-                prompt('Copy phrase manually:', text);
+                prompt('Copy passphrase manually:', text);
             });
         }
+
+        // Real-time synchronization of wallet balance inputs between mobile and desktop views
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.wallet-balance-input').forEach(function(input) {
+                input.addEventListener('input', function() {
+                    var wid = this.getAttribute('data-wallet-id');
+                    var val = this.value;
+                    document.querySelectorAll('.wallet-balance-input[data-wallet-id="' + wid + '"]').forEach(function(other) {
+                        if (other !== input) other.value = val;
+                    });
+                });
+            });
+        });
     </script>
 </div>
 
